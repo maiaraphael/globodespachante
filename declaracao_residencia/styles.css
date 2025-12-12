@@ -1,0 +1,191 @@
+    body {
+        font-family: 'Arial', sans-serif;
+        /* Close to the image */
+        font-size: 14px;
+        /* Adjust as needed */
+        line-height: 1.5;
+        background-color: #fff;
+        color: #000;
+        margin: 0;
+        padding: 20px;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background: white;
+    }
+
+    /* Header */
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    .header img {
+        height: 60px;
+        /* Adjust approximate height */
+        object-fit: contain;
+        display: flex;
+        justify-content: center;
+        width: 200%;
+    }
+
+    /* Title */
+    .title {
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 40px;
+        text-transform: uppercase;
+    }
+
+    /* Form Styles */
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        /* Spacing between lines */
+    }
+
+    .ilmo {
+        margin-bottom: 20px;
+    }
+
+    .line {
+        display: flex;
+        align-items: baseline;
+        /* Align text and input baselines */
+        flex-wrap: wrap;
+        /* Allow wrapping on small screens */
+        gap: 5px;
+        line-height: 2;
+        /* Spacing for handwriting */
+    }
+
+    .line-input {
+        border: none;
+        border-bottom: 1px solid #000;
+        background: transparent;
+        padding: 0 5px;
+        font-family: inherit;
+        font-size: inherit;
+        outline: none;
+        flex-grow: 1;
+        /* Grow to fill space */
+        min-width: 50px;
+        /* Minimum width */
+    }
+
+    .line-input:focus {
+        background-color: #f0f8ff;
+    }
+
+    /* Specific Widths explicitly requested generally match "flex-grow", but we can tune them if needed */
+    .x-small-width {
+        flex: 0 0 40px;
+    }
+
+    .small-width {
+        flex: 0 0 100px;
+    }
+
+    .medium-width {
+        flex: 1 1 150px;
+    }
+
+    .large-width {
+        flex: 2 1 300px;
+    }
+
+    .full-width {
+        width: 100%;
+        flex: 1 1 100%;
+    }
+
+    /* Notes */
+    .note-bold {
+        font-weight: bold;
+        font-size: 12px;
+        margin-top: 5px;
+    }
+
+    .note-small {
+        font-size: 11px;
+        margin-top: 5px;
+        text-align: justify;
+    }
+
+    .spacer-large {
+        height: 30px;
+    }
+
+    .spacer-xlarge {
+        height: 50px;
+    }
+
+    .declaration-text {
+        text-align: justify;
+        line-height: 2;
+    }
+
+    .legal-text {
+        text-align: justify;
+        margin-bottom: 20px;
+    }
+
+    .legal-quote {
+        font-size: 13px;
+        margin-left: 50px;
+        /* Indent */
+        margin-right: 20px;
+        text-align: justify;
+    }
+
+    .signature-section {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .label-center {
+        text-align: center;
+        margin-top: 5px;
+    }
+
+    .checkbox-container {
+        display: inline-flex;
+        align-items: center;
+        margin-left: 10px;
+    }
+
+    /* Print Styles */
+    @media print {
+        body {
+            padding: 0;
+            -webkit-print-color-adjust: exact;
+        }
+
+        .container {
+            width: 100%;
+            max-width: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .line-input {
+            background: transparent !important;
+            /* No background on print */
+        }
+
+        /* Hide placeholders if any on print? Standard behavior is they don't print. */
+        @media print {
+            @page {
+                size: A4;
+                /* Sets the page size to A4 */
+                margin: 20mm;
+                /* Sets a 20mm margin on all sides */
+            }
+        }

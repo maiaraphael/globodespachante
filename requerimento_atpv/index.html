@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário Detran PR - Intenção de Venda</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="page-container">
+        <header class="header">
+            <div class="logo-area">
+                <img src="header-logos.jpg" alt="Detran PR e Governo do Paraná" class="header-image">
+            </div>
+        </header>
+
+        <div class="content">
+            <div class="document-title">ANEXO I</div>
+
+            <p class="intent-text">Solicito que seja registrada a intenção de venda de veículo conforme preenchimento
+                abaixo:</p>
+
+            <!-- Identificação do Veículo -->
+            <section class="form-section">
+                <h2 class="section-title">Identificação do Veículo:</h2>
+                <div class="grid-box vehicle-grid">
+                    <div class="field-box">
+                        <label>Placa:</label>
+                        <input type="text" name="placa">
+                    </div>
+                    <div class="field-box">
+                        <label>Renavam:</label>
+                        <input type="text" name="renavam">
+                    </div>
+                    <div class="field-box">
+                        <label>Número do CRV</label>
+                        <input type="text" name="crv">
+                    </div>
+                    <div class="field-box">
+                        <label>Odômetro:</label>
+                        <input type="text" name="odometro">
+                    </div>
+                    <div class="field-box full-width">
+                        <label>Valor Venda:</label>
+                        <input type="text" name="valor_venda">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Identificação do Vendedor -->
+            <section class="form-section">
+                <h2 class="section-title">Identificação do Vendedor:</h2>
+                <div class="grid-box seller-grid">
+                    <div class="field-box full-width">
+                        <label>Nome:</label>
+                        <input type="text" name="vendedor_nome">
+                    </div>
+                    <div class="field-box full-width">
+                        <label>CPF:</label>
+                        <input type="text" name="vendedor_cpf">
+                    </div>
+                    <div class="field-box full-width">
+                        <label>E-Mail:</label>
+                        <input type="text" name="vendedor_email">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Identificação do Comprador -->
+            <section class="form-section">
+                <h2 class="section-title">Identificação do Comprador:</h2>
+                <div class="grid-box buyer-grid">
+                    <div class="field-box full-width">
+                        <label>Nome:</label>
+                        <input type="text" name="comprador_nome">
+                    </div>
+                    <div class="field-box full-width">
+                        <label>CPF:</label>
+                        <input type="text" name="comprador_cpf">
+                    </div>
+                    <div class="field-box full-width">
+                        <label>Endereço:</label>
+                        <input type="text" name="comprador_endereco">
+                    </div>
+                    <div class="field-box full-width">
+                        <label>E-Mail:</label>
+                        <input type="text" name="comprador_email">
+                    </div>
+                </div>
+            </section>
+
+            <footer class="footer-sign">
+                <div class="signature-line"></div>
+                <div class="signature-info">
+                    <p>Local e data</p>
+                    <p>Assinatura</p>
+                </div>
+            </footer>
+
+            <div class="page-footer-info">
+                <span>Detran-PR - Av. Victor Ferreira do Amaral, 2940 - Capão da Imbuia - 82800-900 - Curitiba - PR - 41
+                    3361-1212</span>
+                <span class="website-link">www.detran.pr.gov.br</span>
+            </div>
+        </div>
+        <div class="color-bar-bottom"></div>
+    </div>
+</body>
+
+</html>

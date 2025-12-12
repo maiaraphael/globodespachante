@@ -94,4 +94,61 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active'));
         }
     });
+
+    // Budget Calculator Logic
+    const transferType = document.getElementById('transferType');
+    const alienationType = document.getElementById('alienationType');
+    const paymentMethod = document.getElementById('paymentMethod');
+    const installmentsGroup = document.getElementById('installmentsGroup');
+    const installments = document.getElementById('installments');
+    const totalValueDisplay = document.getElementById('totalValue');
+    const paymentNoteDisplay = document.getElementById('paymentNote');
+
+    if (transferType && alienationType && paymentMethod && installments) {
+
+        function calculateTotal() {
+            // Base Prices
+            let basePrice = 0;
+
+            // Transfer Type
+            if (transferType.value === 'pr') basePrice += 530;
+            else if (transferType.value === 'other') basePrice += 640;
+
+            // Alienation
+            if (alienationType.value === 'include') basePrice += 60;
+            else if (alienationType.value === 'exclude') basePrice += 60;
+            else if (alienationType.value === 'both') basePrice += 120;
+
+            let finalPrice = basePrice;
+            let note = "Pagamento à vista (Pix, Dinheiro ou Débito).";
+
+            // Payment Method Logic
+            if (paymentMethod.value === 'credit') {
+                installmentsGroup.style.display = 'flex';
+                const installmentCount = parseInt(installments.value);
+
+                // Interest Calculation: Each installment adds 3.5% to the total
+                // Logic: 1x = 3.5%, 2x = 7%, 10x = 35%...
+                const interestRate = installmentCount * 0.035;
+                finalPrice = basePrice * (1 + interestRate);
+
+                const installmentValue = finalPrice / installmentCount;
+                note = `Pagamento em cartão de crédito em ${installmentCount}x de ${installmentValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}.`;
+            } else {
+                installmentsGroup.style.display = 'none';
+            }
+
+            // Update Display
+            totalValueDisplay.textContent = finalPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            paymentNoteDisplay.textContent = note;
+        }
+
+        // Add Event Listeners
+        [transferType, alienationType, paymentMethod, installments].forEach(el => {
+            el.addEventListener('change', calculateTotal);
+        });
+
+        // Initial Calc
+        calculateTotal();
+    }
 });
