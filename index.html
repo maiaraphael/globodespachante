@@ -38,16 +38,20 @@
                     <li><a href="#services">Serviços</a></li>
                     <li><a href="#about">Sobre Nós</a></li>
                     <li><a href="#contact">Contato</a></li>
+                    <li><a href="orcamento.html">Orçamento</a></li>
+                    <li><a href="fipe.html">Tabela Fipe</a></li>
                     <li class="btn btn-outline dropdown">
                         <a href="#">Termos e Documentos <i class="fas fa-chevron-down"
                                 style="font-size: 0.8em; margin-left: 5px;"></i></a>
                         <ul class="dropdown-menu">
-                            <li><a href="declaracao_residencia/index.html">Declação de Residência</a></li>
-                            <li><a href="procuracao_simples/index.html">Procuração Simples</a></li>
-                            <li><a href="requerimento_atpv/index.html">Termo de Preenchimento ATPV</a></li>
-                            <li><a href="cancelamento_atpv/index.html">Declaração de
+                            <li><a href="declaracao_residencia.html">Declação de Residência</a></li>
+                            <li><a href="procuracao_simples.html">Procuração Simples</a></li>
+                            <li><a href="requerimento_atpv.html">Termo de Preenchimento ATPV</a></li>
+                            <li><a href="cancelamento_comunicado.html">Declaração de
                                     Cancelamento de Comunicado
                                 </a></li>
+                            <li><a href="segunda_via_crv.html">Declaração para Solicitação de 2ª Via do CRV</a>
+                            </li>
                             <li><a
                                     href="https://www1.detran.pr.gov.br/detran-itd/consultas/veiculos/consulta_restricao.asp">Consultar
                                     Gravame</a></li>
@@ -187,68 +191,7 @@
         </div>
     </section>
 
-    <!-- Budget Calculator Section -->
-    <section class="calculator-section" id="orcamento">
-        <div class="container">
-            <div class="section-header">
-                <h2>Simule seu Orçamento</h2>
-                <p>Faça uma estimativa instantânea dos valores para regularizar seu veículo.</p>
-            </div>
-            <div class="calculator-wrapper">
-                <div class="calc-grid">
-                    <div class="calc-group">
-                        <label>Tipo de Transferência</label>
-                        <select id="transferType" class="calc-select">
-                            <option value="pr">Transferência Veículo do Paraná</option>
-                            <option value="other">Transferência Outro Estado</option>
-                        </select>
-                    </div>
 
-                    <div class="calc-group">
-                        <label>Alienação</label>
-                        <select id="alienationType" class="calc-select">
-                            <option value="none">Sem nenhum gravame</option>
-                            <option value="include">Com inclusão de gravame</option>
-                            <option value="exclude">Com exclusão de gravame</option>
-                            <option value="both">Com inclusão e exclusão</option>
-                        </select>
-                    </div>
-
-                    <div class="calc-group">
-                        <label>Forma de Pagamento</label>
-                        <select id="paymentMethod" class="calc-select">
-                            <option value="cash">À Vista (Pix, Dinheiro, Débito)</option>
-                            <option value="credit">Cartão de Crédito</option>
-                        </select>
-                    </div>
-
-                    <div class="calc-group" id="installmentsGroup" style="display: none;">
-                        <label>Parcelamento</label>
-                        <select id="installments" class="calc-select">
-                            <option value="1">Crédito à Vista</option>
-                            <option value="2">2x</option>
-                            <option value="3">3x</option>
-                            <option value="4">4x</option>
-                            <option value="5">5x</option>
-                            <option value="6">6x</option>
-                            <option value="7">7x</option>
-                            <option value="8">8x</option>
-                            <option value="9">9x</option>
-                            <option value="10">10x</option>
-                            <option value="11">11x</option>
-                            <option value="12">12x</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="calc-result-box">
-                    <h3>Valor Total Estimado</h3>
-                    <div class="calc-total" id="totalValue">R$ 530,00</div>
-                    <p class="calc-note" id="paymentNote">Pagamento à vista.</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- CTA Section -->
     <section class="cta-section">
@@ -297,7 +240,7 @@
         </div>
     </footer>
 
-    <script src="js/app.js"></script>
+    <script src="js/app.js?v=3"></script>
 </body>
 
 </html>

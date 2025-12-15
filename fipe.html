@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Globo Despachante - Londrina PR | Consulta de Débitos e Licenciamento</title>
+    <meta name="description"
+        content="Regularize seu veículo com o Globo Despachante em Londrina. Consulta de IPVA 2025, Licenciamento, Multas e Transferência. Rápido e Seguro.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <p><i class="fas fa-check-circle"></i> Despachante oficial credenciado pelo DETRAN-PR</p>
+            <a href="https://wa.me/554333560220" target="_blank" class="top-contact"><i class="fab fa-whatsapp"></i>
+                (43) 3356-0220</a>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="main-header">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon"><i class="fas fa-globe-americas"></i></span>
+                GLOBO DESPACHANTE
+            </a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html#services">Serviços</a></li>
+                    <li><a href="index.html#about">Sobre Nós</a></li>
+                    <li><a href="index.html#contact">Contato</a></li>
+                    <li><a href="orcamento.html">Orçamento</a></li>
+                    <li><a href="fipe.html" class="active">Tabela Fipe</a></li>
+                    <li class="btn btn-outline dropdown">
+                        <a href="#">Termos e Documentos <i class="fas fa-chevron-down"
+                                style="font-size: 0.8em; margin-left: 5px;"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="declaracao_residencia.html">Declação de Residência</a></li>
+                            <li><a href="procuracao_simples.html">Procuração Simples</a></li>
+                            <li><a href="requerimento_atpv.html">Termo de Preenchimento ATPV</a></li>
+                            <li><a href="cancelamento_comunicado.html">Declaração de
+                                    Cancelamento de Comunicado
+                                </a></li>
+                            <li><a href="segunda_via_crv.html">Declaração para Solicitação de 2ª Via do CRV</a>
+                            </li>
+                            <li><a
+                                    href="https://www1.detran.pr.gov.br/detran-itd/consultas/veiculos/consulta_restricao.asp">Consultar
+                                    Gravame</a></li>
+                            <li><a href="https://selo.funarpen.com.br/Consulta/">Consultar Selo Funarpen</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </nav>
+            <button class="mobile-menu-btn" aria-label="Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Page Header (Optional, for spacing) -->
+    <div style="height: 40px;"></div>
+
+    <!-- FIPE Lookup Section -->
+    <section class="fipe-section" id="fipe-lookup">
+        <div class="container">
+            <div class="section-header"
+                style="text-align: left; max-width: 600px; margin: 0 auto 30px; padding: 0 20px;">
+                <h2>Consulta Tabela Fipe</h2>
+                <p>Descubra o valor de mercado de qualquer veículo.</p>
+            </div>
+
+            <div class="calculator-wrapper" style="max-width: 600px; margin: 0 auto;">
+
+                <!-- Model Search (Real API) -->
+                <div class="fipe-search-box">
+                    <label>Selecione as características</label>
+                    <div class="calc-group">
+                        <select id="fipeBrand" class="calc-select">
+                            <option value="">Selecione a Marca</option>
+                        </select>
+                    </div>
+                    <div class="calc-group">
+                        <select id="fipeModel" class="calc-select" disabled>
+                            <option value="">Selecione o Modelo</option>
+                        </select>
+                    </div>
+                    <div class="calc-group">
+                        <select id="fipeYear" class="calc-select" disabled>
+                            <option value="">Selecione o Ano</option>
+                        </select>
+                    </div>
+                    <button id="btnModelConsult" class="btn btn-primary btn-block" disabled>
+                        <i class="fas fa-search"></i> Consultar Tabela
+                    </button>
+                </div>
+
+                <div id="fipeResult" class="fipe-result-card" style="display: none;">
+                    <div class="vehicle-info-header">
+                        <div class="vehicle-icon-circle">
+                            <i class="fas fa-car"></i>
+                        </div>
+                        <h3 id="resModel">Veículo não identificado</h3>
+                        <span class="badge-year" id="resYear">---</span>
+                    </div>
+
+                    <div class="fipe-details-grid">
+                        <div class="detail-item">
+                            <span class="label">Preço Médio</span>
+                            <span class="value price" id="resPrice">R$ ---</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Código Fipe</span>
+                            <span class="value" id="resFipeCode">---</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Mês de Referência</span>
+                            <span class="value" id="resRefMonth">---</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Cidade/UF</span>
+                            <span class="value location" id="resCity">---</span>
+                        </div>
+                    </div>
+
+                    <div class="fipe-disclaimer">
+                        <p>* Valores de referência da Tabela Fipe. O valor real pode variar conforme estado de
+                            conservação e opcionais.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Precisa de ajuda com sua documentação?</h2>
+            <p>Fale agora mesmo com um de nossos especialistas pelo WhatsApp.</p>
+            <a href="https://wa.me/554333560220" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> Falar no
+                WhatsApp</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container footer-content">
+            <div class="footer-col">
+                <h3>Globo Despachante</h3>
+                <p>Seu parceiro de confiança para regularização veicular em Londrina e região.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/globodespachante/"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Serviços</h3>
+                <ul>
+                    <li><a href="#">Licenciamento</a></li>
+                    <li><a href="#">IPVA</a></li>
+                    <li><a href="#">Transferência</a></li>
+                    <li><a href="#">Multas</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Contato</h3>
+                <ul class="contact-info">
+                    <li><i class="fas fa-map-marker-alt"></i> Rua Uruguai, 197 - Centro <br> Londrina - PR</li>
+                    <li><i class="fas fa-phone"></i> (43) 3356-0220</li>
+                    <li><i class="fas fa-envelope"></i> contato@globodespachante.com.br</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2025 Globo Despachante. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js?v=3"></script>
+</body>
+
+</html>

@@ -98,13 +98,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // Budget Calculator Logic
     const transferType = document.getElementById('transferType');
     const alienationType = document.getElementById('alienationType');
+    const mercosulPlate = document.getElementById('mercosulPlate');
+    const vehicleTypeGroup = document.getElementById('vehicleTypeGroup');
+    const vehicleType = document.getElementById('vehicleType');
     const paymentMethod = document.getElementById('paymentMethod');
     const installmentsGroup = document.getElementById('installmentsGroup');
     const installments = document.getElementById('installments');
     const totalValueDisplay = document.getElementById('totalValue');
     const paymentNoteDisplay = document.getElementById('paymentNote');
 
-    if (transferType && alienationType && paymentMethod && installments) {
+    if (transferType && alienationType && paymentMethod && installments && mercosulPlate && vehicleType) {
 
         function calculateTotal() {
             // Base Prices
@@ -118,6 +121,15 @@ document.addEventListener('DOMContentLoaded', () => {
             if (alienationType.value === 'include') basePrice += 60;
             else if (alienationType.value === 'exclude') basePrice += 60;
             else if (alienationType.value === 'both') basePrice += 120;
+
+            // Placa Mercosul Logic
+            if (mercosulPlate.value === 'no') {
+                vehicleTypeGroup.style.display = 'flex';
+                if (vehicleType.value === 'car') basePrice += 210;
+                else if (vehicleType.value === 'moto') basePrice += 120;
+            } else {
+                vehicleTypeGroup.style.display = 'none';
+            }
 
             let finalPrice = basePrice;
             let note = "Pagamento à vista (Pix, Dinheiro ou Débito).";
@@ -144,11 +156,137 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Add Event Listeners
-        [transferType, alienationType, paymentMethod, installments].forEach(el => {
+        [transferType, alienationType, mercosulPlate, vehicleType, paymentMethod, installments].forEach(el => {
             el.addEventListener('change', calculateTotal);
         });
 
         // Initial Calc
         calculateTotal();
     }
+
+    // FIPE Lookup Logic (Real API - Parallelum)
+    const brandSelect = document.getElementById('fipeBrand');
+    const modelSelect = document.getElementById('fipeModel');
+    const yearSelect = document.getElementById('fipeYear');
+    const btnModelConsult = document.getElementById('btnModelConsult');
+    const fipeResult = document.getElementById('fipeResult');
+
+    const API_URL = 'https://parallelum.com.br/fipe/api/v1/carros/marcas';
+
+    if (brandSelect && fipeResult) {
+        // Load Brands on Init
+        fetch(API_URL)
+            .then(res => res.json())
+            .then(data => {
+                data.forEach(brand => {
+                    const option = document.createElement('option');
+                    option.value = brand.codigo;
+                    option.textContent = brand.nome;
+                    brandSelect.appendChild(option);
+                });
+            })
+            .catch(err => console.error("Erro ao carregar marcas", err));
+
+        // Brand Change -> Load Models
+        brandSelect.addEventListener('change', () => {
+            modelSelect.innerHTML = '<option value="">Carregando...</option>';
+            modelSelect.disabled = true;
+            yearSelect.innerHTML = '<option value="">Selecione o Ano</option>';
+            yearSelect.disabled = true;
+            btnModelConsult.disabled = true;
+
+            if (!brandSelect.value) return;
+
+            fetch(`${API_URL}/${brandSelect.value}/modelos`)
+                .then(res => res.json())
+                .then(data => {
+                    modelSelect.innerHTML = '<option value="">Selecione o Modelo</option>';
+                    data.modelos.forEach(model => {
+                        const option = document.createElement('option');
+                        option.value = model.codigo;
+                        option.textContent = model.nome;
+                        modelSelect.appendChild(option);
+                    });
+                    modelSelect.disabled = false;
+                });
+        });
+
+        // Model Change -> Load Years
+        modelSelect.addEventListener('change', () => {
+            yearSelect.innerHTML = '<option value="">Carregando...</option>';
+            yearSelect.disabled = true;
+            btnModelConsult.disabled = true;
+
+            if (!modelSelect.value) return;
+
+            fetch(`${API_URL}/${brandSelect.value}/modelos/${modelSelect.value}/anos`)
+                .then(res => res.json())
+                .then(data => {
+                    yearSelect.innerHTML = '<option value="">Selecione o Ano</option>';
+                    data.forEach(year => {
+                        const option = document.createElement('option');
+                        option.value = year.codigo;
+                        option.textContent = year.nome;
+                        yearSelect.appendChild(option);
+                    });
+                    yearSelect.disabled = false;
+                });
+        });
+
+        // Year Change -> Enable Button
+        yearSelect.addEventListener('change', () => {
+            btnModelConsult.disabled = !yearSelect.value;
+        });
+
+        // Consult Click -> specific fetch
+        btnModelConsult.addEventListener('click', () => {
+            const originalBtnContent = btnModelConsult.innerHTML;
+            btnModelConsult.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Buscando...';
+            btnModelConsult.disabled = true;
+            fipeResult.style.display = 'none';
+
+            fetch(`${API_URL}/${brandSelect.value}/modelos/${modelSelect.value}/anos/${yearSelect.value}`)
+                .then(res => res.json())
+                .then(data => {
+                    const resultData = {
+                        model: data.Modelo,
+                        year: data.AnoModelo,
+                        price: data.Valor,
+                        fipeCode: data.CodigoFipe,
+                        refMonth: data.MesReferencia,
+                        city: 'Brasil (Média Nacional)', // Default for table
+                        type: 'car'
+                    };
+                    displayFipeResult(resultData);
+
+                    // Remove Disclaimer if exists (Real Data doesn't need it)
+                    const existingDisclaimer = document.getElementById('sim-disclaimer');
+                    if (existingDisclaimer) existingDisclaimer.remove();
+
+                    btnModelConsult.innerHTML = originalBtnContent;
+                    btnModelConsult.disabled = false;
+                })
+                .catch(err => {
+                    alert('Erro ao buscar dados. Tente novamente.');
+                    btnModelConsult.innerHTML = originalBtnContent;
+                    btnModelConsult.disabled = false;
+                });
+        });
+    }
+
+    function displayFipeResult(data) {
+        document.getElementById('resModel').textContent = data.model;
+        document.getElementById('resYear').textContent = data.year;
+        document.getElementById('resPrice').textContent = data.price;
+        document.getElementById('resFipeCode').textContent = data.fipeCode;
+        document.getElementById('resRefMonth').textContent = data.refMonth;
+        document.getElementById('resCity').textContent = data.city;
+
+        const iconContainer = document.querySelector('.vehicle-icon-circle');
+        iconContainer.innerHTML = '<i class="fas fa-car"></i>'; // Default to car
+
+        fipeResult.style.display = 'block';
+        fipeResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
 });
