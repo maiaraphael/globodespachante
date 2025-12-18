@@ -1,0 +1,200 @@
+@page {
+    size: A4;
+    margin: 0;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-size: 11pt;
+    /* Restoring to 11pt */
+    line-height: 1.5;
+    /* Increased from 1.4 but less than original 1.6 */
+    color: #333;
+}
+
+.page {
+    width: 210mm;
+    min-height: 297mm;
+    padding: 15mm 20mm;
+    /* Keeping tight padding */
+    margin: 10mm auto;
+    background: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+
+@media print {
+
+    body,
+    .page {
+        margin: 0;
+        box-shadow: none;
+        width: 210mm;
+        height: 297mm;
+        background: white;
+        padding: 15mm 20mm !important;
+    }
+
+    .top-bar,
+    .main-header,
+    footer,
+    .mobile-menu-btn,
+    .cta-section {
+        display: none !important;
+    }
+}
+
+/* Typography & Layout */
+h1 {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 20pt;
+    /* Increased from 18pt */
+    letter-spacing: 2px;
+    margin-bottom: 5mm;
+    color: #000;
+    border-bottom: 2px solid #333;
+    padding-bottom: 1mm;
+    margin-top: 0;
+}
+
+h2 {
+    font-size: 11.5pt;
+    /* Slightly larger */
+    text-transform: uppercase;
+    color: #555;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 10px;
+    padding-bottom: 3px;
+    font-weight: 600;
+}
+
+.section {
+    margin-bottom: 20px;
+    /* Increased from 15px */
+}
+
+.intro-text {
+    margin-bottom: 12px;
+    font-style: italic;
+    color: #666;
+}
+
+/* Form Rows */
+.form-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 10px;
+    /* Increased from 8px */
+    align-items: flex-end;
+}
+
+.field {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.field label {
+    font-size: 0.85em;
+    /* Slightly larger labels */
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 2px;
+    text-transform: uppercase;
+}
+
+.field input {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    font-family: inherit;
+    font-size: 11pt;
+    padding: 3px 0;
+    outline: none;
+    transition: border-color 0.2s;
+    background: transparent;
+}
+
+.field input:focus {
+    border-bottom: 1px solid #000;
+}
+
+/* Vehicle Grid */
+.vehicle-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 0;
+}
+
+/* Text Block */
+.powers-block {
+    text-align: justify;
+    background: #f9f9f9;
+    padding: 12px 15px;
+    border-radius: 4px;
+    font-size: 10.5pt;
+    /* Slightly larger */
+    border: 1px solid #eee;
+    line-height: 1.5;
+}
+
+/* Interactive Elements inside text */
+.inline-select,
+.inline-input {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: bold;
+    color: #000;
+    border: none;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.inline-input {
+    width: 120px;
+    text-align: center;
+    text-decoration: none;
+    border-bottom: 1px solid #333;
+}
+
+/* Footer */
+.footer {
+    margin-top: 40px;
+    /* Increased */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.date-line {
+    text-align: right;
+    margin-bottom: 100px;
+    /* Increased from 70px */
+    font-size: 11pt;
+}
+
+.signature-box {
+    width: 65%;
+    text-align: center;
+    border-top: 1px solid #000;
+    padding-top: 8px;
+    /* Increased */
+}
+
+.signature-box span {
+    display: block;
+    font-size: 0.9em;
+    color: #555;
+}
