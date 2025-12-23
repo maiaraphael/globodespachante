@@ -99,6 +99,12 @@ img {
     transform: translateY(-2px);
 }
 
+/* Compact button for nav */
+.main-nav .btn-outline {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+}
+
 .btn-block {
     display: flex;
     width: 100%;
@@ -193,13 +199,14 @@ img {
 
 .main-nav>ul {
     display: flex;
-    gap: 30px;
+    gap: 15px;
     align-items: center;
 }
 
 .main-nav a {
     font-weight: 500;
     color: var(--text-color);
+    font-size: 0.9rem;
     /* Revert to dark text */
 }
 
