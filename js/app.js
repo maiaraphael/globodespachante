@@ -322,6 +322,30 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // 2b. CPF/CNPJ Dual Mask Logic
+    const cpfCnpjInputs = document.querySelectorAll('.mask-cpf-cnpj');
+    cpfCnpjInputs.forEach(input => {
+        input.addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 14) value = value.slice(0, 14);
+
+            if (value.length <= 11) {
+                // CPF Mask: 000.000.000-00
+                value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+            } else {
+                // CNPJ Mask: 00.000.000/0000-00
+                value = value.replace(/^(\d{2})(\d)/, '$1.$2');
+                value = value.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+                value = value.replace(/\.(\d{3})(\d)/, '.$1/$2');
+                value = value.replace(/(\d{4})(\d)/, '$1-$2');
+            }
+
+            e.target.value = value;
+        });
+    });
+
     // 3. Inject Floating Buttons (WhatsApp & Print)
     const fabContainer = document.createElement('div');
     fabContainer.className = 'fab-container';
@@ -396,6 +420,89 @@ document.addEventListener('DOMContentLoaded', () => {
         // Apply initially if value exists?
         // applyAutoDash(input); 
     });
+
+    // -------------------------------------------------------
+    // NEW: Dynamic Outorgados (Procuracao Simples)
+    // -------------------------------------------------------
+    const outorgadosContainer = document.getElementById('outorgados-container');
+    const outorgadosTitle = document.getElementById('outorgados-title');
+    const outorgadosFields = document.getElementById('outorgados-fields');
+    const radioOutorgados = document.querySelectorAll('input[name="num_outorgados"]');
+
+    if (outorgadosContainer && outorgadosTitle && outorgadosFields && radioOutorgados.length > 0) {
+
+        const template = (index, total) => `
+            <div class="outorgado-block" style="${index > 1 ? 'margin-top: 20px; border-top: 1px dashed #ccc; padding-top: 20px;' : ''}">
+                <div class="form-row">
+                    <div class="field" style="flex: 3;">
+                        <label>Nome</label>
+                        <input type="text" placeholder="">
+                    </div>
+                    <div class="field" style="flex: 1;">
+                        <label>CPF/CNPJ</label>
+                        <input type="text" placeholder="" class="mask-cpf-cnpj">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="field">
+                        <label>Endereço</label>
+                        <input type="text" placeholder="">
+                    </div>
+                </div>
+            </div>
+        `;
+
+        function updateOutorgados(count) {
+            // Update Title
+            outorgadosTitle.textContent = count > 1 ? 'OUTORGADOS' : 'OUTORGADO';
+
+            // Clear Fields
+            outorgadosFields.innerHTML = '';
+
+            // Generate Fields
+            for (let i = 1; i <= count; i++) {
+                outorgadosFields.insertAdjacentHTML('beforeend', template(i, count));
+            }
+
+            // Re-apply listeners for new inputs
+            // Auto Uppercase
+            outorgadosFields.querySelectorAll('input[type="text"]').forEach(input => {
+                input.addEventListener('input', function () {
+                    const start = this.selectionStart;
+                    const end = this.selectionEnd;
+                    this.value = this.value.toUpperCase();
+                    this.setSelectionRange(start, end);
+                });
+            });
+            // CPF/CNPJ Mask (Dual)
+            outorgadosFields.querySelectorAll('.mask-cpf-cnpj').forEach(input => {
+                input.addEventListener('input', function (e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    if (value.length > 14) value = value.slice(0, 14);
+
+                    if (value.length <= 11) {
+                        // CPF Mask
+                        value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                        value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                        value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+                    } else {
+                        // CNPJ Mask
+                        value = value.replace(/^(\d{2})(\d)/, '$1.$2');
+                        value = value.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+                        value = value.replace(/\.(\d{3})(\d)/, '.$1/$2');
+                        value = value.replace(/(\d{4})(\d)/, '$1-$2');
+                    }
+                    e.target.value = value;
+                });
+            });
+        }
+
+        radioOutorgados.forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                updateOutorgados(parseInt(e.target.value));
+            });
+        });
+    }
 
     document.body.appendChild(fabContainer);
 });

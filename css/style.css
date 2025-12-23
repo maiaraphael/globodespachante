@@ -20,6 +20,11 @@
     --font-main: 'Inter', sans-serif;
 }
 
+/* Auth Loading State - Prevents FOUC */
+body.auth-loading {
+    display: none !important;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -1112,4 +1117,130 @@ footer {
     .fab-container {
         display: none !important;
     }
+}
+
+/* --- Auth & Utility Classes --- */
+.hidden {
+    display: none !important;
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-container {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    position: relative;
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+}
+
+.modal-overlay.active .modal-container {
+    transform: translateY(0);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.modal-header h2 {
+    margin: 0;
+    color: var(--primary-color);
+    font-size: 1.5rem;
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+}
+
+.auth-form .input-group {
+    margin-bottom: 15px;
+}
+
+.auth-form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+    font-weight: 500;
+}
+
+.auth-form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.btn-full {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+}
+
+.auth-error {
+    color: #dc3545;
+    background: #ffe6e6;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    font-size: 0.9em;
+    display: none;
+}
+
+.auth-footer {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 0.9em;
+}
+
+.auth-footer a {
+    color: var(--primary-color);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Nav Link overrides for auth buttons */
+.nav-btn-link {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--primary-color) !important;
+}
+
+.nav-btn-link:hover {
+    color: var(--secondary-color) !important;
 }

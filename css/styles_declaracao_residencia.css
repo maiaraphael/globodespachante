@@ -86,11 +86,11 @@
 
     /* Specific Widths explicitly requested generally match "flex-grow", but we can tune them if needed */
     .x-small-width {
-        flex: 0 0 40px;
+        flex: 0 0 35px;
     }
 
     .small-width {
-        flex: 0 0 110px;
+        flex: 0 0 100px;
     }
 
     .cpf-width {
@@ -98,7 +98,7 @@
     }
 
     .medium-width {
-        flex: 1 1 150px;
+        flex: 1 1 100px;
     }
 
     .large-width {
@@ -170,8 +170,11 @@
     @media print {
         body {
             padding: 0;
+            margin: 0;
             -webkit-print-color-adjust: exact;
             print-color-adjust: exact;
+            font-size: 13px;
+            /* Slightly smaller font for print */
         }
 
         .page-container {
@@ -183,20 +186,60 @@
 
         .line-input {
             background: transparent !important;
-            /* No background on print */
+        }
+
+        /* Hide Navigation and FABs */
+        .top-bar,
+        .main-header,
+        footer,
+        .mobile-menu-btn,
+        .fab-container {
+            display: none !important;
+        }
+
+        /* Reduce Vertical Spacing for Print */
+        .header {
+            margin-bottom: 10px;
+        }
+
+        .header img {
+            height: 40px;
+            /* Smaller logo */
+            width: auto;
+        }
+
+        .title {
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .spacer-large {
+            height: 10px;
+        }
+
+        .spacer-xlarge {
+            height: 20px;
+        }
+
+        .ilmo {
+            margin-bottom: 10px;
+        }
+
+        form {
+            gap: 10px;
+        }
+
+        .legal-text {
+            margin-bottom: 10px;
+        }
+
+        .signature-section {
+            margin-top: 10px;
         }
 
         @page {
             size: A4;
-            /* Sets the page size to A4 */
-            margin: 10mm;
-            /* Sets a 10mm margin on all sides */
-        }
-
-        .top-bar,
-        .main-header,
-        footer,
-        .mobile-menu-btn {
-            display: none !important;
+            margin: 10mm 15mm;
+            /* Top/Bottom 10mm, Left/Right 15mm */
         }
     }
