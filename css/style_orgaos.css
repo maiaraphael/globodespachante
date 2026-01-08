@@ -1,0 +1,83 @@
+/* CSS for Orgãos Page */
+
+.agency-list-section {
+    padding: 60px 0;
+    background-color: var(--bg-light);
+}
+
+.agency-category {
+    margin-bottom: 60px;
+    background: var(--white);
+    padding: 40px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.agency-category h3 {
+    color: var(--secondary-color);
+    border-bottom: 2px solid var(--gray-200, #eee);
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+    font-size: 1.8rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.agency-category h3 i {
+    color: var(--primary-color);
+}
+
+.agency-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.agency-item {
+    background: #f8f9fa;
+    padding: 15px 20px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #e9ecef;
+    transition: all 0.2s ease;
+}
+
+.agency-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    background: #fff;
+    border-color: var(--primary-color);
+}
+
+.agency-code {
+    font-weight: 700;
+    color: var(--primary-color);
+    background: rgba(0, 156, 59, 0.1);
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    min-width: 80px;
+    text-align: center;
+}
+
+.agency-name {
+    text-align: right;
+    font-size: 0.95rem;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+/* Response specific adjustments */
+@media (max-width: 768px) {
+    .agency-category {
+        padding: 20px;
+    }
+
+    .agency-grid {
+        grid-template-columns: 1fr;
+    }
+}

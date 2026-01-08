@@ -106,29 +106,119 @@ document.addEventListener('DOMContentLoaded', () => {
     const installments = document.getElementById('installments');
     const totalValueDisplay = document.getElementById('totalValue');
     const paymentNoteDisplay = document.getElementById('paymentNote');
+    const clientPlateInput = document.getElementById('clientPlate');
 
+    // Extra Service Elements
+    const extraServiceSelect = document.getElementById('extraServiceSelect');
+    const extraServiceDetails = document.getElementById('extraServiceDetails');
+    const extraServiceDesc = document.getElementById('extraServiceDesc');
+    const extraServiceValue = document.getElementById('extraServiceValue');
+
+
+    // Auto-Format Client Plate (Budget Page)
+    if (clientPlateInput) {
+        clientPlateInput.addEventListener('input', function (e) {
+            let value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+
+            if (value.length > 7) value = value.slice(0, 7);
+
+            if (value.length > 3) {
+                value = value.slice(0, 3) + '-' + value.slice(3);
+            }
+
+            e.target.value = value;
+        });
+    }
+
+
+    // Budget Logic (Only if elements exist)
     if (transferType && alienationType && paymentMethod && installments && mercosulPlate && vehicleType) {
 
+        // Helper to update UI based on Transfer Type
+        function updateUI() {
+            const isFirstReg = transferType.value === 'first_reg';
+
+            // 1. Mercosul Plate
+            // If First Reg, hide it.
+            if (isFirstReg) {
+                mercosulPlate.closest('.calc-group').style.display = 'none';
+                vehicleTypeGroup.style.display = 'flex'; // Always show vehicle type
+            } else {
+                mercosulPlate.closest('.calc-group').style.display = 'flex';
+                // Show vehicle type only if "No" (Need plate)
+                if (mercosulPlate.value === 'no') {
+                    vehicleTypeGroup.style.display = 'flex';
+                } else {
+                    vehicleTypeGroup.style.display = 'none';
+                }
+            }
+
+            // 2. Alienation Options
+            // If First Reg, only "none" or "include" allowed.
+            const options = alienationType.options;
+            for (let i = 0; i < options.length; i++) {
+                if (isFirstReg) {
+                    if (options[i].value === 'exclude' || options[i].value === 'both') {
+                        options[i].style.display = 'none';
+                    } else {
+                        options[i].style.display = 'block';
+                    }
+                } else {
+                    options[i].style.display = 'block'; // Show all
+                }
+            }
+
+            // Reset selection if hidden option is selected
+            if (isFirstReg && (alienationType.value === 'exclude' || alienationType.value === 'both')) {
+                alienationType.value = 'none';
+            }
+
+            // 3. Extra Service toggle
+            if (extraServiceSelect && extraServiceDetails) {
+                if (extraServiceSelect.value === 'yes') {
+                    extraServiceDetails.style.display = 'grid'; // grid to match calc-grid behavior
+                } else {
+                    extraServiceDetails.style.display = 'none';
+                }
+            }
+        }
+
         function calculateTotal() {
+            updateUI(); // Ensure UI is in sync
+
             // Base Prices
             let basePrice = 0;
 
-            // Transfer Type
-            if (transferType.value === 'pr') basePrice += 530;
-            else if (transferType.value === 'other') basePrice += 640;
+            if (transferType.value === 'first_reg') {
+                // First Registration Logic
+                if (vehicleType.value === 'car') basePrice = 720;
+                else if (vehicleType.value === 'moto') basePrice = 620;
 
-            // Alienation
-            if (alienationType.value === 'include') basePrice += 60;
-            else if (alienationType.value === 'exclude') basePrice += 60;
-            else if (alienationType.value === 'both') basePrice += 120;
+                // Gravame (Only Inclusion possible)
+                if (alienationType.value === 'include') basePrice += 70;
 
-            // Placa Mercosul Logic
-            if (mercosulPlate.value === 'no') {
-                vehicleTypeGroup.style.display = 'flex';
-                if (vehicleType.value === 'car') basePrice += 210;
-                else if (vehicleType.value === 'moto') basePrice += 120;
             } else {
-                vehicleTypeGroup.style.display = 'none';
+                // Standard Transfer Logic
+                // Transfer Type
+                if (transferType.value === 'pr') basePrice += 550;
+                else if (transferType.value === 'other') basePrice += 670;
+
+                // Alienation
+                if (alienationType.value === 'include') basePrice += 70;
+                else if (alienationType.value === 'exclude') basePrice += 70;
+                else if (alienationType.value === 'both') basePrice += 140;
+
+                // Placa Mercosul Logic (Only for Transfer)
+                if (mercosulPlate.value === 'no') {
+                    if (vehicleType.value === 'car') basePrice += 210;
+                    else if (vehicleType.value === 'moto') basePrice += 120;
+                }
+            }
+
+            // Add Extra Service Value
+            if (extraServiceSelect && extraServiceValue && extraServiceSelect.value === 'yes') {
+                const extraVal = parseFloat(extraServiceValue.value) || 0;
+                basePrice += extraVal;
             }
 
             let finalPrice = basePrice;
@@ -156,8 +246,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Add Event Listeners
-        [transferType, alienationType, mercosulPlate, vehicleType, paymentMethod, installments].forEach(el => {
-            el.addEventListener('change', calculateTotal);
+        [transferType, alienationType, mercosulPlate, vehicleType, paymentMethod, installments, extraServiceSelect, extraServiceValue].forEach(el => {
+            if (el) el.addEventListener('change', calculateTotal);
+            if (el && el.type === 'number') el.addEventListener('input', calculateTotal); // Realtime for number
         });
 
         // Initial Calc
@@ -350,13 +441,112 @@ document.addEventListener('DOMContentLoaded', () => {
     const fabContainer = document.createElement('div');
     fabContainer.className = 'fab-container';
 
+    // 5. Print Logic (Handles both Button and Ctrl+P)
+    function updatePrintQuote() {
+        const quoteContainer = document.querySelector('.printable-quote');
+        // Only run if we are on a page with the printable quote
+        if (!quoteContainer) return;
+
+        // 1. Capture Client Data
+        const pName = document.getElementById('clientName').value || 'Não informado';
+        const pPlate = document.getElementById('clientPlate').value || '---';
+        const pModel = document.getElementById('clientModel').value || '---';
+
+        const quoteClientName = document.getElementById('quoteClientName');
+        const quotePlate = document.getElementById('quotePlate');
+        const quoteModel = document.getElementById('quoteModel');
+
+        if (quoteClientName) quoteClientName.textContent = pName;
+        if (quotePlate) quotePlate.textContent = pPlate.toUpperCase();
+        if (quoteModel) quoteModel.textContent = pModel;
+
+        // 2. Capture Date
+        const now = new Date();
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        const quoteDate = document.getElementById('quoteDate');
+        if (quoteDate) quoteDate.textContent = now.toLocaleDateString('pt-BR', options);
+
+        // 3. Build Itemized List based on selections
+        const itemsList = document.getElementById('quoteItemsList');
+        if (itemsList) {
+            itemsList.innerHTML = ''; // Clear previous
+
+            const transferType = document.getElementById('transferType');
+            const alienationType = document.getElementById('alienationType');
+            const mercosulPlate = document.getElementById('mercosulPlate');
+            const vehicleType = document.getElementById('vehicleType');
+            const totalValueDisplay = document.getElementById('totalValue');
+            const paymentNoteDisplay = document.getElementById('paymentNote');
+
+            // Helper to add row
+            const addRow = (desc, price) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td>${desc}</td><td class="amount">${price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>`;
+                itemsList.appendChild(tr);
+            };
+
+            // Transfer Cost
+            if (transferType && transferType.value === 'pr') addRow('Transferência de Veículo (PR)', 550);
+            else if (transferType && transferType.value === 'other') addRow('Transferência de Veículo (Outro Estado)', 670);
+            else if (transferType && transferType.value === 'first_reg') {
+                // First Reg Item
+                const label = vehicleType.value === 'car' ? 'Primeiro Emplacamento (Automóvel)' : 'Primeiro Emplacamento (Moto)';
+                const price = vehicleType.value === 'car' ? 720 : 620;
+                addRow(label, price);
+            }
+
+            // Alienation Cost
+            if (alienationType) {
+                if (alienationType.value === 'include') addRow('Inclusão de Gravame', 70);
+                else if (alienationType.value === 'exclude') addRow('Exclusão de Gravame', 70);
+                else if (alienationType.value === 'both') {
+                    addRow('Inclusão de Gravame', 70);
+                    addRow('Exclusão de Gravame', 70);
+                }
+            }
+
+            // Plate Cost
+            if (mercosulPlate && mercosulPlate.value === 'no') {
+                if (vehicleType && vehicleType.value === 'car') addRow('Par de Placas Mercosul (Carro)', 210);
+                else if (vehicleType && vehicleType.value === 'moto') addRow('Placa Mercosul (Moto)', 120);
+            }
+
+            // Extra Service Cost
+            const extraServiceSelect = document.getElementById('extraServiceSelect');
+            const extraServiceDesc = document.getElementById('extraServiceDesc');
+            const extraServiceValue = document.getElementById('extraServiceValue');
+
+            if (extraServiceSelect && extraServiceSelect.value === 'yes') {
+                const desc = (extraServiceDesc ? extraServiceDesc.value : '') || 'Serviço Extra';
+                const val = (extraServiceValue ? parseFloat(extraServiceValue.value) : 0) || 0;
+                if (val > 0) {
+                    addRow(desc, val);
+                }
+            }
+        }
+
+
+        // 4. Update Total and Note
+        if (totalValueDisplay) document.getElementById('quoteTotalValue').textContent = totalValueDisplay.textContent;
+        if (paymentNoteDisplay) document.getElementById('quotePaymentNote').textContent = paymentNoteDisplay.textContent;
+    }
+
+    // Bind to browser print event
+    window.addEventListener('beforeprint', updatePrintQuote);
+
     // Print Button (Only on form pages - check by existing of .page or .page-container)
-    if (document.querySelector('.page') || document.querySelector('.page-container')) {
+    // ALSO for the Budget page (orcamento.html) which now has .printable-quote
+    if (document.querySelector('.page') || document.querySelector('.page-container') || document.querySelector('.printable-quote')) {
         const printBtn = document.createElement('button');
         printBtn.className = 'fab-btn fab-print';
         printBtn.innerHTML = '<i class="fas fa-print"></i>';
-        printBtn.setAttribute('data-tooltip', 'Imprimir Formulário');
-        printBtn.onclick = () => window.print();
+        printBtn.setAttribute('data-tooltip', 'Imprimir Formulário/Orçamento');
+
+        printBtn.onclick = () => {
+            // Forcing update manually too, just in case
+            updatePrintQuote();
+            window.print();
+        };
         fabContainer.appendChild(printBtn);
     }
 

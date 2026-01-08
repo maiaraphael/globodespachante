@@ -27,7 +27,7 @@ body {
         padding: 0;
         background: transparent;
         display: block !important;
-        overflow: visible;
+        overflow: hidden;
         /* debugging */
     }
 
@@ -43,7 +43,7 @@ body {
         border: none;
 
         /* Scale content to 100% as requested */
-        transform: scale(1);
+        transform: scale(0.96);
         transform-origin: top center;
     }
 

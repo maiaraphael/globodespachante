@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Globo Despachante - Londrina PR | Consulta de Débitos e Licenciamento</title>
+    <title>Orçamento Online - Globo Despachante Londrina</title>
     <meta name="description"
         content="Regularize seu veículo com o Globo Despachante em Londrina. Consulta de IPVA 2025, Licenciamento, Multas e Transferência. Rápido e Seguro.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="css/style.css">
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/print_budget.css">
 </head>
 
 <body>
@@ -40,6 +41,7 @@
                     <li><a href="index.html#contact">Contato</a></li>
                     <li><a href="orcamento.html" class="active">Orçamento</a></li>
                     <li><a href="fipe.html">Tabela Fipe</a></li>
+                    <li><a href="orgaos.html">Orgãos</a></li>
                     <li class="btn btn-outline dropdown">
                         <a href="#">Termos e Documentos <i class="fas fa-chevron-down"
                                 style="font-size: 0.8em; margin-left: 5px;"></i></a>
@@ -78,12 +80,39 @@
                 <p>Faça uma estimativa instantânea dos valores para regularizar seu veículo.</p>
             </div>
             <div class="calculator-wrapper">
+
+                <!-- Client Data for Print -->
+                <div class="fipe-search-box"
+                    style="text-align: left; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 20px;">
+                    <h3 style="color: var(--secondary-color); margin-bottom: 15px; font-size: 1.1rem;">Dados para
+                        Orçamento (Opcional)</h3>
+                    <div class="calc-grid" style="margin-bottom: 0;">
+                        <div class="calc-group">
+                            <label>Nome do Cliente</label>
+                            <input type="text" id="clientName" class="calc-select"
+                                style="cursor: text; background-image: none;" placeholder="Digite o nome do cliente">
+                        </div>
+                        <div class="calc-group">
+                            <label>Placa do Veículo</label>
+                            <input type="text" id="clientPlate" class="calc-select"
+                                style="cursor: text; background-image: none; text-transform: uppercase;"
+                                placeholder="ABC-1234">
+                        </div>
+                        <div class="calc-group">
+                            <label>Modelo do Veículo</label>
+                            <input type="text" id="clientModel" class="calc-select"
+                                style="cursor: text; background-image: none;" placeholder="Ex: Gol 1.6 MSI">
+                        </div>
+                    </div>
+                </div>
+
                 <div class="calc-grid">
                     <div class="calc-group">
                         <label>Tipo de Transferência</label>
                         <select id="transferType" class="calc-select">
                             <option value="pr">Transferência Veículo do Paraná</option>
                             <option value="other">Transferência Outro Estado</option>
+                            <option value="first_reg">Primeiro Emplacamento</option>
                         </select>
                     </div>
 
@@ -111,6 +140,30 @@
                             <option value="car">Automóvel</option>
                             <option value="moto">Moto</option>
                         </select>
+                    </div>
+
+                    <!-- Extra Service Section -->
+                    <div class="calc-group">
+                        <label>Serviço Extra?</label>
+                        <select id="extraServiceSelect" class="calc-select">
+                            <option value="no">Não</option>
+                            <option value="yes">Sim</option>
+                        </select>
+                    </div>
+
+                    <!-- Hidden Extra Service Fields -->
+                    <div id="extraServiceDetails" class="calc-grid"
+                        style="display: none; margin-top: 10px; width: 100%;">
+                        <div class="calc-group">
+                            <label>Tipo do Serviço</label>
+                            <input type="text" id="extraServiceDesc" class="calc-select"
+                                style="cursor: text; background-image: none;" placeholder="Ex: Taxa de Entrega">
+                        </div>
+                        <div class="calc-group">
+                            <label>Valor do Serviço (R$)</label>
+                            <input type="number" id="extraServiceValue" class="calc-select"
+                                style="cursor: text; background-image: none;" placeholder="0,00" min="0" step="0.01">
+                        </div>
                     </div>
 
                     <div class="calc-group">
@@ -142,7 +195,7 @@
 
                 <div class="calc-result-box">
                     <h3>Valor Total Estimado</h3>
-                    <div class="calc-total" id="totalValue">R$ 530,00</div>
+                    <div class="calc-total" id="totalValue">R$ 550,00</div>
                     <p class="calc-note" id="paymentNote">Pagamento à vista.</p>
                 </div>
             </div>
@@ -196,7 +249,81 @@
         </div>
     </footer>
 
-    <script src="js/app.js?v=5"></script>
+
+    <!-- Printable Quote Template (Hidden on Screen) -->
+    <div class="printable-quote">
+        <div class="quote-header">
+            <div class="quote-logo">
+                <div class="quote-logo-icon"><i class="fas fa-globe-americas"></i></div>
+                <div class="quote-company-info">
+                    <h1>Globo Despachante</h1>
+                    <p>Rua Uruguai, 197 - Centro - Londrina - PR</p>
+                    <p>(43) 3356-0220 | contato@globodespachante.com.br</p>
+                </div>
+            </div>
+            <div class="quote-meta">
+                <h2>Orçamento</h2>
+                <p id="quoteDate">Unknown Date</p>
+            </div>
+        </div>
+
+        <div class="quote-details">
+            <div class="quote-column">
+                <h3>Cliente</h3>
+                <div class="quote-row">
+                    <span class="label">Nome:</span>
+                    <span id="quoteClientName">Não informado</span>
+                </div>
+            </div>
+            <div class="quote-column">
+                <h3>Veículo</h3>
+                <div class="quote-row">
+                    <span class="label">Placa:</span>
+                    <span id="quotePlate">---</span>
+                </div>
+                <div class="quote-row">
+                    <span class="label">Modelo:</span>
+                    <span id="quoteModel">---</span>
+                </div>
+            </div>
+        </div>
+
+        <table class="quote-items">
+            <thead>
+                <tr>
+                    <th>Descrição do Serviço</th>
+                    <th style="text-align: right;">Valor</th>
+                </tr>
+            </thead>
+            <tbody id="quoteItemsList">
+                <!-- Items injected via JS -->
+            </tbody>
+        </table>
+
+        <div class="quote-total-section">
+            <div class="quote-total-box">
+                <div class="quote-row" style="font-size: 16px;">
+                    <span class="label">Total Estimado</span>
+                </div>
+                <div class="quote-final-total" id="quoteTotalValue">R$ 0,00</div>
+                <p id="quotePaymentNote" style="font-size: 11px; margin-top: 5px; color: #666;"></p>
+            </div>
+        </div>
+
+        <div class="quote-footer">
+            <div class="quote-payment-info">
+                <strong>Observações Importantes:</strong><br>
+                1. Este orçamento é uma estimativa baseada nas tabelas vigentes e pode sofrer alterações sem aviso
+                prévio.<br>
+                2. Débitos anteriores (IPVA, Multas, Licenciamento atrasado) não estão inclusos neste cálculo inicial,
+                salvo se especificado.<br>
+                3. O prazo para conclusão dos serviços depende da disponibilidade do sistema do Detran-PR.<br>
+            </div>
+            <p style="margin-top: 20px;">Gereado em www.globodespachante.com.br</p>
+        </div>
+    </div>
+
+    <script src="js/app.js?v=6"></script>
 </body>
 
 </html>
