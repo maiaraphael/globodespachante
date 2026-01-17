@@ -13,6 +13,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/chatbot.css">
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Open Graph Meta Tags -->
@@ -87,6 +88,7 @@
                     <li><a href="#contact">Contato</a></li>
                     <li><a href="orcamento.html">Orçamento</a></li>
                     <li><a href="fipe.html">Tabela Fipe</a></li>
+
                     <li><a href="orgaos.html">Orgãos</a></li>
 
                     <!-- Protected Menu (Hidden by default) -->
@@ -212,7 +214,7 @@
             <div class="why-us-content">
                 <div class="why-text">
                     <h2>Por que escolher o Globo Despachante?</h2>
-                    <p>Somos referência em Londrina - PR pela agilidade e transparência. Com 40 anos de experiência,
+                    <p>Somos referência em Londrina - PR pela agilidade e transparência. Com 35 anos de experiência,
                         nossa missão é descomplicar a vida do motorista.</p>
                     <div class="features-list">
                         <div class="feature">
@@ -322,6 +324,20 @@
         </div>
     </div>
 
+
+    <!-- Chatbot -->
+    <div id="chatbot-fab" class="chatbot-fab">
+        <i class="fas fa-comments"></i>
+    </div>
+
+    <div id="chatbot-window" class="chatbot-window">
+        <div class="chatbot-header">
+            <span>Dúvidas Frequentes</span>
+            <span id="chatbot-close" class="chatbot-close">&times;</span>
+        </div>
+        <div id="chatbot-body" class="chatbot-body"></div>
+    </div>
+
     <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 
@@ -333,7 +349,7 @@
     <script src="js/firebase-config.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/app.js?v=5"></script>
+    <script src="js/chatbot.js"></script>
 </body>
-
 
 </html>

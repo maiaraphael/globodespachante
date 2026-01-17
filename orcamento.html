@@ -41,6 +41,7 @@
                     <li><a href="index.html#contact">Contato</a></li>
                     <li><a href="orcamento.html" class="active">Orçamento</a></li>
                     <li><a href="fipe.html">Tabela Fipe</a></li>
+
                     <li><a href="orgaos.html">Orgãos</a></li>
                     <li class="btn btn-outline dropdown">
                         <a href="#">Termos e Documentos <i class="fas fa-chevron-down"
@@ -162,6 +163,23 @@
                         <div class="calc-group">
                             <label>Valor do Serviço (R$)</label>
                             <input type="number" id="extraServiceValue" class="calc-select"
+                                style="cursor: text; background-image: none;" placeholder="0,00" min="0" step="0.01">
+                        </div>
+                    </div>
+
+                    <!-- Discount Section -->
+                    <div class="calc-group">
+                        <label>Aplicar Desconto?</label>
+                        <select id="discountSelect" class="calc-select">
+                            <option value="no">Não</option>
+                            <option value="yes">Sim</option>
+                        </select>
+                    </div>
+
+                    <div id="discountDetails" class="calc-grid" style="display: none; margin-top: 10px; width: 100%;">
+                        <div class="calc-group">
+                            <label>Valor do Desconto (R$)</label>
+                            <input type="number" id="discountValue" class="calc-select"
                                 style="cursor: text; background-image: none;" placeholder="0,00" min="0" step="0.01">
                         </div>
                     </div>

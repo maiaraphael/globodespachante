@@ -114,6 +114,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const extraServiceDesc = document.getElementById('extraServiceDesc');
     const extraServiceValue = document.getElementById('extraServiceValue');
 
+    // Discount Elements
+    const discountSelect = document.getElementById('discountSelect');
+    const discountDetails = document.getElementById('discountDetails');
+    const discountValue = document.getElementById('discountValue');
+
 
     // Auto-Format Client Plate (Budget Page)
     if (clientPlateInput) {
@@ -181,7 +186,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     extraServiceDetails.style.display = 'none';
                 }
             }
+
+            // 4. Discount toggle
+            if (discountSelect && discountDetails) {
+                if (discountSelect.value === 'yes') {
+                    discountDetails.style.display = 'grid';
+                } else {
+                    discountDetails.style.display = 'none';
+                }
+            }
         }
+
 
         function calculateTotal() {
             updateUI(); // Ensure UI is in sync
@@ -221,6 +236,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 basePrice += extraVal;
             }
 
+            // Apply Discount (BEFORE Interest)
+            if (discountSelect && discountValue && discountSelect.value === 'yes') {
+                const discVal = parseFloat(discountValue.value) || 0;
+                basePrice -= discVal;
+                if (basePrice < 0) basePrice = 0; // Prevent negative total
+            }
+
             let finalPrice = basePrice;
             let note = "Pagamento à vista (Pix, Dinheiro ou Débito).";
 
@@ -246,7 +268,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Add Event Listeners
-        [transferType, alienationType, mercosulPlate, vehicleType, paymentMethod, installments, extraServiceSelect, extraServiceValue].forEach(el => {
+        [transferType, alienationType, mercosulPlate, vehicleType, paymentMethod, installments, extraServiceSelect, extraServiceValue, discountSelect, discountValue].forEach(el => {
             if (el) el.addEventListener('change', calculateTotal);
             if (el && el.type === 'number') el.addEventListener('input', calculateTotal); // Realtime for number
         });
@@ -521,6 +543,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 const val = (extraServiceValue ? parseFloat(extraServiceValue.value) : 0) || 0;
                 if (val > 0) {
                     addRow(desc, val);
+                }
+            }
+
+            // Discount Row
+            // Need to re-fetch element inside this scope if not available, or use global IDs
+            const discountSelect = document.getElementById('discountSelect');
+            const discountValue = document.getElementById('discountValue');
+
+            if (discountSelect && discountSelect.value === 'yes') {
+                const dVal = (discountValue ? parseFloat(discountValue.value) : 0) || 0;
+                if (dVal > 0) {
+                    // Show as negative
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `<td>Desconto Aplicado</td><td class="amount" style="color: #d32f2f;">- ${dVal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>`;
+                    itemsList.appendChild(tr);
                 }
             }
         }
