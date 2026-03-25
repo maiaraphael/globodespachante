@@ -25,6 +25,11 @@ body.auth-loading {
     display: none !important;
 }
 
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -38,6 +43,22 @@ body {
     background-color: var(--bg-light);
     -webkit-font-smoothing: antialiased;
 }
+
+/* Scroll Animations */
+.fade-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.delay-100 { transition-delay: 100ms; }
+.delay-200 { transition-delay: 200ms; }
+.delay-300 { transition-delay: 300ms; }
 
 a {
     text-decoration: none;
