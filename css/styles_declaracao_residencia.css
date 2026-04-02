@@ -203,53 +203,77 @@
         .main-header,
         footer,
         .mobile-menu-btn,
-        .fab-container {
+        .fab-container,
+        .no-print {
             display: none !important;
         }
 
         /* Reduce Vertical Spacing for Print */
         .header {
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
 
         .header img {
-            height: 40px;
-            /* Smaller logo */
+            height: 35px;
             width: auto;
         }
 
         .title {
-            margin-bottom: 20px;
-            font-size: 14px;
+            margin-bottom: 10px;
+            font-size: 13px;
         }
 
         .spacer-large {
-            height: 10px;
+            height: 5px;
         }
 
         .spacer-xlarge {
-            height: 20px;
+            height: 10px;
         }
 
         .ilmo {
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
 
         form {
-            gap: 10px;
+            gap: 6px;
         }
 
         .legal-text {
-            margin-bottom: 10px;
+            margin-bottom: 5px;
+        }
+
+        .legal-quote {
+            margin-left: 30px;
+            font-size: 12px;
         }
 
         .signature-section {
-            margin-top: 10px;
+            margin-top: 6px;
+        }
+
+        .signature-main {
+            margin-top: 15px !important;
+        }
+
+        .assinou-extra {
+            margin-top: 15px !important;
+        }
+
+        .note-small {
+            font-size: 10px;
+        }
+
+        .declaration-text {
+            line-height: 1.8;
+        }
+
+        .line {
+            line-height: 1.6;
         }
 
         @page {
             size: A4;
-            margin: 10mm 15mm;
-            /* Top/Bottom 10mm, Left/Right 15mm */
+            margin: 8mm 15mm;
         }
     }

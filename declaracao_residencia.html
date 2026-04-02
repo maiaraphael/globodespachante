@@ -154,13 +154,6 @@
 
             <div class="spacer-large"></div>
 
-                <!-- Checkbox: Assinou em minha presença (movido para antes da declaração, oculto na impressão) -->
-                <div class="line no-print" style="align-items: center; margin-bottom: 10px;">
-                    <label style="display: flex; align-items: center; gap: 8px;">
-                        <input type="checkbox" id="assinou-presenca-checkbox">
-                        Assinou em minha presença
-                    </label>
-                </div>
 
             <div class="legal-text">
                 Declaro ainda, estar ciente de que a falsidade da presente declaração pode implicar na sanção penal
@@ -175,6 +168,14 @@
                 (três) anos, se o documento é particular.”
             </div>
 
+            <!-- Checkbox: Assinou em minha presença (movido para antes da declaração, oculto na impressão) -->
+                <div class="line no-print" style="align-items: center; margin-bottom: 10px;">
+                    <label style="display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox" id="assinou-presenca-checkbox">
+                        Assinou em minha presença
+                    </label>
+                </div>
+
             <div class="spacer-xlarge"></div>
 
             <div class="signature-section">
@@ -185,7 +186,7 @@
                 <!-- Day/Month/Year input hack if needed, but image shows just a line for local/data -->
             </div>
 
-            <div class="signature-section" style="margin-top: 50px;">
+            <div class="signature-section signature-main" style="margin-top: 50px;">
                 <div class="signature-line-box">
                     <!-- The line itself comes from border-top of the div or an input? Image has a line. -->
                     <div style="border-bottom: 1px solid black; width: 80%; margin: 0 auto;"></div>
@@ -193,7 +194,7 @@
                 </div>
 
                     <!-- Linha extra: Assinou em minha presença (escondida por padrão) -->
-                    <div id="assinou-presenca-extra" style="display: none; margin-top: 40px;">
+                    <div id="assinou-presenca-extra" class="assinou-extra" style="display: none; margin-top: 40px;">
                         <div style="border-bottom: 1px solid black; width: 80%; margin: 0 auto;"></div>
                         <div class="label-center">Assinou em minha presença</div>
                     </div>
