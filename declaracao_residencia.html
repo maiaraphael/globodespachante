@@ -179,14 +179,16 @@
             <div class="spacer-xlarge"></div>
 
             <div class="signature-section">
-                <div class="signature-line-date">
-                    <input type="text" class="line-input full-width" style="text-align: center;">
-                    <div class="label-center">Local e data.</div>
+                <div class="signature-line-date" style="display: flex; justify-content: center;">
+                    <div style="width: 35%; text-align: center;">
+                        <input type="text" style="width: 100%; border: none; border-bottom: 1px solid #000; background: transparent; text-align: center;">
+                        <div class="label-center">Local e data.</div>
+                    </div>
                 </div>
                 <!-- Day/Month/Year input hack if needed, but image shows just a line for local/data -->
             </div>
 
-            <div class="signature-section signature-main" style="margin-top: 50px;">
+            <div class="signature-section signature-main">
                 <div class="signature-line-box">
                     <!-- The line itself comes from border-top of the div or an input? Image has a line. -->
                     <div style="border-bottom: 1px solid black; width: 80%; margin: 0 auto;"></div>
@@ -194,7 +196,7 @@
                 </div>
 
                     <!-- Linha extra: Assinou em minha presença (escondida por padrão) -->
-                    <div id="assinou-presenca-extra" class="assinou-extra" style="display: none; margin-top: 40px;">
+                    <div id="assinou-presenca-extra" class="assinou-extra" style="display: none;">
                         <div style="border-bottom: 1px solid black; width: 80%; margin: 0 auto;"></div>
                         <div class="label-center">Assinou em minha presença</div>
                     </div>
