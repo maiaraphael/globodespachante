@@ -68,100 +68,123 @@
 
         <!-- Cabeçalho do Documento -->
         <div class="doc-header">
-            <div class="doc-header-logos">
+            <div class="logo-area">
                 <img src="header-logos.jpg" alt="Detran PR e Governo do Paraná" class="header-image">
-            </div>
-            <div class="doc-header-title">
-                <p class="doc-res">RES 968/2022 CONTRAN – ANEXO III</p>
-                <h1 class="doc-title">DECLARAÇÃO PROCEDÊNCIA LÍCITA DO MOTOR</h1>
             </div>
         </div>
 
-        <!-- Formulário -->
-        <form id="formMotor968" autocomplete="off">
+        <div class="content">
+            <p class="doc-res">RES 968/2022 CONTRAN – ANEXO III</p>
+            <h1 class="doc-title">DECLARAÇÃO PROCEDÊNCIA LÍCITA DO MOTOR</h1>
 
-            <div class="line">
-                EU: <input type="text" id="nomeInput" class="line-input large-width auto-dash" placeholder="">
-                CPF/CNPJ: <input type="text" id="cpfCnpjInput" class="line-input medium-width mask-cpf-cnpj auto-dash" placeholder="">
-            </div>
+            <!-- Formulário -->
+            <form id="formMotor968" autocomplete="off">
 
-            <div class="line">
-                ENDEREÇO: <input type="text" class="line-input large-width auto-dash" placeholder="">
-                - LONDRINA PR
-            </div>
-
-            <div class="declaration-text">
-                de acordo com o disposto no inciso <strong>II</strong> do art. 28, e nos incisos <strong>III</strong> e <strong>IV</strong> do art.
-                29 da Resolução CONTRAN nº 968, de 2022, declaro que assumo a responsabilidade
-                pela procedência lícita do motor nº:
-                <input type="text" id="motorInput" class="line-input medium-width auto-dash" placeholder="">
-                instalado no veículo de minha propriedade:
-            </div>
-
-            <div class="vehicle-grid">
-                <div class="vehicle-row">
-                    <div class="vehicle-field">
-                        <span class="field-label">PLACA:</span>
-                        <input type="text" id="placaInput" class="line-input auto-dash" placeholder="">
+                <!-- Seção: Identificação do Declarante -->
+                <section class="form-section">
+                    <h2 class="section-title">Identificação do Declarante</h2>
+                    <div class="grid-box declarant-grid">
+                        <div class="field-box field-wide">
+                            <label>EU (Nome Completo):</label>
+                            <input type="text" id="nomeInput" class="auto-dash" placeholder="">
+                        </div>
+                        <div class="field-box">
+                            <label>CPF/CNPJ:</label>
+                            <input type="text" id="cpfCnpjInput" class="mask-cpf-cnpj auto-dash" placeholder="">
+                        </div>
+                        <div class="field-box field-full">
+                            <label>Endereço:</label>
+                            <div class="field-inline">
+                                <input type="text" id="enderecoInput" class="auto-dash" placeholder="" style="flex:1;">
+                                <span class="field-suffix">– LONDRINA PR</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="vehicle-field">
-                        <span class="field-label">RENAVAN:</span>
-                        <input type="text" id="renavamInput" class="line-input auto-dash" placeholder="">
+                </section>
+
+                <!-- Seção: Declaração -->  
+                <section class="form-section">
+                    <h2 class="section-title">Declaração</h2>
+                    <div class="declaration-box">
+                        <p class="declaration-text">
+                            De acordo com o disposto no inciso <strong>II</strong> do art. 28, e nos incisos <strong>III</strong> e <strong>IV</strong>
+                            do art. 29 da Resolução CONTRAN nº 968, de 2022, declaro que assumo a responsabilidade
+                            pela procedência lícita do motor nº:
+                        </p>
+                        <div class="motor-field">
+                            <label>Número do Motor:</label>
+                            <input type="text" id="motorInput" class="auto-dash" placeholder="">
+                        </div>
+                        <p class="declaration-text" style="margin-top: 10px;">
+                            instalado no veículo de minha propriedade:
+                        </p>
                     </div>
-                    <div class="vehicle-field wide">
-                        <span class="field-label">CHASSI:</span>
-                        <input type="text" id="chassiInput" class="line-input auto-dash" placeholder="">
+                </section>
+
+                <!-- Seção: Dados do Veículo -->
+                <section class="form-section">
+                    <h2 class="section-title">Dados do Veículo</h2>
+                    <div class="grid-box vehicle-grid">
+                        <div class="field-box">
+                            <label>Placa:</label>
+                            <input type="text" id="placaInput" class="auto-dash" placeholder="">
+                        </div>
+                        <div class="field-box">
+                            <label>Renavan:</label>
+                            <input type="text" id="renavamInput" class="auto-dash" placeholder="">
+                        </div>
+                        <div class="field-box field-full">
+                            <label>Chassi:</label>
+                            <input type="text" id="chassiInput" class="auto-dash" placeholder="">
+                        </div>
+                        <div class="field-box field-wide">
+                            <label>Modelo:</label>
+                            <input type="text" id="modeloInput" class="auto-dash" placeholder="">
+                        </div>
+                        <div class="field-box">
+                            <label>Ano:</label>
+                            <input type="text" id="anoInput" class="auto-dash" placeholder="">
+                        </div>
+                        <div class="field-box">
+                            <label>Cor:</label>
+                            <input type="text" id="corInput" class="auto-dash" placeholder="">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Declaração Final -->
+                <div class="legal-box">
+                    <p>Declaro, ainda, serem verdadeiras as informações supracitadas, sujeitando-me às cominações dispostas no art. 299 do Código Penal Brasileiro.</p>
+                </div>
+
+                <!-- Data e Assinatura -->
+                <div class="footer-sign">
+                    <div class="date-line">
+                        <span>Londrina,</span>
+                        <input type="text" class="date-input day auto-dash" placeholder="">
+                        <span>de</span>
+                        <input type="text" class="date-input month auto-dash" placeholder="">
+                        <span>de</span>
+                        <input type="text" class="date-input year auto-dash" placeholder="">
+                    </div>
+
+                    <div class="signature-area">
+                        <div class="signature-line"></div>
+                        <p class="sig-label" id="printNome">NOME</p>
+                        <p class="sig-label" id="printCpfCnpj">CPF/CNPJ</p>
                     </div>
                 </div>
-                <div class="vehicle-row">
-                    <div class="vehicle-field wide">
-                        <span class="field-label">MODELO:</span>
-                        <input type="text" id="modeloInput" class="line-input auto-dash" placeholder="">
-                    </div>
-                    <div class="vehicle-field">
-                        <span class="field-label">ANO:</span>
-                        <input type="text" id="anoInput" class="line-input small-width auto-dash" placeholder="">
-                    </div>
-                    <div class="vehicle-field">
-                        <span class="field-label">COR:</span>
-                        <input type="text" id="corInput" class="line-input auto-dash" placeholder="">
-                    </div>
-                </div>
+
+            </form>
+
+            <!-- Rodapé do documento -->
+            <div class="page-footer-info">
+                <span>Detran-PR – Av. Victor Ferreira do Amaral, 2940 – Capão da Imbuia – 82800-900 – Curitiba – PR – (41) 3361-1212</span>
+                <span class="website-link">www.detran.pr.gov.br</span>
             </div>
+        </div>
 
-            <div class="spacer-large"></div>
-
-            <div class="legal-text">
-                Declaro, ainda, serem verdadeiras as informações supracitadas,
-                sujeitando-me às cominações dispostas no art. 299 do Código Penal Brasileiro.
-            </div>
-
-            <div class="spacer-large"></div>
-
-            <!-- Data -->
-            <div class="signature-section">
-                <div class="date-line">
-                    Londrina
-                    <input type="text" class="line-input x-small-width auto-dash" placeholder="">
-                    de
-                    <input type="text" class="line-input medium-width auto-dash" placeholder="">
-                    de
-                    <input type="text" id="anoDataInput" class="line-input small-width auto-dash" placeholder="">
-                </div>
-            </div>
-
-            <div class="spacer-xlarge"></div>
-
-            <!-- Assinatura -->
-            <div class="signature-block">
-                <div class="signature-line-wrapper">
-                    <div class="signature-line"></div>
-                    <div class="signature-label" id="printNome">NOME</div>
-                    <div class="signature-label" id="printCpfCnpj">CPF/CNPJ</div>
-                </div>
-            </div>
-
-        </form>
+        <div class="color-bar-bottom"></div>
     </div>
 
     <!-- Footer -->
