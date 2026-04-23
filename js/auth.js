@@ -171,7 +171,8 @@ document.addEventListener('DOMContentLoaded', () => {
         'declaracao_residencia.html',
         'cancelamento_comunicado.html',
         'segunda_via_crv.html',
-        'requerimento_atpv_sp.html'
+        'requerimento_atpv_sp.html',
+        'termo_motor_968.html'
     ];
 
     const path = window.location.pathname;
