@@ -1,186 +1,140 @@
-/* ============================================================
-   Termo Motor 968 — Design Profissional
-   Baseado no padrão das demais páginas do site
+﻿/* ============================================================
+   Termo Motor 968 — Design Clean/Minimalista
    ============================================================ */
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-    background-color: #f0f0f0;
+    background-color: #eee;
     font-family: 'Arial', 'Helvetica', sans-serif;
-    padding: 20px;
+    font-size: 13px;
     color: #000;
+    padding: 20px;
 }
 
-/* ── Container Principal ── */
+/* ── Container ── */
 .page-container {
-    background-color: white;
+    background: #fff;
     width: 100%;
     max-width: 210mm;
-    min-height: auto;
     margin: 10mm auto;
-    padding: 10mm 15mm 20mm;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    padding: 12mm 14mm 18mm;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.12);
     position: relative;
     display: flex;
     flex-direction: column;
 }
 
-/* ── Cabeçalho ── */
-.doc-header {
-    margin-bottom: 18px;
-}
-
-.logo-area {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-.header-image {
-    max-width: 100%;
-    height: auto;
-    object-fit: contain;
-    max-height: 120px;
-}
+/* ── Logos ── */
+.doc-header { margin-bottom: 10px; }
+.logo-area { width: 100%; display: flex; justify-content: center; }
+.header-image { max-width: 100%; height: auto; max-height: 90px; object-fit: contain; }
 
 /* ── Título ── */
 .doc-res {
     text-align: center;
-    font-size: 12px;
-    color: #555;
-    margin-bottom: 4px;
-    letter-spacing: 0.3px;
+    font-size: 11px;
+    color: #666;
+    margin-bottom: 3px;
+    letter-spacing: 0.4px;
 }
 
 .doc-title {
     text-align: center;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: bold;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: #002776;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #002776;
+    letter-spacing: 1px;
+    color: #111;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #ccc;
 }
 
-/* ── Conteúdo ── */
-.content {
-    flex-grow: 1;
-}
+.content { flex-grow: 1; }
 
 /* ── Seções ── */
-.form-section {
-    margin-bottom: 18px;
-}
+.form-section { margin-bottom: 12px; }
 
 .section-title {
-    font-size: 12px;
+    font-size: 10px;
     font-weight: bold;
     text-transform: uppercase;
-    color: #fff;
-    background: linear-gradient(90deg, #002776 70%, #009c3b 100%);
-    padding: 5px 10px;
-    margin-bottom: 0;
-    letter-spacing: 0.5px;
+    color: #555;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+    padding-bottom: 3px;
+    border-bottom: 1px solid #ddd;
 }
 
 /* ── Grid dos campos ── */
 .grid-box {
-    border: 1px solid #ccc;
     display: grid;
+    border: 1px solid #ccc;
 }
 
-.declarant-grid {
-    grid-template-columns: 2fr 1fr;
-}
-
-.vehicle-grid {
-    grid-template-columns: 1fr 1fr 2fr;
-}
+.declarant-grid { grid-template-columns: 2fr 1fr; }
+.vehicle-grid   { grid-template-columns: 1fr 1fr 2fr; }
 
 .field-box {
-    padding: 6px 8px;
+    padding: 5px 7px;
     display: flex;
     flex-direction: column;
-    min-height: 52px;
+    min-height: 44px;
     border-right: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
-    position: relative;
 }
 
-/* Bordas declarant-grid */
+/* Remove bordas redundantes */
 .declarant-grid .field-box:nth-child(2) { border-right: none; }
-.declarant-grid .field-box.field-full {
-    grid-column: span 2;
-    border-right: none;
-    border-bottom: none;
-}
-
-/* Bordas vehicle-grid */
-.vehicle-grid .field-box:nth-child(3) { border-right: none; }
-.vehicle-grid .field-box:nth-child(4) { border-bottom: none; }
-.vehicle-grid .field-box:nth-child(5) { border-bottom: none; }
-.vehicle-grid .field-box:nth-child(6) { border-right: none; border-bottom: none; }
-
+.declarant-grid .field-box.field-full   { grid-column: span 2; border-right: none; border-bottom: none; }
+.vehicle-grid .field-box:nth-child(3)   { border-right: none; }
+.vehicle-grid .field-box:nth-child(4)   { border-bottom: none; }
+.vehicle-grid .field-box:nth-child(5)   { border-bottom: none; }
+.vehicle-grid .field-box:nth-child(6)   { border-right: none; border-bottom: none; }
 .field-box.field-full { grid-column: 1 / -1; }
 
 .field-box label {
-    font-size: 11px;
+    font-size: 9.5px;
     font-weight: bold;
-    color: #555;
-    margin-bottom: 4px;
+    color: #888;
     text-transform: uppercase;
-    letter-spacing: 0.3px;
+    letter-spacing: 0.5px;
+    margin-bottom: 3px;
 }
 
 .field-box input {
     border: none;
     border-bottom: 1px solid #bbb;
     outline: none;
-    font-size: 13px;
+    font-size: 12px;
     width: 100%;
     background: transparent;
     font-family: inherit;
-    padding: 2px 0;
+    padding: 1px 0;
     color: #000;
 }
 
 .field-box input:focus {
-    border-bottom-color: #002776;
-    background: rgba(0, 39, 118, 0.03);
+    border-bottom-color: #333;
+    background: rgba(0,0,0,0.02);
 }
 
 /* Endereço inline */
-.field-inline {
-    display: flex;
-    align-items: baseline;
-    gap: 6px;
-    width: 100%;
-}
+.field-inline { display: flex; align-items: baseline; gap: 6px; width: 100%; }
 .field-inline input { flex: 1; }
-.field-suffix {
-    font-size: 12px;
-    white-space: nowrap;
-    color: #333;
-    font-weight: bold;
-}
+.field-suffix { font-size: 11px; white-space: nowrap; color: #555; }
 
-/* ── Caixa de Declaração ── */
+/* ── Caixa Declaração ── */
 .declaration-box {
     border: 1px solid #ccc;
-    padding: 12px 14px;
+    padding: 9px 11px;
     background: #fafafa;
 }
 
 .declaration-text {
-    font-size: 13px;
-    line-height: 1.7;
+    font-size: 12px;
+    line-height: 1.65;
     text-align: justify;
     color: #222;
 }
@@ -189,100 +143,99 @@ body {
 .motor-field {
     display: flex;
     align-items: baseline;
-    gap: 10px;
-    margin: 10px 0;
-    padding: 6px 10px;
+    gap: 8px;
+    margin: 7px 0;
+    padding: 4px 8px;
+    border-left: 2px solid #bbb;
     background: #fff;
-    border: 1px solid #ccc;
-    border-left: 3px solid #002776;
 }
 
 .motor-field label {
-    font-size: 11px;
+    font-size: 9.5px;
     font-weight: bold;
-    color: #555;
+    color: #888;
     text-transform: uppercase;
+    letter-spacing: 0.5px;
     white-space: nowrap;
-    letter-spacing: 0.3px;
 }
 
 .motor-field input {
     flex: 1;
-    max-width: 280px;
+    max-width: 260px;
     border: none;
     border-bottom: 1px solid #bbb;
     outline: none;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: bold;
     background: transparent;
     font-family: inherit;
     color: #000;
-    padding: 2px 0;
 }
-.motor-field input:focus { border-bottom-color: #002776; }
+
+.motor-field input:focus { border-bottom-color: #333; }
 
 /* ── Caixa Legal ── */
 .legal-box {
-    border: 1px solid #ccc;
-    border-left: 4px solid #009c3b;
-    padding: 10px 14px;
-    margin-bottom: 20px;
-    background: #f8fff8;
+    border: 1px solid #ddd;
+    padding: 8px 11px;
+    margin-bottom: 14px;
+    background: #fafafa;
 }
+
 .legal-box p {
-    font-size: 12.5px;
+    font-size: 11.5px;
     line-height: 1.6;
     text-align: justify;
-    color: #333;
+    color: #444;
 }
 
 /* ── Data e Assinatura ── */
 .footer-sign {
     display: flex;
     flex-direction: column;
-    gap: 30px;
-    margin-top: 10px;
+    gap: 22px;
 }
 
 .date-line {
     display: flex;
     align-items: baseline;
-    gap: 8px;
-    font-size: 13px;
+    gap: 6px;
+    font-size: 12px;
     flex-wrap: wrap;
 }
 
 .date-input {
     border: none;
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid #999;
     outline: none;
     background: transparent;
     font-family: inherit;
-    font-size: 13px;
+    font-size: 12px;
     text-align: center;
-    padding: 0 4px;
+    padding: 0 2px;
 }
-.date-input.day   { width: 40px; }
-.date-input.month { width: 130px; }
-.date-input.year  { width: 60px; }
+
+.date-input.day   { width: 35px; }
+.date-input.month { width: 120px; }
+.date-input.year  { width: 55px; }
 
 .signature-area {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 14px;
 }
 
 .signature-line {
-    width: 55%;
+    width: 50%;
     border-top: 1px solid #000;
-    margin-bottom: 6px;
+    margin-bottom: 5px;
 }
 
 .sig-label {
-    font-size: 12px;
+    font-size: 11px;
     text-align: center;
-    color: #333;
+    color: #444;
     font-weight: 600;
     line-height: 1.5;
     text-transform: uppercase;
@@ -292,37 +245,35 @@ body {
 /* ── Rodapé do documento ── */
 .page-footer-info {
     position: absolute;
-    bottom: 14px;
-    left: 15mm;
-    right: 15mm;
+    bottom: 12px;
+    left: 14mm;
+    right: 14mm;
     display: flex;
     justify-content: space-between;
-    font-size: 9px;
-    color: #666;
-}
-.website-link {
-    font-weight: bold;
-    color: #0066cc;
+    font-size: 8.5px;
+    color: #999;
 }
 
-/* ── Barra de cor ── */
+.website-link { font-weight: bold; color: #555; }
+
+/* Barra sutil no rodapé */
 .color-bar-bottom {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 10px;
-    background: linear-gradient(90deg, #002776 70%, #009c3b 70%);
+    height: 4px;
+    background: #ccc;
 }
 
 /* ============================================================
-   IMPRESSÃO — A4 em uma página
+   IMPRESSÃO — A4 em UMA página
    ============================================================ */
 @media print {
 
     @page {
         size: A4 portrait;
-        margin: 5mm;
+        margin: 8mm 12mm;
     }
 
     .top-bar,
@@ -338,222 +289,6 @@ body {
         background: transparent;
         padding: 0;
         margin: 0;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-    }
-
-    .page-container {
-        width: 100%;
-        max-width: 100%;
-        margin: 0;
-        padding: 6mm 10mm 15mm;
-        box-shadow: none;
-        transform: scale(0.97);
-        transform-origin: top center;
-    }
-
-    .field-box input,
-    .date-input,
-    .motor-field input {
-        background: transparent !important;
-    }
-
-    .color-bar-bottom,
-    .section-title {
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-    }
-
-    .form-section { margin-bottom: 10px; }
-    .declaration-box { padding: 8px 12px; }
-    .motor-field { margin: 6px 0; padding: 4px 8px; }
-    .legal-box { margin-bottom: 12px; padding: 7px 12px; }
-    .footer-sign { gap: 16px; margin-top: 6px; }
-    .signature-area { margin-top: 12px; }
-}
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 28px;
-    text-align: center;
-}
-
-.doc-header-logos {
-    width: 100%;
-    margin-bottom: 16px;
-}
-
-.header-image {
-    width: 100%;
-    max-width: 700px;
-    height: auto;
-    object-fit: contain;
-}
-
-.doc-res {
-    font-size: 13px;
-    font-weight: normal;
-    margin: 0 0 6px;
-    letter-spacing: 0.5px;
-}
-
-.doc-title {
-    font-size: 16px;
-    font-weight: bold;
-    text-transform: uppercase;
-    margin: 0;
-    letter-spacing: 0.5px;
-}
-
-/* ── Form lines ── */
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-}
-
-.line {
-    display: flex;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 5px;
-    line-height: 2;
-}
-
-.line-input {
-    border: none;
-    border-bottom: 1px solid #000;
-    background: transparent;
-    padding: 0 4px;
-    font-family: inherit;
-    font-size: inherit;
-    outline: none;
-    flex-grow: 1;
-    min-width: 50px;
-}
-
-.line-input:focus {
-    background-color: #f0f8ff;
-}
-
-.x-small-width { flex: 0 0 30px; }
-.small-width    { flex: 0 0 80px; }
-.medium-width   { flex: 1 1 140px; }
-.large-width    { flex: 2 1 260px; }
-.full-width     { width: 100%; flex: 1 1 100%; }
-
-/* ── Declaration text (inline com input de nº motor) ── */
-.declaration-text {
-    text-align: justify;
-    line-height: 2;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 5px;
-}
-
-/* ── Grid de dados do veículo ── */
-.vehicle-grid {
-    border: 1px solid #000;
-    padding: 10px 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.vehicle-row {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-}
-
-.vehicle-field {
-    display: flex;
-    align-items: baseline;
-    gap: 5px;
-    flex: 1 1 120px;
-}
-
-.vehicle-field.wide {
-    flex: 2 1 200px;
-}
-
-.field-label {
-    font-weight: bold;
-    white-space: nowrap;
-    font-size: 13px;
-}
-
-/* ── Legal text ── */
-.legal-text {
-    text-align: justify;
-    line-height: 1.8;
-    font-size: 13.5px;
-    padding: 0 4px;
-}
-
-/* ── Spacers ── */
-.spacer-large  { height: 18px; }
-.spacer-xlarge { height: 50px; }
-
-/* ── Data ── */
-.signature-section {
-    text-align: left;
-}
-
-.date-line {
-    display: flex;
-    align-items: baseline;
-    gap: 6px;
-    flex-wrap: wrap;
-}
-
-/* ── Bloco de assinatura ── */
-.signature-block {
-    display: flex;
-    justify-content: center;
-}
-
-.signature-line-wrapper {
-    width: 60%;
-    text-align: center;
-}
-
-.signature-line {
-    border-top: 1px solid #000;
-    width: 100%;
-    margin-bottom: 6px;
-}
-
-.signature-label {
-    font-size: 13px;
-    line-height: 1.5;
-    font-weight: 500;
-    text-transform: uppercase;
-}
-
-/* ============================================================
-   PRINT STYLES — A4, tudo em uma página
-   ============================================================ */
-@media print {
-
-    @page {
-        size: A4 portrait;
-        margin: 10mm 15mm;
-    }
-
-    /* Ocultar elementos de navegação e FABs */
-    .top-bar,
-    .main-header,
-    footer,
-    .mobile-menu-btn,
-    .fab-container,
-    .no-print {
-        display: none !important;
-    }
-
-    body {
-        background: white;
         font-size: 11px;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
@@ -561,62 +296,39 @@ form {
 
     .page-container {
         width: 100%;
-        max-width: none;
+        max-width: 100%;
         margin: 0;
         padding: 0;
         box-shadow: none;
-        border-radius: 0;
     }
 
-    .doc-header {
-        margin-bottom: 14px;
-    }
+    .doc-header    { margin-bottom: 6px; }
+    .header-image  { max-height: 70px; }
+    .doc-title     { font-size: 12px; margin-bottom: 8px; padding-bottom: 5px; }
+    .doc-res       { font-size: 10px; }
 
-    .header-image {
-        max-width: 100%;
-    }
+    .form-section  { margin-bottom: 8px; }
+    .section-title { margin-bottom: 2px; padding-bottom: 2px; font-size: 9px; }
 
-    .doc-title {
-        font-size: 13px;
-    }
+    .field-box        { min-height: 36px; padding: 3px 6px; }
+    .field-box label  { font-size: 8.5px; margin-bottom: 2px; }
+    .field-box input  { font-size: 11px; background: transparent !important; }
 
-    .doc-res {
-        font-size: 11px;
-    }
+    .declaration-box  { padding: 6px 9px; }
+    .declaration-text { font-size: 11px; line-height: 1.5; }
+    .motor-field      { margin: 5px 0; padding: 3px 7px; }
+    .motor-field input { font-size: 11px; background: transparent !important; }
+    .motor-field label { font-size: 8.5px; }
 
-    form {
-        gap: 8px;
-    }
+    .legal-box    { padding: 6px 9px; margin-bottom: 8px; }
+    .legal-box p  { font-size: 10.5px; }
 
-    .line {
-        line-height: 1.8;
-    }
+    .footer-sign  { gap: 12px; }
+    .date-line    { font-size: 11px; }
+    .date-input   { font-size: 11px; background: transparent !important; }
+    .sig-label    { font-size: 10px; }
+    .signature-area { margin-top: 8px; }
 
-    .declaration-text {
-        line-height: 1.8;
-    }
-
-    .vehicle-grid {
-        padding: 6px 10px;
-        gap: 5px;
-    }
-
-    .vehicle-row {
-        gap: 10px;
-    }
-
-    .legal-text {
-        font-size: 11px;
-    }
-
-    .spacer-large  { height: 8px; }
-    .spacer-xlarge { height: 30px; }
-
-    .line-input {
-        background: transparent !important;
-    }
-
-    .signature-line-wrapper {
-        width: 55%;
-    }
+    .page-footer-info { font-size: 8px; bottom: 8px; }
+    .color-bar-bottom { display: none !important; }
 }
