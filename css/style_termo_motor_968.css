@@ -244,14 +244,13 @@ body {
 
 /* ── Rodapé do documento ── */
 .page-footer-info {
-    position: absolute;
-    bottom: 12px;
-    left: 14mm;
-    right: 14mm;
     display: flex;
     justify-content: space-between;
     font-size: 8.5px;
     color: #999;
+    margin-top: 20px;
+    padding-top: 6px;
+    border-top: 1px solid #eee;
 }
 
 .website-link { font-weight: bold; color: #555; }
@@ -329,6 +328,6 @@ body {
     .sig-label    { font-size: 10px; }
     .signature-area { margin-top: 8px; }
 
-    .page-footer-info { font-size: 8px; bottom: 8px; }
+    .page-footer-info { font-size: 8px; margin-top: 10px; padding-top: 4px; }
     .color-bar-bottom { display: none !important; }
 }
