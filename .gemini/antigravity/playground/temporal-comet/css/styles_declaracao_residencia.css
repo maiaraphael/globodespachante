@@ -1,0 +1,279 @@
+    @media print {
+        .no-print, .no-print * {
+            display: none !important;
+            visibility: hidden !important;
+            height: 0 !important;
+            width: 0 !important;
+            overflow: hidden !important;
+            position: absolute !important;
+        }
+    }
+    body {
+        font-family: 'Arial', sans-serif;
+        /* Close to the image */
+        font-size: 14px;
+        /* Adjust as needed */
+        line-height: 1.5;
+        background-color: #fff;
+        color: #000;
+        margin: 0;
+        padding: 20px;
+    }
+
+    .page-container {
+        max-width: 800px;
+        margin: 10mm auto;
+        padding: 20px;
+        background: white;
+    }
+
+    /* Header */
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    .header img {
+        height: 60px;
+        /* Adjust approximate height */
+        object-fit: contain;
+        display: flex;
+        justify-content: center;
+        width: 200%;
+    }
+
+    /* Title */
+    .title {
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 40px;
+        text-transform: uppercase;
+    }
+
+    /* Form Styles */
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        /* Spacing between lines */
+    }
+
+    .ilmo {
+        margin-bottom: 20px;
+    }
+
+    .line {
+        display: flex;
+        align-items: baseline;
+        /* Align text and input baselines */
+        flex-wrap: wrap;
+        /* Allow wrapping on small screens */
+        gap: 5px;
+        line-height: 2;
+        /* Spacing for handwriting */
+    }
+
+    .line-input {
+        border: none;
+        border-bottom: 1px solid #000;
+        background: transparent;
+        padding: 0 5px;
+        font-family: inherit;
+        font-size: inherit;
+        outline: none;
+        flex-grow: 1;
+        /* Grow to fill space */
+        min-width: 50px;
+        /* Minimum width */
+    }
+
+    .line-input:focus {
+        background-color: #f0f8ff;
+    }
+
+    /* Specific Widths explicitly requested generally match "flex-grow", but we can tune them if needed */
+    .x-small-width {
+        flex: 0 0 35px;
+    }
+
+    .small-width {
+        flex: 0 0 100px;
+    }
+
+    .cpf-width {
+        flex: 0 0 150px;
+    }
+
+    .medium-width {
+        flex: 1 1 100px;
+    }
+
+    .large-width {
+        flex: 2 1 300px;
+    }
+
+    .full-width {
+        width: 100%;
+        flex: 1 1 100%;
+    }
+
+    /* Notes */
+    .note-bold {
+        font-weight: bold;
+        font-size: 12px;
+        margin-top: 5px;
+    }
+
+    .note-small {
+        font-size: 11px;
+        margin-top: 5px;
+        text-align: justify;
+    }
+
+    .spacer-large {
+        height: 20px;
+    }
+
+    .spacer-xlarge {
+        height: 30px;
+    }
+
+    .declaration-text {
+        text-align: justify;
+        line-height: 2;
+    }
+
+    .legal-text {
+        text-align: justify;
+        margin-bottom: 20px;
+    }
+
+    .legal-quote {
+        font-size: 13px;
+        margin-left: 50px;
+        /* Indent */
+        margin-right: 20px;
+        text-align: justify;
+    }
+
+    .signature-section {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .label-center {
+        text-align: center;
+        margin-top: 5px;
+    }
+
+    .checkbox-container {
+        display: inline-flex;
+        align-items: center;
+        margin-left: 10px;
+    }
+
+    /* Print Styles */
+    /* Print Styles */
+    @media print {
+        body {
+            padding: 0;
+            margin: 0;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+            font-size: 13px;
+            /* Slightly smaller font for print */
+        }
+
+        .page-container {
+            width: 100%;
+            max-width: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .line-input {
+            background: transparent !important;
+        }
+
+        /* Hide Navigation and FABs */
+        .top-bar,
+        .main-header,
+        footer,
+        .mobile-menu-btn,
+        .fab-container,
+        .no-print {
+            display: none !important;
+        }
+
+        /* Reduce Vertical Spacing for Print */
+        .header {
+            margin-bottom: 5px;
+        }
+
+        .header img {
+            height: 35px;
+            width: auto;
+        }
+
+        .title {
+            margin-bottom: 10px;
+            font-size: 13px;
+        }
+
+        .spacer-large {
+            height: 5px;
+        }
+
+        .spacer-xlarge {
+            height: 10px;
+        }
+
+        .ilmo {
+            margin-bottom: 5px;
+        }
+
+        form {
+            gap: 6px;
+        }
+
+        .legal-text {
+            margin-bottom: 5px;
+        }
+
+        .legal-quote {
+            margin-left: 30px;
+            font-size: 12px;
+        }
+
+        .signature-section {
+            margin-top: 6px;
+        }
+
+        .signature-main {
+            margin-top: 60px !important;
+        }
+
+        .assinou-extra {
+            margin-top: 55px !important;
+        }
+
+        .note-small {
+            font-size: 10px;
+        }
+
+        .declaration-text {
+            line-height: 1.8;
+        }
+
+        .line {
+            line-height: 1.6;
+        }
+
+        @page {
+            size: A4;
+            margin: 8mm 15mm;
+        }
+    }

@@ -1,0 +1,195 @@
+/* =========================================
+   Printable Budget Styles
+   ========================================= */
+
+/* Hidden by default on screen */
+.printable-quote {
+    display: none;
+}
+
+@media print {
+
+    /* Hide everything else properly so it takes no space */
+    body>*:not(.printable-quote) {
+        display: none !important;
+    }
+
+    /* Reset body */
+    body {
+        margin: 0;
+        padding: 0;
+        background: white;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    /* Show only the quote section */
+    .printable-quote {
+        display: block !important;
+        position: relative;
+        /* Relative is safer when everything else is gone */
+        width: 100%;
+        height: 100%;
+        padding: 30px;
+        box-sizing: border-box;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        color: #333;
+        background: white;
+    }
+
+    /* Print Layout Typography & Structure */
+    .quote-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 2px solid #009c3b;
+        /* Primary Color */
+        padding-bottom: 20px;
+        margin-bottom: 40px;
+    }
+
+    .quote-logo {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .quote-logo-icon {
+        font-size: 40px;
+        color: #009c3b;
+    }
+
+    .quote-company-info h1 {
+        margin: 0;
+        font-size: 24px;
+        color: #002776;
+        /* Secondary Color */
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .quote-company-info p {
+        margin: 5px 0 0;
+        font-size: 12px;
+        color: #666;
+    }
+
+    .quote-meta {
+        text-align: right;
+    }
+
+    .quote-meta h2 {
+        margin: 0;
+        font-size: 28px;
+        color: #ddd;
+        text-transform: uppercase;
+    }
+
+    .quote-meta p {
+        margin: 5px 0 0;
+        font-weight: bold;
+    }
+
+    /* Client & Vehicle Section */
+    .quote-details {
+        display: flex;
+        gap: 40px;
+        margin-bottom: 40px;
+        background: #f9f9f9;
+        padding: 20px;
+        border-radius: 8px;
+        -webkit-print-color-adjust: exact;
+    }
+
+    .quote-column {
+        flex: 1;
+    }
+
+    .quote-column h3 {
+        margin: 0 0 10px;
+        font-size: 14px;
+        text-transform: uppercase;
+        color: #002776;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 5px;
+    }
+
+    .quote-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        font-size: 14px;
+    }
+
+    .quote-row span.label {
+        font-weight: 600;
+        color: #555;
+    }
+
+    /* Items Table */
+    .quote-items {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 40px;
+    }
+
+    .quote-items th {
+        background-color: #002776;
+        color: white;
+        padding: 12px;
+        text-align: left;
+        font-size: 12px;
+        text-transform: uppercase;
+        -webkit-print-color-adjust: exact;
+    }
+
+    .quote-items td {
+        padding: 12px;
+        border-bottom: 1px solid #eee;
+        font-size: 14px;
+    }
+
+    .quote-items td.amount {
+        text-align: right;
+        font-weight: 600;
+    }
+
+    /* Totals */
+    .quote-total-section {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 60px;
+    }
+
+    .quote-total-box {
+        width: 250px;
+        text-align: right;
+    }
+
+    .quote-final-total {
+        font-size: 24px;
+        font-weight: bold;
+        color: #009c3b;
+        border-top: 2px solid #009c3b;
+        padding-top: 10px;
+        margin-top: 10px;
+    }
+
+    /* Footer */
+    .quote-footer {
+        text-align: center;
+        font-size: 10px;
+        color: #888;
+        border-top: 1px solid #eee;
+        padding-top: 20px;
+    }
+
+    .quote-payment-info {
+        margin-top: 20px;
+        font-size: 12px;
+        background: #fff;
+        border: 1px dashed #ccc;
+        padding: 15px;
+        text-align: left;
+    }
+}

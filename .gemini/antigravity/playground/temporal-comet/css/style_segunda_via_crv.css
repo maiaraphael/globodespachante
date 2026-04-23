@@ -1,0 +1,247 @@
+/* Global Styles */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 12pt;
+    color: #000;
+}
+
+/* Page Setup for A4 */
+.page-container {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 10mm auto;
+    background: white;
+    padding: 20mm;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: center;
+    /* Center the single image */
+    margin-bottom: 20px;
+}
+
+.logo-area img {
+    max-width: 100%;
+    height: auto;
+    max-height: 80px;
+    /* Constrain height */
+}
+
+/* Typography */
+h1.document-title {
+    text-align: center;
+    font-size: 14pt;
+    /* Slightly smaller to fit better */
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+}
+
+.intro-text {
+    font-style: italic;
+    margin-bottom: 20px;
+    line-height: 1.4;
+    text-align: justify;
+}
+
+.section-title {
+    font-size: 11pt;
+    font-weight: bold;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+/* Form Layout */
+.section {
+    margin-bottom: 20px;
+}
+
+.request-reason {
+    margin-bottom: 1px;
+}
+
+.request-reason .input-group label {
+    font-weight: bold;
+}
+
+.reason-subtitle {
+    text-align: center;
+    font-size: 9pt;
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+.instructions-list {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin-bottom: 30px;
+}
+
+.instructions-list li {
+    font-style: italic;
+    font-weight: bold;
+    font-size: 9pt;
+    margin-bottom: 4px;
+}
+
+/* Input Styling */
+.row {
+    display: flex;
+    gap: 15px;
+    /* Reduced gap */
+    margin-bottom: 10px;
+    align-items: baseline;
+}
+
+.input-group {
+    display: flex;
+    align-items: baseline;
+    white-space: nowrap;
+    min-width: 0;
+    /* Fix for Firefox flex overflow */
+}
+
+.input-group label {
+    font-weight: bold;
+    font-style: italic;
+    margin-right: 5px;
+    font-size: 10pt;
+}
+
+.line-input {
+    border: none;
+    border-bottom: 1px solid black;
+    outline: none;
+    font-size: 11pt;
+    font-family: inherit;
+    padding: 0 5px;
+    flex-grow: 1;
+    background: transparent;
+    height: 20px;
+    min-width: 0;
+    /* Fix for Firefox flex overflow */
+}
+
+.full-width {
+    width: 100%;
+    flex: 1;
+    /* Ensure it grows in flex container */
+}
+
+/* ... */
+
+/* Custom adjustments for specific fields based on reference */
+/* Custom adjustments for specific fields based on reference */
+.vehicle-id .row:first-child .input-group:nth-child(2) {
+    /* ANO */
+    flex: 0.8;
+    /* Make Ano smaller */
+}
+
+.vehicle-id .row:first-child .input-group:nth-child(3) {
+    /* PLACA */
+    flex: 1.5;
+    /* Make Placa medium */
+}
+
+.owner-id .row:nth-of-type(1) .line-input {
+    /* NOME */
+    height: 30px;
+    font-size: 14pt;
+}
+
+/* Date and Signature */
+.signature-section {
+    margin-top: auto;
+    /* Push to bottom if needed, but spacing is usually fixed */
+    padding-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    /* Align Date to right */
+}
+
+.date-line {
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 80px;
+    align-self: flex-end;
+}
+
+.date-line .line-input.date-part {
+    width: 40px;
+    text-align: center;
+    margin: 0 5px;
+    flex-grow: 0;
+}
+
+.signature-line-container {
+    width: 100%;
+    text-align: center;
+    align-self: center;
+}
+
+.signature-line {
+    border-bottom: 1px solid black;
+    width: 60%;
+    margin: 0 auto 5px auto;
+}
+
+.signature-label {
+    font-weight: bold;
+    font-size: 10pt;
+    font-style: italic;
+}
+
+.signature-sublabel {
+    font-size: 10pt;
+    font-style: italic;
+}
+
+/* Print Specific Styles */
+@media print {
+    @page {
+        size: A4;
+        margin: 0;
+    }
+
+    body {
+        margin: 0;
+        background: white;
+    }
+
+    .page-container {
+        width: 100%;
+        margin: 0;
+        box-shadow: none;
+        border: none;
+        padding: 20mm;
+        /* Keep padding for safe area */
+    }
+
+    /* Identify inputs to ensure they look okay */
+    input {
+        background: transparent !important;
+    }
+
+    .top-bar,
+    .main-header,
+    footer,
+    .mobile-menu-btn {
+        display: none !important;
+    }
+}
