@@ -87,8 +87,6 @@
     });
 
     // ── Estado inicial dos elementos da hero ─────────────────────────────
-    gsap.set('.top-bar',          { y: -40, opacity: 0 });
-    gsap.set('.main-header',      { y: -20, opacity: 0 });
     gsap.set('.hero-text h1',     { y: 70,  opacity: 0 });
     gsap.set('.hero-text > p',    { y: 45,  opacity: 0 });
     gsap.set('.hero-benefits li', { y: 30,  opacity: 0 });
@@ -112,8 +110,6 @@
             scaleX: 1, duration: 1.0, ease: 'power2.inOut',
             transformOrigin: 'left center'
         })
-        .to('.top-bar',     { y: 0, opacity: 1, duration: 0.5 }, '-=0.3')
-        .to('.main-header', { y: 0, opacity: 1, duration: 0.5 }, '-=0.38')
         .to('#page-loader', {
             yPercent: -100, duration: 0.75, ease: 'power3.inOut'
         }, '+=0.1')
