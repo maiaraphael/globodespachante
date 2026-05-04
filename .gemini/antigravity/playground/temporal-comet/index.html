@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Despachante em Londrina - Globo Despachante | Licenciamento e Transferência</title>
+    <meta name="description"
+        content="Procurando Despachante em Londrina? O Globo Despachante resolve Licenciamento, IPVA, Transferência e Primeiro Emplacamento. Atendimento rápido e fácil.">
+    <meta name="keywords"
+        content="despachante londrina, despachante em londrina, licenciamento, ipva, transferencia de veiculo, primeiro emplacamento, detran pr, despachante centro londrina">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/chatbot.css">
+    <!-- Font Awesome for Icons -->
+
+    <!-- ===================== PRELOADER STYLES ===================== -->
+    <style>
+      /* ── Overlay ─────────────────────────────────────────────── */
+      #pl-preloader {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        overflow: hidden;
+        background: #001d5c;
+        pointer-events: all;
+      }
+
+      /* ── Sky radial gradient ─────────────────────────────────── */
+      .pl-sky {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(ellipse 80% 55% at 50% 46%,
+            #003faa 0%, #002776 45%, #00114a 100%);
+      }
+
+      /* ── Stars ──────────────────────────────────────────────── */
+      .pl-stars {
+        position: absolute;
+        inset: 0 0 45% 0; /* only in the sky half */
+        background-image:
+          radial-gradient(1px 1px at  8%  12%, rgba(255,255,255,.7) 0%, transparent 100%),
+          radial-gradient(1px 1px at 18%  35%, rgba(255,255,255,.5) 0%, transparent 100%),
+          radial-gradient(1px 1px at 33%   8%, rgba(255,255,255,.6) 0%, transparent 100%),
+          radial-gradient(1px 1px at 47%  22%, rgba(255,255,255,.4) 0%, transparent 100%),
+          radial-gradient(1px 1px at 62%  15%, rgba(255,255,255,.7) 0%, transparent 100%),
+          radial-gradient(1px 1px at 75%   5%, rgba(255,255,255,.5) 0%, transparent 100%),
+          radial-gradient(1px 1px at 88%  28%, rgba(255,255,255,.6) 0%, transparent 100%),
+          radial-gradient(1px 1px at  5%  42%, rgba(255,255,255,.3) 0%, transparent 100%),
+          radial-gradient(1px 1px at 25%  48%, rgba(255,255,255,.4) 0%, transparent 100%),
+          radial-gradient(1px 1px at 55%  38%, rgba(255,255,255,.5) 0%, transparent 100%),
+          radial-gradient(1px 1px at 92%  44%, rgba(255,255,255,.3) 0%, transparent 100%),
+          radial-gradient(2px 2px at 40%  18%, rgba(255,255,255,.5) 0%, transparent 100%),
+          radial-gradient(2px 2px at 70%  32%, rgba(255,255,255,.4) 0%, transparent 100%),
+          radial-gradient(1.5px 1.5px at 15% 55%, rgba(255,255,255,.35) 0%, transparent 100%),
+          radial-gradient(1px 1px at 82%  10%, rgba(255,255,255,.6) 0%, transparent 100%);
+        z-index: 1;
+      }
+
+      /* ── Horizon glow ───────────────────────────────────────── */
+      .pl-horizon {
+        position: absolute;
+        left: 0; right: 0;
+        top: calc(45% - 6px);
+        height: 14px;
+        background: radial-gradient(
+          ellipse 55% 100% at 50% 50%,
+          rgba(100,180,255,.55) 0%,
+          transparent 70%
+        );
+        filter: blur(4px);
+        z-index: 3;
+      }
+
+      /* ── Road (SVG) ─────────────────────────────────────────── */
+      .pl-road-svg {
+        position: absolute;
+        bottom: 0; left: 0;
+        width: 100%; height: 56%;
+        z-index: 2;
+        overflow: visible;
+      }
+
+      /* ── Headlight ambient glow ─────────────────────────────── */
+      .pl-ambient {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          ellipse 50% 35% at 50% 46%,
+          rgba(255,235,130,.18) 0%,
+          rgba(80,130,255,.06) 35%,
+          transparent 65%
+        );
+        opacity: 0;
+        z-index: 4;
+        pointer-events: none;
+        animation: pl-ambient-appear 3s cubic-bezier(.2,0,.7,1) forwards;
+      }
+      @keyframes pl-ambient-appear {
+        0%,  38% { opacity: 0; }
+        78%       { opacity: 1; }
+        92%       { opacity: .5; }
+        100%      { opacity: 0; }
+      }
+
+      /* ── Car wrapper (position = vanishing point) ────────────── */
+      .pl-car-wrap {
+        position: absolute;
+        top: 45%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 10;
+      }
+
+      /* ── Car inner (holds scale animation) ──────────────────── */
+      .pl-car-inner {
+        transform: scale(.038);
+        transform-origin: center center;
+        animation: pl-car-approach 3s cubic-bezier(.18,0,.72,1) forwards;
+        position: relative;
+      }
+      @keyframes pl-car-approach {
+        0%  { transform: scale(.038); opacity: .65; filter: blur(.5px); }
+        30% { opacity: 1; filter: blur(0); }
+        86% { transform: scale(9);  filter: blur(0); opacity: 1; }
+        100%{ transform: scale(20); filter: blur(10px); opacity: 0; }
+      }
+
+      /* ── Car SVG ─────────────────────────────────────────────── */
+      .pl-car-svg {
+        display: block;
+        width: 200px;
+        height: auto;
+        filter: drop-shadow(0 0 12px rgba(255,224,100,.7));
+      }
+
+      /* ── Brand block ─────────────────────────────────────────── */
+      .pl-brand {
+        position: absolute;
+        bottom: 11%;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 20;
+        text-align: center;
+        white-space: nowrap;
+        animation: pl-brand-in .9s .25s ease-out both;
+      }
+      @keyframes pl-brand-in {
+        from { opacity: 0; transform: translateX(-50%) translateY(14px); }
+        to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+      }
+      .pl-brand-icon {
+        font-size: 2rem;
+        color: #ffdf00;
+        display: block;
+        margin-bottom: 7px;
+        text-shadow: 0 0 20px rgba(255,223,0,.6);
+      }
+      .pl-brand-name {
+        font-family: 'Inter', sans-serif;
+        font-size: .95rem;
+        font-weight: 700;
+        letter-spacing: .22em;
+        color: rgba(255,255,255,.92);
+        text-transform: uppercase;
+        display: block;
+      }
+      .pl-brand-sub {
+        font-family: 'Inter', sans-serif;
+        font-size: .6rem;
+        font-weight: 400;
+        letter-spacing: .14em;
+        color: rgba(255,255,255,.45);
+        margin-top: 5px;
+        display: block;
+      }
+
+      /* ── Loading dots ────────────────────────────────────────── */
+      .pl-dots {
+        position: absolute;
+        bottom: 5.5%;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 20;
+        display: flex;
+        gap: 9px;
+      }
+      .pl-dot {
+        width: 7px; height: 7px;
+        border-radius: 50%;
+        background: rgba(255,255,255,.35);
+        animation: pl-dot-pulse 1.3s ease-in-out infinite;
+      }
+      .pl-dot:nth-child(2) { animation-delay: .22s; }
+      .pl-dot:nth-child(3) { animation-delay: .44s; }
+      @keyframes pl-dot-pulse {
+        0%,100% { opacity: .3;  transform: scale(.85); background: rgba(255,255,255,.35); }
+        50%      { opacity: 1;   transform: scale(1.25); background: #ffdf00; }
+      }
+
+      /* ── Flash overlay ───────────────────────────────────────── */
+      .pl-flash {
+        position: absolute;
+        inset: 0;
+        z-index: 60;
+        background: #002776;
+        opacity: 0;
+        pointer-events: none;
+        transition: none;
+      }
+      .pl-flash.active {
+        animation: pl-flash-anim .55s ease-out forwards;
+      }
+      @keyframes pl-flash-anim {
+        0%   { opacity: 0; background: #002776; }
+        35%  { opacity: 1; background: #ffffff; }
+        100% { opacity: 1; background: #002776; }
+      }
+
+      /* ── Preloader exit ──────────────────────────────────────── */
+      #pl-preloader.pl-exit {
+        animation: pl-exit .7s ease-in forwards;
+      }
+      @keyframes pl-exit {
+        from { opacity: 1; }
+        to   { opacity: 0; pointer-events: none; }
+      }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Globo Despachante - O Melhor de Londrina">
+    <meta property="og:description"
+        content="Regularize seu veículo com segurança. Licenciamento, IPVA e Transferências. Fale conosco pelo WhatsApp!">
+    <meta property="og:image" content="https://www.globodespachante.com.br/logo.png">
+    <meta property="og:url" content="https://www.globodespachante.com.br">
+    <meta property="og:type" content="website">
+
+    <!-- JSON-LD Local Business -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "AutoBodyShop",
+      "name": "Globo Despachante",
+      "image": "https://www.globodespachante.com.br/logo.png",
+      "url": "https://www.globodespachante.com.br",
+      "telephone": "+554333560220",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Rua Uruguai, 197 - Centro",
+        "addressLocality": "Londrina",
+        "addressRegion": "PR",
+        "postalCode": "86010-210",
+        "addressCountry": "BR"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -23.3118021,
+        "longitude": -51.152537
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "opens": "08:00",
+        "closes": "18:00"
+      },
+      "priceRange": "$$"
+    }
+    </script>
+</head>
+
+<body>
+
+    <!-- ===================== PRELOADER ===================== -->
+    <div id="pl-preloader" role="status" aria-label="Carregando…">
+
+      <!-- Sky & Stars -->
+      <div class="pl-sky"></div>
+      <div class="pl-stars"></div>
+
+      <!-- Horizon light -->
+      <div class="pl-horizon"></div>
+
+      <!-- Road (SVG perspective) -->
+      <svg class="pl-road-svg" viewBox="0 0 1000 600"
+           preserveAspectRatio="xMidYMax slice"
+           xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="rdGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stop-color="#0d1726"/>
+            <stop offset="100%" stop-color="#060c14"/>
+          </linearGradient>
+        </defs>
+        <!-- Asphalt -->
+        <polygon points="500,0 1020,620 -20,620" fill="url(#rdGrad)"/>
+        <!-- Yellow edge lines -->
+        <line x1="500" y1="0" x2="-20"  y2="620"
+              stroke="#ffdf00" stroke-width="4" stroke-opacity=".65"/>
+        <line x1="500" y1="0" x2="1020" y2="620"
+              stroke="#ffdf00" stroke-width="4" stroke-opacity=".65"/>
+        <!-- White centre dash (animated → rushes toward viewer) -->
+        <line x1="500" y1="0" x2="500" y2="620"
+              stroke="white" stroke-width="5"
+              stroke-dasharray="30 48" stroke-opacity=".55">
+          <animate attributeName="stroke-dashoffset"
+                   from="0" to="78" dur=".44s" repeatCount="indefinite"/>
+        </line>
+        <!-- Left lane divider -->
+        <line x1="500" y1="0" x2="255" y2="620"
+              stroke="white" stroke-width="2"
+              stroke-dasharray="20 40" stroke-opacity=".16">
+          <animate attributeName="stroke-dashoffset"
+                   from="0" to="60" dur=".44s" repeatCount="indefinite"/>
+        </line>
+        <!-- Right lane divider -->
+        <line x1="500" y1="0" x2="745" y2="620"
+              stroke="white" stroke-width="2"
+              stroke-dasharray="20 40" stroke-opacity=".16">
+          <animate attributeName="stroke-dashoffset"
+                   from="0" to="60" dur=".44s" repeatCount="indefinite"/>
+        </line>
+      </svg>
+
+      <!-- Headlight ambient glow (brightens as car approaches) -->
+      <div class="pl-ambient"></div>
+
+      <!-- ── CAR ── -->
+      <div class="pl-car-wrap" aria-hidden="true">
+        <div class="pl-car-inner">
+
+          <!-- Front-facing car SVG -->
+          <svg class="pl-car-svg" viewBox="0 0 200 150"
+               xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <!-- Body gradient (lit from front/top) -->
+              <linearGradient id="bdGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%"   stop-color="#d8dded"/>
+                <stop offset="100%" stop-color="#a8aec2"/>
+              </linearGradient>
+              <!-- Roof gradient -->
+              <linearGradient id="rfGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%"   stop-color="#e6eaf6"/>
+                <stop offset="100%" stop-color="#c0c6d8"/>
+              </linearGradient>
+              <!-- Windshield gradient -->
+              <linearGradient id="wsGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%"   stop-color="#7ab6e8" stop-opacity=".9"/>
+                <stop offset="100%" stop-color="#3678b8" stop-opacity=".75"/>
+              </linearGradient>
+              <!-- Headlight glow -->
+              <radialGradient id="hlGrad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%"   stop-color="#ffffff"/>
+                <stop offset="40%"  stop-color="#fff9e6"/>
+                <stop offset="100%" stop-color="#ffe082" stop-opacity=".2"/>
+              </radialGradient>
+              <!-- Soft glow filter -->
+              <filter id="hlBlur" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="2.2" result="blur"/>
+                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+
+            <!-- ── MAIN BODY SILHOUETTE ── -->
+            <path d="M63,17 L137,17
+                     C148,17 156,24 158,31
+                     L164,58
+                     L184,67
+                     L186,131 C186,135 183,137 180,137
+                     L20,137 C17,137 14,135 14,131
+                     L16,67 L36,58
+                     L42,31 C44,24 52,17 63,17 Z"
+                  fill="url(#bdGrad)" stroke="#9aa2b6" stroke-width=".5"/>
+
+            <!-- ── ROOF ── -->
+            <rect x="62" y="15" width="76" height="40" rx="13"
+                  fill="url(#rfGrad)" stroke="#b2bace" stroke-width=".5"/>
+
+            <!-- ── WINDSHIELD ── -->
+            <path d="M68,22 L132,22 L150,56 L50,56 Z"
+                  fill="url(#wsGrad)"/>
+            <!-- Glass reflections -->
+            <path d="M72,25 L105,25 L88,53 L67,53 Z"
+                  fill="white" opacity=".09"/>
+            <path d="M110,25 L129,25 L143,53 L119,53 Z"
+                  fill="white" opacity=".06"/>
+            <!-- Windshield border -->
+            <path d="M68,22 L132,22 L150,56 L50,56 Z"
+                  fill="none" stroke="#6090b0" stroke-width="1" opacity=".5"/>
+            <!-- A-pillars -->
+            <line x1="66" y1="20" x2="51" y2="55"
+                  stroke="#8898b0" stroke-width="2.2"/>
+            <line x1="134" y1="20" x2="149" y2="55"
+                  stroke="#8898b0" stroke-width="2.2"/>
+
+            <!-- ── Hood crease ── -->
+            <path d="M49,60 Q100,56 151,60"
+                  stroke="#c6cede" stroke-width="1.2" fill="none"/>
+
+            <!-- ── LEFT HEADLIGHT ── -->
+            <path d="M16,65 L60,61 L62,94 L14,96 Z"
+                  fill="#131d32" stroke="#0c1526" stroke-width=".5"/>
+            <!-- DRL strip -->
+            <rect x="18" y="63" width="40" height="5.5" rx="2.5"
+                  fill="#fffde7" opacity=".92"/>
+            <!-- Main lens -->
+            <ellipse cx="39" cy="79" rx="19" ry="12"
+                     fill="url(#hlGrad)" filter="url(#hlBlur)"/>
+            <ellipse cx="39" cy="79" rx="11" ry="7"  fill="#ffe082"/>
+            <ellipse cx="39" cy="79" rx="6"  ry="4"  fill="white"/>
+            <!-- Amber turn signal -->
+            <rect x="18" y="87" width="14" height="7" rx="2"
+                  fill="#ff8c00" opacity=".8"/>
+
+            <!-- ── RIGHT HEADLIGHT ── -->
+            <path d="M184,65 L140,61 L138,94 L186,96 Z"
+                  fill="#131d32" stroke="#0c1526" stroke-width=".5"/>
+            <!-- DRL strip -->
+            <rect x="142" y="63" width="40" height="5.5" rx="2.5"
+                  fill="#fffde7" opacity=".92"/>
+            <!-- Main lens -->
+            <ellipse cx="161" cy="79" rx="19" ry="12"
+                     fill="url(#hlGrad)" filter="url(#hlBlur)"/>
+            <ellipse cx="161" cy="79" rx="11" ry="7" fill="#ffe082"/>
+            <ellipse cx="161" cy="79" rx="6"  ry="4" fill="white"/>
+            <!-- Amber turn signal -->
+            <rect x="168" y="87" width="14" height="7" rx="2"
+                  fill="#ff8c00" opacity=".8"/>
+
+            <!-- ── GRILLE ── -->
+            <rect x="63" y="61" width="74" height="42" rx="5"
+                  fill="#0b1628"/>
+            <!-- Horizontal bars -->
+            <rect x="66" y="67" width="68" height="3"   rx="1.5" fill="#192e50"/>
+            <rect x="66" y="74" width="68" height="3"   rx="1.5" fill="#192e50"/>
+            <rect x="66" y="81" width="68" height="3"   rx="1.5" fill="#192e50"/>
+            <rect x="66" y="88" width="68" height="3"   rx="1.5" fill="#192e50"/>
+            <!-- Vertical bars -->
+            <rect x="97" y="63" width="2"  height="38" rx="1" fill="#14253e" opacity=".8"/>
+            <rect x="103" y="63" width="2" height="38" rx="1" fill="#14253e" opacity=".8"/>
+            <!-- Brand logo -->
+            <circle cx="100" cy="98" r="10"
+                    fill="#002776" stroke="#ffdf00" stroke-width="2"/>
+            <text x="100" y="102" text-anchor="middle"
+                  fill="#ffdf00" font-size="8.5" font-weight="900"
+                  font-family="Arial,sans-serif">G</text>
+
+            <!-- ── BODY LINES ── -->
+            <line x1="15"  y1="69" x2="63"  y2="63" stroke="#b2bace" stroke-width="1.4"/>
+            <line x1="137" y1="63" x2="185" y2="69" stroke="#b2bace" stroke-width="1.4"/>
+            <path d="M14,97 Q100,93 186,97"
+                  stroke="#c6cedc" stroke-width="1" fill="none" opacity=".6"/>
+
+            <!-- ── BUMPER ── -->
+            <path d="M12,109 L188,109 L190,136
+                     C190,140 187,141 184,141
+                     L16,141 C13,141 10,140 10,136 Z"
+                  fill="#b0b6c8"/>
+            <line x1="14" y1="118" x2="186" y2="118"
+                  stroke="#a2a8ba" stroke-width=".9"/>
+            <!-- Bottom lip -->
+            <rect x="12" y="134" width="176" height="5" rx="2.5"
+                  fill="#9ea4b6"/>
+            <!-- LEFT fog light -->
+            <rect x="17" y="111" width="30" height="14" rx="4"
+                  fill="#18243a"/>
+            <ellipse cx="32" cy="118" rx="10" ry="6"
+                     fill="#ffe082" opacity=".72"/>
+            <!-- RIGHT fog light -->
+            <rect x="153" y="111" width="30" height="14" rx="4"
+                  fill="#18243a"/>
+            <ellipse cx="168" cy="118" rx="10" ry="6"
+                     fill="#ffe082" opacity=".72"/>
+            <!-- License plate -->
+            <rect x="66" y="111" width="68" height="17" rx="2.5"
+                  fill="#f6f6f6" stroke="#ccc" stroke-width=".5"/>
+            <text x="100" y="122.5" text-anchor="middle"
+                  fill="#222" font-size="6.2" font-weight="700"
+                  font-family="Arial,sans-serif" letter-spacing="1.5">GLOBO</text>
+
+            <!-- ── SIDE MIRRORS ── -->
+            <path d="M10,65 L23,65 L21,76 L8,74 Z"
+                  fill="#bec4d4" stroke="#aab0c0" stroke-width=".5"/>
+            <path d="M190,65 L177,65 L179,76 L192,74 Z"
+                  fill="#bec4d4" stroke="#aab0c0" stroke-width=".5"/>
+
+            <!-- Centre door split -->
+            <line x1="100" y1="58" x2="100" y2="109"
+                  stroke="#b0b8ca" stroke-width=".7" opacity=".55"/>
+          </svg>
+
+        </div><!-- .pl-car-inner -->
+      </div><!-- .pl-car-wrap -->
+
+      <!-- Brand -->
+      <div class="pl-brand">
+        <span class="pl-brand-icon"><i class="fas fa-globe-americas"></i></span>
+        <span class="pl-brand-name">GLOBO DESPACHANTE</span>
+        <span class="pl-brand-sub">Despachante em Londrina</span>
+      </div>
+
+      <!-- Loading dots -->
+      <div class="pl-dots" aria-hidden="true">
+        <div class="pl-dot"></div>
+        <div class="pl-dot"></div>
+        <div class="pl-dot"></div>
+      </div>
+
+      <!-- Flash overlay (triggered by JS on exit) -->
+      <div id="pl-flash" class="pl-flash"></div>
+
+    </div><!-- #pl-preloader -->
+
+    <script>
+      /* ── Preloader dismiss logic ────────────────────────────── */
+      (function () {
+        'use strict';
+        var MIN_MS   = 3250; // ms — lets the car animation finish (~3s)
+        var ready    = document.readyState === 'complete';
+        var timerOk  = false;
+
+        function dismiss() {
+          var flash = document.getElementById('pl-flash');
+          var pl    = document.getElementById('pl-preloader');
+          if (!pl) return;
+          flash.classList.add('active');
+          setTimeout(function () {
+            pl.classList.add('pl-exit');
+            setTimeout(function () { pl.style.display = 'none'; }, 720);
+          }, 500);
+        }
+
+        function tryDismiss() {
+          if (ready && timerOk) dismiss();
+        }
+
+        if (!ready) {
+          window.addEventListener('load', function () { ready = true; tryDismiss(); });
+        }
+        setTimeout(function () { timerOk = true; tryDismiss(); }, MIN_MS);
+      }());
+    </script>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <p><i class="fas fa-check-circle"></i> Despachante oficial credenciado pelo DETRAN-PR</p>
+            <a href="https://wa.me/554333560220" target="_blank" class="top-contact"><i class="fab fa-whatsapp"></i>
+                (43) 3356-0220</a>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="main-header">
+        <div class="container">
+            <a href="#" class="logo">
+                <span class="logo-icon"><i class="fas fa-globe-americas"></i></span>
+                GLOBO DESPACHANTE
+            </a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#services">Serviços</a></li>
+                    <li><a href="#about">Sobre Nós</a></li>
+                    <li><a href="#contact">Contato</a></li>
+                    <li><a href="orcamento.html">Orçamento</a></li>
+                    <li><a href="fipe.html">Tabela Fipe</a></li>
+
+                    <li><a href="orgaos.html">Orgãos</a></li>
+
+                    <!-- Protected Menu (Hidden by default) -->
+                    <li id="protectedMenu" class="btn btn-outline dropdown hidden">
+                        <a href="#">Termos e Documentos <i class="fas fa-chevron-down"
+                                style="font-size: 0.8em; margin-left: 5px;"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="declaracao_residencia.html">Declação de Residência</a></li>
+                            <li><a href="procuracao_simples.html">Procuração Simples</a></li>
+                            <li><a href="requerimento_atpv.html">Termo de Preenchimento ATPV</a></li>
+                            <li><a href="requerimento_atpv_sp.html">Requerimento ATPV SP</a></li>
+                            <li><a href="cancelamento_comunicado.html">Declaração de
+                                    Cancelamento de Comunicado
+                                </a></li>
+                            <li><a href="segunda_via_crv.html">Declaração para Solicitação de 2ª Via do CRV</a>
+                            </li>
+                            <li><a href="termo_motor_968.html">Termo Motor 968</a></li>
+                                    <li><a
+                                    href="https://www1.detran.pr.gov.br/detran-itd/consultas/veiculos/consulta_restricao.asp">Consultar
+                                    Gravame</a></li>
+                            <li><a href="https://selo.funarpen.com.br/Consulta/">Consultar Selo Funarpen</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Login/Logout Buttons -->
+                    <li><a href="#" id="loginBtn" class="nav-btn-link"><i class="fas fa-sign-in-alt"></i> Entrar</a>
+                    </li>
+                    <li><a href="#" id="logoutBtn" class="nav-btn-link hidden"><i class="fas fa-sign-out-alt"></i>
+                            Sair</a></li>
+
+                </ul>
+            </nav>
+            <button class="mobile-menu-btn" aria-label="Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <h1>Globo Despachante em Londrina</h1>
+                <p>Regularize seu veículo sem sair de casa. Licenciamento, IPVA, Multas e Transferências.</p>
+                <ul class="hero-benefits">
+                    <li><i class="fas fa-check"></i> Consulta Gratuita e Online</li>
+                    <li><i class="fas fa-check"></i> Parcelamento de transferências</li>
+                    <li><i class="fas fa-check"></i> Primeiro Emplacamento</li>
+                    <li><i class="fas fa-check"></i> Atendimento em Londrina e Região</li>
+                </ul>
+            </div>
+
+            <div class="hero-form-card">
+                <p align="center"><i class="fas fa-search"></i> <b>Consultar Débitos</b><br>Consulte grátis pelo Renavam
+                    do
+                    veículo</p>
+                <iframe
+                    src="https://www.extratodebito.detran.pr.gov.br/detranextratos/geraExtrato.do?action=iniciarProcesso"
+                    class="detran-iframe" title="Consulta Detran PR"></iframe>
+            </div>
+        </div>
+        <div class="hero-bg-overlay"></div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>Nossos Serviços</h2>
+                <p>Resolvemos toda a burocracia para você rodar tranquilo</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="icon-box"><i class="fas fa-calendar-check"></i></div>
+                    <h3>Licenciamento Anual</h3>
+                    <p>Emita o CRLV-e do seu veículo de forma rápida e segura. Enviamos o documento digital para você.
+                    </p>
+                </div>
+                <div class="service-card">
+                    <div class="icon-box"><i class="fas fa-file-invoice-dollar"></i></div>
+                    <h3>IPVA 2025</h3>
+                    <p>Consulte e parcele seu IPVA atrasado ou do ano corrente. Evite juros e bloqueios.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon-box"><i class="fas fa-exchange-alt"></i></div>
+                    <h3>Transferência</h3>
+                    <p>Assessoria completa para transferência de propriedade de veículos. Mudou de dono? Fale com a
+                        gente.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon-box"><i class="fas fa-car-side"></i></div>
+                    <h3>Primeiro Emplacamento</h3>
+                    <p>Comprou carro zero? Cuidamos de todo o processo de documentação e emplacamento.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon-box"><i class="fas fa-search"></i></div>
+                    <h3>Consultas</h3>
+                    <p>Consulta completa do veículo que você pensa em adquirir.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon-box"><i class="fas fa-file-signature"></i></div>
+                    <h3>Emissão de ATPV</h3>
+                    <p>Vai vender o seu veículo? Emitimos o ATPV para você vender tranquilamente.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon-box"><i class="fas fa-user-edit"></i></div>
+                    <h3>Alteração de Dados e Características</h3>
+                    <p>Precisando mudar algum dados do seu veículo? Fale com a gente.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon-box"><i class="fas fa-car-side"></i></div>
+                    <h3>Vistoria</h3>
+                    <p>Precisa fazer desdobramento de vistoria para outro municipio? Fale com a gente.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section id="about" class="why-us">
+        <div class="container">
+            <!-- ... existing content ... -->
+            <div class="why-us-content">
+                <div class="why-text">
+                    <h2>Por que escolher o Globo Despachante?</h2>
+                    <p>Somos referência em Londrina - PR pela agilidade e transparência. Com 35 anos de experiência,
+                        nossa missão é descomplicar a vida do motorista.</p>
+                    <div class="features-list">
+                        <div class="feature">
+                            <i class="fas fa-shield-alt"></i>
+                            <div>
+                                <h4>Segurança Total</h4>
+                                <p>Seus dados e pagamentos protegidos com a mais alta tecnologia.</p>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-shipping-fast"></i>
+                            <div>
+                                <h4>Agilidade</h4>
+                                <p>Resolvemos burocracias em tempo recorde para você não perder tempo.</p>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-headset"></i>
+                            <div>
+                                <h4>Suporte Humanizado</h4>
+                                <p>Equipe pronta para tirar suas dúvidas pelo WhatsApp ou telefone.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="why-image">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1828.431055811771!2d-51.152537!3d-23.3118021!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94eb43623aa6f457%3A0x1da9e67f0c0be992!2sDespachante%20Globo!5e0!3m2!1spt-BR!2sbr!4v1715463100000!5m2!1spt-BR!2sbr"
+                        width="100%" height="400" style="border:0; border-radius: 20px;" allowfullscreen=""
+                        loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container" id="cta-container">
+            <h2>Precisa de ajuda com sua documentação?</h2>
+            <p>Fale agora mesmo com um de nossos especialistas pelo WhatsApp.</p>
+            <a href="https://wa.me/554333560220" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> Falar no
+                WhatsApp</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container footer-content">
+            <div class="footer-col">
+                <h3>Globo Despachante</h3>
+                <p>Seu parceiro de confiança para regularização veicular em Londrina e região.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/globodespachante/"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Serviços</h3>
+                <ul>
+                    <li><a href="#">Licenciamento</a></li>
+                    <li><a href="#">IPVA</a></li>
+                    <li><a href="#">Transferência</a></li>
+                    <li><a href="#">Multas</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Contato</h3>
+                <ul class="contact-info">
+                    <li><i class="fas fa-map-marker-alt"></i> Rua Uruguai, 197 - Centro <br> Londrina - PR</li>
+                    <li><i class="fas fa-phone"></i> (43) 3356-0220</li>
+                    <li><i class="fas fa-envelope"></i> contato@globodespachante.com.br</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2025 Globo Despachante. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2 id="modalTitle">Login</h2>
+                <button id="closeModalBtn" class="close-modal">&times;</button>
+            </div>
+            <form id="authForm" class="auth-form">
+                <div id="authError" class="auth-error"></div>
+                <div class="input-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" required placeholder="seu@email.com">
+                </div>
+                <div class="input-group">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" required placeholder="******" minlength="6">
+                </div>
+                <button type="submit" id="authSubmitBtn" class="btn btn-primary btn-full">Entrar</button>
+                <div class="auth-footer">
+                    <p><a href="#" id="toggleAuthMode">Não tem conta? <b>Cadastre-se</b></a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Chatbot -->
+    <div id="chatbot-fab" class="chatbot-fab">
+        <i class="fas fa-comments"></i>
+    </div>
+
+    <div id="chatbot-window" class="chatbot-window">
+        <div class="chatbot-header">
+            <span>Dúvidas Frequentes</span>
+            <span id="chatbot-close" class="chatbot-close">&times;</span>
+        </div>
+        <div id="chatbot-body" class="chatbot-body"></div>
+    </div>
+
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+    <!-- App Scripts (No type='module') -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/app.js?v=5"></script>
+    <script src="js/chatbot.js"></script>
+    <script src="js/gsap-animations.js"></script>
+</body>
+
+</html>
