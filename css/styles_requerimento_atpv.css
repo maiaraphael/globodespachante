@@ -21,34 +21,84 @@ body {
     body {
         width: 100%;
         height: auto;
-        /* Let height be natural */
         margin: 0;
-        padding: 5mm;
+        padding: 4mm;
         background: transparent;
         display: block !important;
-        overflow: hidden;
-        /* debugging */
+        overflow: visible;
     }
 
     .page-container {
         width: 100%;
         max-width: 100%;
         min-height: 0;
-        /* Remove force height */
         height: auto;
-        margin: 0 auto;
+        margin: 0;
         padding: 0;
         box-shadow: none;
         border: none;
+        zoom: 0.82;
+    }
 
-        /* Scale content to 100% as requested */
-        transform: scale(0.96);
-        transform-origin: top center;
+    .header {
+        margin-bottom: 8px;
+    }
+
+    .header-image {
+        max-height: 60px;
+    }
+
+    .document-title {
+        margin-bottom: 8px;
+        font-size: 12px;
+    }
+
+    .intent-text {
+        margin-bottom: 10px;
+        font-size: 12px;
+    }
+
+    .form-section {
+        margin-bottom: 10px;
+    }
+
+    .section-title {
+        font-size: 12px;
+        margin-bottom: 1px;
+    }
+
+    .field-box {
+        min-height: 36px;
+        padding: 3px 5px;
+    }
+
+    .field-box label {
+        font-size: 10px;
+    }
+
+    .field-box input {
+        font-size: 12px;
+    }
+
+    .footer-sign {
+        margin-top: 20px;
+    }
+
+    .page-footer-info {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        right: auto;
+        margin-top: 10px;
+        font-size: 8px;
     }
 
     /* Show color bar and force print colors */
     .color-bar-bottom {
         display: block !important;
+        position: relative;
+        bottom: auto;
+        margin-top: 12px;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
     }
