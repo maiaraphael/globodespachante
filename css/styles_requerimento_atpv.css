@@ -14,8 +14,7 @@ body {
 @media print {
     @page {
         size: A4;
-        margin: 5mm;
-        /* Small margin safely handled by printer */
+        margin: 0;
     }
 
     html,
@@ -24,7 +23,7 @@ body {
         height: auto;
         /* Let height be natural */
         margin: 0;
-        padding: 0;
+        padding: 5mm;
         background: transparent;
         display: block !important;
         overflow: hidden;

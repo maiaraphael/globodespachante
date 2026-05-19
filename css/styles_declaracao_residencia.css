@@ -274,6 +274,10 @@
 
         @page {
             size: A4;
-            margin: 8mm 15mm;
+            margin: 0;
+        }
+
+        body {
+            padding: 8mm 15mm;
         }
     }

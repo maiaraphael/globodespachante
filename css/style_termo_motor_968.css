@@ -272,7 +272,7 @@ body {
 
     @page {
         size: A4 portrait;
-        margin: 8mm 12mm;
+        margin: 0;
     }
 
     .top-bar,
@@ -286,7 +286,7 @@ body {
 
     body {
         background: transparent;
-        padding: 0;
+        padding: 8mm 12mm;
         margin: 0;
         font-size: 11px;
         -webkit-print-color-adjust: exact;
