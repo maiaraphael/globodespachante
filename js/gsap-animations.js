@@ -71,5 +71,48 @@
         yPercent: 30, ease: 'none',
         scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
     });
+    // ── Stats section ────────────────────────────────────────────────────
+    gsap.from('.stat-item', {
+        y: 40, opacity: 0, duration: 0.55, stagger: 0.1,
+        ease: 'power3.out', clearProps: 'all',
+        scrollTrigger: { trigger: '.stats-section', start: 'top 90%', toggleActions: 'play none none none' }
+    });
 
+    // ── How It Works ──────────────────────────────────────────────────────
+    gsap.from('.how-it-works .section-header', {
+        y: 40, opacity: 0, duration: 0.7, ease: 'power3.out', clearProps: 'all',
+        scrollTrigger: { trigger: '.how-it-works', start: 'top 88%', toggleActions: 'play none none none' }
+    });
+    gsap.from('.step-card', {
+        y: 55, opacity: 0, duration: 0.6, stagger: 0.18,
+        ease: 'power3.out', clearProps: 'all',
+        scrollTrigger: { trigger: '.steps-grid', start: 'top 88%', toggleActions: 'play none none none' }
+    });
+    gsap.from('.step-connector', {
+        opacity: 0, duration: 0.4, stagger: 0.18, delay: 0.3,
+        ease: 'power2.out', clearProps: 'all',
+        scrollTrigger: { trigger: '.steps-grid', start: 'top 88%', toggleActions: 'play none none none' }
+    });
+
+    // ── Testimonials ─────────────────────────────────────────────────────
+    gsap.from('.testimonials-section .section-header', {
+        y: 40, opacity: 0, duration: 0.7, ease: 'power3.out', clearProps: 'all',
+        scrollTrigger: { trigger: '.testimonials-section', start: 'top 88%', toggleActions: 'play none none none' }
+    });
+    gsap.from('.testimonial-card', {
+        y: 60, opacity: 0, duration: 0.65, stagger: 0.14,
+        ease: 'power3.out', clearProps: 'all',
+        scrollTrigger: { trigger: '.testimonials-grid', start: 'top 90%', toggleActions: 'play none none none' }
+    });
+
+    // ── FAQ ───────────────────────────────────────────────────────────────
+    gsap.from('.faq-section .section-header', {
+        y: 40, opacity: 0, duration: 0.7, ease: 'power3.out', clearProps: 'all',
+        scrollTrigger: { trigger: '.faq-section', start: 'top 88%', toggleActions: 'play none none none' }
+    });
+    gsap.from('.faq-item', {
+        y: 30, opacity: 0, duration: 0.5, stagger: 0.1,
+        ease: 'power3.out', clearProps: 'all',
+        scrollTrigger: { trigger: '.faq-list', start: 'top 90%', toggleActions: 'play none none none' }
+    });
 })();

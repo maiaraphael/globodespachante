@@ -1,4 +1,69 @@
 document.addEventListener('DOMContentLoaded', () => {
+
+    // ── Animated stat counters ────────────────────────────────────────────
+    const statNumbers = document.querySelectorAll('.stat-number');
+    if (statNumbers.length) {
+        const countUp = (el) => {
+            const target = +el.dataset.target;
+            const duration = 1800;
+            const step = target / (duration / 16);
+            let current = 0;
+            const tick = () => {
+                current = Math.min(current + step, target);
+                el.textContent = target >= 1000
+                    ? Math.round(current).toLocaleString('pt-BR')
+                    : Math.round(current);
+                if (current < target) requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+        };
+        const statsObserver = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    countUp(entry.target);
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        statNumbers.forEach(n => statsObserver.observe(n));
+    }
+
+    // ── Service card "Solicitar" links (injected) ─────────────────────────
+    document.querySelectorAll('.service-card').forEach(card => {
+        const serviceName = card.querySelector('h3') ? card.querySelector('h3').textContent.trim() : 'Serviço';
+        const msg = encodeURIComponent(`Olá, entrei no site de vocês e estou entrando em contato a respeito de documentação do meu veículo. Gostaria de solicitar: ${serviceName}`);
+        const link = document.createElement('a');
+        link.href = `https://wa.me/554333560220?text=${msg}`;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.className = 'service-link';
+        link.innerHTML = 'Solicitar <i class="fas fa-arrow-right"></i>';
+        card.appendChild(link);
+    });
+
+    // ── FAQ accordion ─────────────────────────────────────────────────────
+    document.querySelectorAll('.faq-question').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const item = btn.closest('.faq-item');
+            const answer = item.querySelector('.faq-answer');
+            const isOpen = item.classList.contains('open');
+
+            // Close all
+            document.querySelectorAll('.faq-item.open').forEach(openItem => {
+                openItem.classList.remove('open');
+                openItem.querySelector('.faq-answer').classList.remove('open');
+                openItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+            });
+
+            // Open clicked (unless it was already open)
+            if (!isOpen) {
+                item.classList.add('open');
+                answer.classList.add('open');
+                btn.setAttribute('aria-expanded', 'true');
+            }
+        });
+    });
+
     // Mobile Menu Toggle
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
     const mainNav = document.querySelector('.main-nav');
@@ -130,13 +195,46 @@ document.addEventListener('DOMContentLoaded', () => {
     // Extra Service Elements
     const extraServiceSelect = document.getElementById('extraServiceSelect');
     const extraServiceDetails = document.getElementById('extraServiceDetails');
-    const extraServiceDesc = document.getElementById('extraServiceDesc');
-    const extraServiceValue = document.getElementById('extraServiceValue');
+    const addExtraServiceBtn = document.getElementById('addExtraServiceBtn');
 
     // Discount Elements
     const discountSelect = document.getElementById('discountSelect');
     const discountDetails = document.getElementById('discountDetails');
     const discountValue = document.getElementById('discountValue');
+
+    // Add a new extra service row dynamically
+    function addExtraServiceRow() {
+        const container = document.getElementById('extraServicesContainer');
+        if (!container) return;
+        const row = document.createElement('div');
+        row.className = 'extra-service-row';
+        row.style.cssText = 'display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; align-items: end;';
+        row.innerHTML = `
+            <div class="calc-group" style="margin: 0;">
+                <label>Tipo do Serviço</label>
+                <input type="text" class="calc-select extra-service-desc" style="cursor: text; background-image: none;" placeholder="Ex: Taxa de Entrega">
+            </div>
+            <div class="calc-group" style="margin: 0;">
+                <label>Valor (R$)</label>
+                <input type="number" class="calc-select extra-service-value" style="cursor: text; background-image: none;" placeholder="0,00" min="0" step="0.01">
+            </div>
+            <button type="button" class="remove-extra-btn" style="width: 42px; height: 48px; border: none; border-radius: 8px; background: #fee2e2; color: #dc2626; cursor: pointer; font-size: 0.95rem; flex-shrink: 0;">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+        `;
+        row.querySelector('.remove-extra-btn').addEventListener('click', () => {
+            row.remove();
+            if (typeof calculateTotal === 'function') calculateTotal();
+        });
+        row.querySelector('.extra-service-value').addEventListener('input', () => {
+            if (typeof calculateTotal === 'function') calculateTotal();
+        });
+        container.appendChild(row);
+    }
+
+    if (addExtraServiceBtn) {
+        addExtraServiceBtn.addEventListener('click', addExtraServiceRow);
+    }
 
 
     // Auto-Format Client Plate (Budget Page)
@@ -158,49 +256,54 @@ document.addEventListener('DOMContentLoaded', () => {
     // Budget Logic (Only if elements exist)
     if (transferType && alienationType && paymentMethod && installments && mercosulPlate && vehicleType) {
 
-        // Helper to update UI based on Transfer Type
+        // Helper to update UI based on Service Type
         function updateUI() {
             const isFirstReg = transferType.value === 'first_reg';
+            const isSegundaVia = transferType.value === 'segunda_via_recibo';
+            const isAlteracaoDados = transferType.value === 'alteracao_dados';
+            const hideFields = isSegundaVia || isAlteracaoDados;
 
-            // 1. Mercosul Plate
-            // If First Reg, hide it.
-            if (isFirstReg) {
+            // 1. Mercosul Plate & Vehicle Type
+            if (isSegundaVia) {
                 mercosulPlate.closest('.calc-group').style.display = 'none';
-                vehicleTypeGroup.style.display = 'flex'; // Always show vehicle type
+                vehicleTypeGroup.style.display = 'none';
+            } else if (isFirstReg) {
+                mercosulPlate.closest('.calc-group').style.display = 'none';
+                vehicleTypeGroup.style.display = 'flex';
+            } else if (isAlteracaoDados) {
+                mercosulPlate.closest('.calc-group').style.display = 'flex';
+                vehicleTypeGroup.style.display = mercosulPlate.value === 'no' ? 'flex' : 'none';
             } else {
                 mercosulPlate.closest('.calc-group').style.display = 'flex';
-                // Show vehicle type only if "No" (Need plate)
-                if (mercosulPlate.value === 'no') {
-                    vehicleTypeGroup.style.display = 'flex';
-                } else {
-                    vehicleTypeGroup.style.display = 'none';
-                }
+                vehicleTypeGroup.style.display = mercosulPlate.value === 'no' ? 'flex' : 'none';
             }
 
             // 2. Alienation Options
-            // If First Reg, only "none" or "include" allowed.
-            const options = alienationType.options;
-            for (let i = 0; i < options.length; i++) {
-                if (isFirstReg) {
-                    if (options[i].value === 'exclude' || options[i].value === 'both') {
-                        options[i].style.display = 'none';
+            const alienationGroup = alienationType.closest('.calc-group');
+            if (isSegundaVia) {
+                alienationGroup.style.display = 'none';
+                alienationType.value = 'none';
+            } else {
+                alienationGroup.style.display = 'flex';
+                const options = alienationType.options;
+                for (let i = 0; i < options.length; i++) {
+                    if (isFirstReg) {
+                        options[i].style.display = (options[i].value === 'exclude' || options[i].value === 'both') ? 'none' : 'block';
                     } else {
                         options[i].style.display = 'block';
                     }
-                } else {
-                    options[i].style.display = 'block'; // Show all
                 }
-            }
-
-            // Reset selection if hidden option is selected
-            if (isFirstReg && (alienationType.value === 'exclude' || alienationType.value === 'both')) {
-                alienationType.value = 'none';
+                if (isFirstReg && (alienationType.value === 'exclude' || alienationType.value === 'both')) {
+                    alienationType.value = 'none';
+                }
             }
 
             // 3. Extra Service toggle
             if (extraServiceSelect && extraServiceDetails) {
                 if (extraServiceSelect.value === 'yes') {
-                    extraServiceDetails.style.display = 'grid'; // grid to match calc-grid behavior
+                    extraServiceDetails.style.display = 'block';
+                    const container = document.getElementById('extraServicesContainer');
+                    if (container && container.children.length === 0) addExtraServiceRow();
                 } else {
                     extraServiceDetails.style.display = 'none';
                 }
@@ -208,88 +311,82 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // 4. Discount toggle
             if (discountSelect && discountDetails) {
-                if (discountSelect.value === 'yes') {
-                    discountDetails.style.display = 'grid';
-                } else {
-                    discountDetails.style.display = 'none';
-                }
+                discountDetails.style.display = discountSelect.value === 'yes' ? 'grid' : 'none';
             }
         }
 
 
         function calculateTotal() {
-            updateUI(); // Ensure UI is in sync
+            updateUI();
 
-            // Base Prices
             let basePrice = 0;
 
-            if (transferType.value === 'first_reg') {
-                // First Registration Logic
+            if (transferType.value === 'segunda_via_recibo') {
+                basePrice = 390;
+            } else if (transferType.value === 'alteracao_dados') {
+                basePrice = 390;
+                if (alienationType.value === 'include') basePrice += 60;
+                else if (alienationType.value === 'exclude') basePrice += 60;
+                else if (alienationType.value === 'both') basePrice += 120;
+
+                if (mercosulPlate.value === 'no') {
+                    if (vehicleType.value === 'car') basePrice += 210;
+                    else if (vehicleType.value === 'moto') basePrice += 120;
+                }
+            } else if (transferType.value === 'first_reg') {
                 if (vehicleType.value === 'car') basePrice = 720;
                 else if (vehicleType.value === 'moto') basePrice = 620;
-
-                // Gravame (Only Inclusion possible)
-                if (alienationType.value === 'include') basePrice += 70;
-
+                if (alienationType.value === 'include') basePrice += 60;
             } else {
-                // Standard Transfer Logic
-                // Transfer Type
                 if (transferType.value === 'pr') basePrice += 550;
                 else if (transferType.value === 'other') basePrice += 670;
 
-                // Alienation
-                if (alienationType.value === 'include') basePrice += 70;
-                else if (alienationType.value === 'exclude') basePrice += 70;
-                else if (alienationType.value === 'both') basePrice += 140;
+                if (alienationType.value === 'include') basePrice += 60;
+                else if (alienationType.value === 'exclude') basePrice += 60;
+                else if (alienationType.value === 'both') basePrice += 120;
 
-                // Placa Mercosul Logic (Only for Transfer)
                 if (mercosulPlate.value === 'no') {
                     if (vehicleType.value === 'car') basePrice += 210;
                     else if (vehicleType.value === 'moto') basePrice += 120;
                 }
             }
 
-            // Add Extra Service Value
-            if (extraServiceSelect && extraServiceValue && extraServiceSelect.value === 'yes') {
-                const extraVal = parseFloat(extraServiceValue.value) || 0;
-                basePrice += extraVal;
+            // Sum all extra service rows
+            if (extraServiceSelect && extraServiceSelect.value === 'yes') {
+                document.querySelectorAll('.extra-service-value').forEach(input => {
+                    basePrice += parseFloat(input.value) || 0;
+                });
             }
 
-            // Apply Discount (BEFORE Interest)
+            // Apply Discount
             if (discountSelect && discountValue && discountSelect.value === 'yes') {
                 const discVal = parseFloat(discountValue.value) || 0;
                 basePrice -= discVal;
-                if (basePrice < 0) basePrice = 0; // Prevent negative total
+                if (basePrice < 0) basePrice = 0;
             }
 
             let finalPrice = basePrice;
-            let note = "Pagamento à vista (Pix, Dinheiro ou Débito).";
+            let note = 'Pagamento à vista (Pix, Dinheiro ou Débito).';
 
-            // Payment Method Logic
             if (paymentMethod.value === 'credit') {
                 installmentsGroup.style.display = 'flex';
                 const installmentCount = parseInt(installments.value);
-
-                // Interest Calculation: Each installment adds 3.5% to the total
-                // Logic: 1x = 3.5%, 2x = 7%, 10x = 35%...
                 const interestRate = installmentCount * 0.035;
                 finalPrice = basePrice * (1 + interestRate);
-
                 const installmentValue = finalPrice / installmentCount;
                 note = `Pagamento em cartão de crédito em ${installmentCount}x de ${installmentValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}.`;
             } else {
                 installmentsGroup.style.display = 'none';
             }
 
-            // Update Display
             totalValueDisplay.textContent = finalPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
             paymentNoteDisplay.textContent = note;
         }
 
-        // Add Event Listeners
-        [transferType, alienationType, mercosulPlate, vehicleType, paymentMethod, installments, extraServiceSelect, extraServiceValue, discountSelect, discountValue].forEach(el => {
+        // Event Listeners
+        [transferType, alienationType, mercosulPlate, vehicleType, paymentMethod, installments, extraServiceSelect, discountSelect, discountValue].forEach(el => {
             if (el) el.addEventListener('change', calculateTotal);
-            if (el && el.type === 'number') el.addEventListener('input', calculateTotal); // Realtime for number
+            if (el && el.type === 'number') el.addEventListener('input', calculateTotal);
         });
 
         // Initial Calc
@@ -526,23 +623,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 itemsList.appendChild(tr);
             };
 
-            // Transfer Cost
-            if (transferType && transferType.value === 'pr') addRow('Transferência de Veículo (PR)', 550);
-            else if (transferType && transferType.value === 'other') addRow('Transferência de Veículo (Outro Estado)', 670);
-            else if (transferType && transferType.value === 'first_reg') {
-                // First Reg Item
-                const label = vehicleType.value === 'car' ? 'Primeiro Emplacamento (Automóvel)' : 'Primeiro Emplacamento (Moto)';
-                const price = vehicleType.value === 'car' ? 720 : 620;
-                addRow(label, price);
+            // Service Type Cost
+            if (transferType) {
+                if (transferType.value === 'pr') addRow('Transferência de Veículo (PR)', 550);
+                else if (transferType.value === 'other') addRow('Transferência de Veículo (Outro Estado)', 670);
+                else if (transferType.value === 'segunda_via_recibo') addRow('Emissão de Segunda Via do Recibo', 390);
+                else if (transferType.value === 'alteracao_dados') addRow('Alteração de Dados', 390);
+                else if (transferType.value === 'first_reg') {
+                    const label = vehicleType.value === 'car' ? 'Primeiro Emplacamento (Automóvel)' : 'Primeiro Emplacamento (Moto)';
+                    const price = vehicleType.value === 'car' ? 720 : 620;
+                    addRow(label, price);
+                }
             }
 
             // Alienation Cost
-            if (alienationType) {
-                if (alienationType.value === 'include') addRow('Inclusão de Gravame', 70);
-                else if (alienationType.value === 'exclude') addRow('Exclusão de Gravame', 70);
+            if (alienationType && alienationType.value !== 'none') {
+                if (alienationType.value === 'include') addRow('Inclusão de Gravame', 60);
+                else if (alienationType.value === 'exclude') addRow('Exclusão de Gravame', 60);
                 else if (alienationType.value === 'both') {
-                    addRow('Inclusão de Gravame', 70);
-                    addRow('Exclusão de Gravame', 70);
+                    addRow('Inclusão de Gravame', 60);
+                    addRow('Exclusão de Gravame', 60);
                 }
             }
 
@@ -552,17 +652,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 else if (vehicleType && vehicleType.value === 'moto') addRow('Placa Mercosul (Moto)', 120);
             }
 
-            // Extra Service Cost
+            // Extra Service Cost (multiple rows)
             const extraServiceSelect = document.getElementById('extraServiceSelect');
-            const extraServiceDesc = document.getElementById('extraServiceDesc');
-            const extraServiceValue = document.getElementById('extraServiceValue');
-
             if (extraServiceSelect && extraServiceSelect.value === 'yes') {
-                const desc = (extraServiceDesc ? extraServiceDesc.value : '') || 'Serviço Extra';
-                const val = (extraServiceValue ? parseFloat(extraServiceValue.value) : 0) || 0;
-                if (val > 0) {
-                    addRow(desc, val);
-                }
+                document.querySelectorAll('.extra-service-row').forEach(row => {
+                    const desc = row.querySelector('.extra-service-desc')?.value || 'Serviço Extra';
+                    const val = parseFloat(row.querySelector('.extra-service-value')?.value) || 0;
+                    if (val > 0) addRow(desc, val);
+                });
             }
 
             // Discount Row
@@ -609,7 +706,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // WhatsApp Button (All pages)
     const waBtn = document.createElement('a');
     waBtn.className = 'fab-btn fab-whatsapp';
-    waBtn.href = 'https://wa.me/554333560220';
+    waBtn.href = 'https://wa.me/554333560220?text=Ol%C3%A1%2C%20entrei%20no%20site%20de%20voc%C3%AAs%20e%20estou%20entrando%20em%20contato%20a%20respeito%20de%20documenta%C3%A7%C3%A3o%20do%20meu%20ve%C3%ADculo.';
     waBtn.target = '_blank';
     waBtn.innerHTML = '<i class="fab fa-whatsapp"></i>';
     waBtn.setAttribute('data-tooltip', 'Falar no WhatsApp');
@@ -752,3 +849,125 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.body.appendChild(fabContainer);
 });
+
+/* ============================================================
+   TRANSFER JOURNEY — Sticky-Scroll Cinematic Animation
+   ============================================================ */
+(function initTransferJourney() {
+    'use strict';
+
+    const section = document.getElementById('transfer-journey');
+    if (!section) return;
+
+    const bg       = document.getElementById('tjBg');
+    const orb2     = document.getElementById('tjOrb2');
+    const intro    = document.getElementById('tjIntro');
+    const fill     = document.getElementById('tjProgressFill');
+    const dots     = Array.from(section.querySelectorAll('.tj-dot'));
+    const steps    = Array.from(section.querySelectorAll('.tj-step'));
+
+    const STEP_COUNT  = steps.length; // 5
+    const INTRO_END   = 0.13;         // first 13% = intro phase
+    const STEP_SPAN   = (1 - INTRO_END) / STEP_COUNT;
+
+    // Background configs per phase (0=intro, 1-5=steps)
+    const BG = [
+        { bg: 'radial-gradient(ellipse 80% 80% at 70% 28%, #001845 0%, #020810 100%)', orb: 'rgba(0,39,118,.22)' },
+        { bg: 'radial-gradient(ellipse 80% 80% at 75% 62%, #002a14 0%, #020810 100%)', orb: 'rgba(0,156,59,.22)' },
+        { bg: 'radial-gradient(ellipse 80% 80% at 24% 40%, #001428 0%, #020810 100%)', orb: 'rgba(0,66,176,.22)' },
+        { bg: 'radial-gradient(ellipse 80% 80% at 65% 68%, #1a0d00 0%, #020810 100%)', orb: 'rgba(180,100,0,.22)'  },
+        { bg: 'radial-gradient(ellipse 80% 80% at 35% 32%, #000e1f 0%, #020810 100%)', orb: 'rgba(0,39,118,.22)'  },
+        { bg: 'radial-gradient(ellipse 80% 80% at 50% 50%, #003318 0%, #020810 100%)', orb: 'rgba(0,200,83,.30)'  },
+    ];
+
+    let lastPhaseIdx = -1;
+    let rafId = null;
+
+    function getProgress() {
+        const rect     = section.getBoundingClientRect();
+        const scrolled = -rect.top;
+        const maxScroll = section.offsetHeight - window.innerHeight;
+        return Math.max(0, Math.min(1, scrolled / maxScroll));
+    }
+
+    function isMobile() { return window.innerWidth <= 900; }
+
+    function update() {
+        if (isMobile()) return;
+
+        const p = getProgress();
+
+        /* ── Determine active phase ── */
+        let phaseIdx, phaseLocal;
+        if (p <= INTRO_END) {
+            phaseIdx   = 0;
+            phaseLocal = p / INTRO_END;
+        } else {
+            const rel   = (p - INTRO_END) / (1 - INTRO_END);
+            phaseIdx    = Math.min(1 + Math.floor(rel * STEP_COUNT), STEP_COUNT);
+            phaseLocal  = (rel * STEP_COUNT) % 1;
+        }
+
+        /* ── Intro opacity / transform ── */
+        if (phaseIdx === 0) {
+            const t = Math.max(0, (phaseLocal - 0.45) / 0.55);
+            intro.style.opacity   = String(Math.max(0, 1 - t * 2.2));
+            intro.style.transform = t > 0 ? `translateY(${-t * 44}px) scale(${1 - t * .03})` : 'none';
+        } else {
+            intro.style.opacity   = '0';
+            intro.style.transform = 'translateY(-44px) scale(0.97)';
+        }
+
+        /* ── Steps ── */
+        steps.forEach((step, i) => {
+            const stepPhase = i + 1;
+            step.classList.remove('tj-active', 'tj-exit');
+            if (phaseIdx === stepPhase) {
+                step.classList.add('tj-active');
+            } else if (phaseIdx > stepPhase) {
+                step.classList.add('tj-exit');
+            }
+            // else: default state = entering from right (translateX(70px))
+        });
+
+        /* ── Progress bar ── */
+        const stepPct = Math.max(0, (p - INTRO_END) / (1 - INTRO_END));
+        fill.style.height = (Math.min(stepPct, 1) * 100) + '%';
+
+        /* ── Sidebar dots ── */
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('active', phaseIdx === i + 1);
+            dot.classList.toggle('done',   phaseIdx >  i + 1);
+        });
+
+        /* ── Background & orb ── (throttled to phase changes) ── */
+        if (phaseIdx !== lastPhaseIdx) {
+            const cfg = BG[phaseIdx] || BG[0];
+            if (bg)   bg.style.background   = cfg.bg;
+            if (orb2) orb2.style.background = cfg.orb;
+            lastPhaseIdx = phaseIdx;
+        }
+    }
+
+    function onScroll() {
+        if (rafId) return;
+        rafId = requestAnimationFrame(() => { update(); rafId = null; });
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', update);
+    update(); // set initial state
+
+    /* ── Mobile: IntersectionObserver fallback ── */
+    if (isMobile()) {
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('tj-mobile-visible');
+                    obs.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.22 });
+        steps.forEach(s => obs.observe(s));
+    }
+}());
