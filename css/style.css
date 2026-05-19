@@ -266,9 +266,21 @@ img {
     z-index: 1000;
     flex-direction: column;
     gap: 0 !important;
+    /* Bridge invisível que cobre o gap entre o link e o menu */
+    margin-top: 0;
 }
 
-.dropdown:hover .dropdown-menu,
+/* Pseudo-elemento bridge para cobrir qualquer gap entre o trigger e o dropdown */
+.dropdown::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: 8px;
+    background: transparent;
+}
+
 .dropdown.active .dropdown-menu {
     display: flex;
 }
