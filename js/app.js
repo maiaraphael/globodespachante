@@ -162,14 +162,33 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-    // Dropdown Menu Toggle (Click)
-    const dropdowns = document.querySelectorAll('.dropdown > a');
-    dropdowns.forEach(dropdownToggle => {
-        dropdownToggle.addEventListener('click', (e) => {
-            e.preventDefault();
-            const parent = dropdownToggle.parentElement;
-            parent.classList.toggle('active');
+    // Dropdown Menu Toggle (Hover com delay + Click)
+    const dropdownItems = document.querySelectorAll('.dropdown');
+    dropdownItems.forEach(dropdown => {
+        let closeTimer = null;
+
+        // Hover: abre imediatamente, fecha com delay
+        dropdown.addEventListener('mouseenter', () => {
+            clearTimeout(closeTimer);
+            // Fecha outros dropdowns abertos por hover
+            dropdownItems.forEach(d => { if (d !== dropdown) d.classList.remove('active'); });
+            dropdown.classList.add('active');
         });
+
+        dropdown.addEventListener('mouseleave', () => {
+            closeTimer = setTimeout(() => {
+                dropdown.classList.remove('active');
+            }, 150);
+        });
+
+        // Click no link principal: previne navegação e alterna (para touch/mobile)
+        const toggleLink = dropdown.querySelector(':scope > a');
+        if (toggleLink) {
+            toggleLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                dropdown.classList.toggle('active');
+            });
+        }
     });
 
     // Close dropdown when clicking outside
