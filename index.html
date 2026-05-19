@@ -303,13 +303,226 @@
       }());
     </script>
 
-    
+    <script>
+        /* ── Face ── */
+        var face = ctx.createRadialGradient(cx, cy-.2*R, R*.1, cx, cy, R);
+        face.addColorStop(0, '#141e30');
+        face.addColorStop(1, '#080c14');
+        ctx.beginPath();
+        ctx.arc(cx, cy, R, 0, Math.PI*2);
+        ctx.fillStyle = face;
+        ctx.fill();
+
+        /* ── Red-zone arc ── */
+        ctx.beginPath();
+        ctx.arc(cx, cy, R*.78, kmhToAngle(RED_ZONE), kmhToAngle(MAX_KMH));
+        ctx.lineWidth = R*.065;
+        ctx.strokeStyle = 'rgba(220,40,40,.22)';
+        ctx.lineCap = 'round';
+        ctx.stroke();
+
+        /* ── Track arc (background) ── */
+        ctx.beginPath();
+        ctx.arc(cx, cy, R*.78, toRad(ARC_START), toRad(ARC_START + ARC_SWEEP));
+        ctx.lineWidth = R*.045;
+        ctx.strokeStyle = 'rgba(255,255,255,.07)';
+        ctx.lineCap = 'round';
+        ctx.stroke();
+
+        /* ── Progress arc ── */
+        if (kmh > 0) {
+          var progGrad = ctx.createLinearGradient(cx-R, cy, cx+R, cy);
+          progGrad.addColorStop(0, '#002776');
+          progGrad.addColorStop(.55, '#ffdf00');
+          progGrad.addColorStop(1, '#ff2200');
+          ctx.beginPath();
+          ctx.arc(cx, cy, R*.78, toRad(ARC_START), kmhToAngle(kmh));
+          ctx.lineWidth = R*.045;
+          ctx.strokeStyle = progGrad;
+          ctx.lineCap = 'round';
+          ctx.stroke();
+
+          /* Glow on tip */
+          ctx.beginPath();
+          ctx.arc(cx, cy, R*.78, toRad(ARC_START), kmhToAngle(kmh));
+          ctx.lineWidth = R*.09;
+          ctx.strokeStyle = kmh > RED_ZONE
+            ? 'rgba(255,60,0,.18)'
+            : 'rgba(255,220,0,.14)';
+          ctx.stroke();
+        }
+
+        /* ── Ticks ── */
+        for (var i = 0; i <= TICKS; i++) {
+          var kk  = (i / TICKS) * MAX_KMH;
+          var ang = kmhToAngle(kk);
+          var isMajor = (i % 5 === 0);
+          var r1  = R * (isMajor ? .66 : .72);
+          var r2  = R * .82;
+          ctx.beginPath();
+          ctx.moveTo(cx + Math.cos(ang)*r1, cy + Math.sin(ang)*r1);
+          ctx.lineTo(cx + Math.cos(ang)*r2, cy + Math.sin(ang)*r2);
+          ctx.lineWidth  = isMajor ? R*.018 : R*.009;
+          var lit = kk <= kmh;
+          ctx.strokeStyle = lit
+            ? (kk > RED_ZONE ? '#ff3300' : '#ffdf00')
+            : 'rgba(255,255,255,.18)';
+          ctx.lineCap = 'round';
+          ctx.stroke();
+
+          /* Major tick labels */
+          if (isMajor) {
+            var lr = R * .58;
+            ctx.save();
+            ctx.translate(cx + Math.cos(ang)*lr, cy + Math.sin(ang)*lr);
+            ctx.font = 'bold ' + (R*.115) + 'px Inter,sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillStyle = lit
+              ? (kk > RED_ZONE ? '#ff5533' : 'rgba(255,223,0,.9)')
+              : 'rgba(255,255,255,.3)';
+            ctx.fillText(Math.round(kk), 0, 0);
+            ctx.restore();
+          }
+        }
+
+        /* ── km/h label ── */
+        ctx.font = 'bold ' + (R*.1) + 'px Inter,sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillStyle = 'rgba(255,255,255,.3)';
+        ctx.fillText('km/h', cx, cy + R*.52);
+
+        /* ── Center digital readout ── */
+        var dispKmh = Math.round(kmh);
+        var readColor = dispKmh > RED_ZONE ? '#ff4422' : '#ffdf00';
+
+        /* Readout bg pill */
+        var pw = R*.7, ph = R*.28;
+        var px2 = cx - pw/2, py2 = cy + R*.08;
+        ctx.beginPath();
+        ctx.roundRect(px2, py2, pw, ph, R*.06);
+        ctx.fillStyle = 'rgba(0,0,0,.55)';
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(255,255,255,.07)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        ctx.font = 'bold ' + (R*.36) + 'px Inter,sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillStyle = readColor;
+        /* Glow text */
+        ctx.shadowColor = readColor;
+        ctx.shadowBlur  = R*.18;
+        ctx.fillText(dispKmh, cx, cy + R*.22);
+        ctx.shadowBlur = 0;
+
+        /* ── Needle ── */
+        var needleAng = kmhToAngle(kmh);
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(needleAng);
+
+        /* Needle shadow */
+        ctx.shadowColor = 'rgba(0,0,0,.6)';
+        ctx.shadowBlur  = 8;
+
+        /* Needle body */
+        ctx.beginPath();
+        ctx.moveTo(-R*.05, -R*.03);
+        ctx.lineTo(R*.72, 0);
+        ctx.lineTo(-R*.05, R*.03);
+        ctx.closePath();
+        var needleGrad = ctx.createLinearGradient(-R*.05, 0, R*.72, 0);
+        needleGrad.addColorStop(0, '#cc0000');
+        needleGrad.addColorStop(.3, '#ff2200');
+        needleGrad.addColorStop(1, 'rgba(255,80,0,.3)');
+        ctx.fillStyle = needleGrad;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+        ctx.restore();
+
+        /* Center hub */
+        var hub = ctx.createRadialGradient(cx, cy, 0, cx, cy, R*.1);
+        hub.addColorStop(0, '#ffffff');
+        hub.addColorStop(.3, '#cccccc');
+        hub.addColorStop(1, '#555');
+        ctx.beginPath();
+        ctx.arc(cx, cy, R*.1, 0, Math.PI*2);
+        ctx.fillStyle = hub;
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(cx, cy, R*.04, 0, Math.PI*2);
+        ctx.fillStyle = '#cc0000';
+        ctx.fill();
+
+        /* ── Particles ── */
+        particles = particles.filter(function(p){ return p.life > 0; });
+        particles.forEach(function(p) {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI*2);
+          ctx.fillStyle = p.hue === 0
+            ? 'rgba(255,' + Math.floor(p.life*80) + ',0,' + p.life + ')'
+            : 'rgba(255,' + Math.floor(220 + p.life*35) + ',0,' + p.life + ')';
+          ctx.fill();
+          p.x   += p.vx;
+          p.y   += p.vy;
+          p.vy  += .12;
+          p.life -= .045;
+        });
+      }
+
+      /* ── Animation loop ──────────────────────────────────── */
+      var lastSpawn = 0;
+      function loop(ts) {
+        if (!startTime) startTime = ts;
+        var elapsed = ts - startTime;
+        var t   = Math.min(elapsed / DURATION, 1);
+        var et  = easeInOutQuart(t);
+        var kmh = et * MAX_KMH;
+
+        /* Spawn particles near needle tip every ~60ms */
+        if (ts - lastSpawn > 55 && kmh > 5) {
+          spawnParticle(kmh);
+          lastSpawn = ts;
+        }
+
+        draw(kmh);
+
+        if (t < 1) {
+          raf = requestAnimationFrame(loop);
+        } else {
+          /* Hold at redline then dismiss */
+          draw(MAX_KMH);
+          tryDismiss();
+        }
+      }
+      raf = requestAnimationFrame(loop);
+
+      /* ── Dismiss logic ───────────────────────────────────── */
+      function dismiss() {
+        if (dismissed) return;
+        dismissed = true;
+        cancelAnimationFrame(raf);
+        var pl = document.getElementById('pl-preloader');
+        pl.classList.add('pl-exit');
+        setTimeout(function(){ pl.style.display = 'none'; }, 680);
+      }
+      function tryDismiss() { if (pageReady && timerDone) dismiss(); }
+
+      if (!pageReady) {
+        window.addEventListener('load', function(){ pageReady = true; tryDismiss(); });
+      }
+      setTimeout(function(){ timerDone = true; tryDismiss(); }, MIN_WAIT);
+    }());
+    </script>
 
     <!-- Top Bar -->
     <div class="top-bar">
         <div class="container">
             <p><i class="fas fa-check-circle"></i> Despachante oficial credenciado pelo DETRAN-PR</p>
-            <a href="https://wa.me/554333560220" target="_blank" class="top-contact"><i class="fab fa-whatsapp"></i>
+            <a href="https://wa.me/554333560220?text=Ol%C3%A1%2C%20entrei%20no%20site%20de%20voc%C3%AAs%20e%20estou%20entrando%20em%20contato%20a%20respeito%20de%20documenta%C3%A7%C3%A3o%20do%20meu%20ve%C3%ADculo." target="_blank" class="top-contact"><i class="fab fa-whatsapp"></i>
                 (43) 3356-0220</a>
         </div>
     </div>
@@ -371,6 +584,7 @@
     <section class="hero">
         <div class="container hero-content">
             <div class="hero-text">
+                <div class="hero-badge"><span class="hero-badge-hex"><i class="fas fa-check"></i></span> Credenciado DETRAN-PR &nbsp;·&nbsp; Desde 1986</div>
                 <h1>Globo Despachante em Londrina</h1>
                 <p>Regularize seu veículo sem sair de casa. Licenciamento, IPVA, Multas e Transferências.</p>
                 <ul class="hero-benefits">
@@ -393,6 +607,34 @@
         <div class="hero-bg-overlay"></div>
     </section>
 
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fas fa-history"></i></div>
+                    <div class="stat-value"><span class="stat-number" data-target="35">0</span><span class="stat-suffix">+</span></div>
+                    <p>Anos de Experiência</p>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fas fa-users"></i></div>
+                    <div class="stat-value"><span class="stat-number" data-target="10000">0</span><span class="stat-suffix">+</span></div>
+                    <p>Clientes Atendidos</p>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fas fa-clipboard-list"></i></div>
+                    <div class="stat-value"><span class="stat-number" data-target="15">0</span><span class="stat-suffix">+</span></div>
+                    <p>Serviços Disponíveis</p>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fas fa-star"></i></div>
+                    <div class="stat-value"><span class="stat-number" data-target="100">0</span><span class="stat-suffix">%</span></div>
+                    <p>Índice de Satisfação</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Services Section -->
     <section id="services" class="services">
         <div class="container">
@@ -409,7 +651,7 @@
                 </div>
                 <div class="service-card">
                     <div class="icon-box"><i class="fas fa-file-invoice-dollar"></i></div>
-                    <h3>IPVA 2025</h3>
+                    <h3>IPVA</h3>
                     <p>Consulte e parcele seu IPVA atrasado ou do ano corrente. Evite juros e bloqueios.</p>
                 </div>
                 <div class="service-card">
@@ -446,6 +688,157 @@
             </div>
         </div>
     </section>
+
+    <!-- Transfer Journey — Cinematic Scroll Section -->
+    <section id="transfer-journey">
+
+        <div class="tj-sticky" id="tjSticky">
+
+            <!-- Background layers -->
+            <div class="tj-bg" id="tjBg"></div>
+            <div class="tj-grid-overlay"></div>
+            <div class="tj-orb tj-orb-1"></div>
+            <div class="tj-orb tj-orb-2" id="tjOrb2"></div>
+
+            <!-- Left sidebar: vertical progress indicator -->
+            <nav class="tj-sidebar" aria-label="Progresso da transferência">
+                <div class="tj-progress-track">
+                    <div class="tj-progress-fill" id="tjProgressFill"></div>
+                </div>
+                <div class="tj-dots" id="tjDots">
+                    <div class="tj-dot" data-step="0"><span>01</span></div>
+                    <div class="tj-dot" data-step="1"><span>02</span></div>
+                    <div class="tj-dot" data-step="2"><span>03</span></div>
+                    <div class="tj-dot" data-step="3"><span>04</span></div>
+                    <div class="tj-dot" data-step="4"><span>05</span></div>
+                </div>
+            </nav>
+
+            <!-- Intro panel -->
+            <div class="tj-intro" id="tjIntro">
+                <div class="tj-intro-inner">
+                    <span class="tj-eyebrow">Passo a passo</span>
+                    <h2 class="tj-title">Como funciona o<br>processo de <em>transferência?</em></h2>
+                    <p class="tj-intro-sub">Role para descobrir cada etapa</p>
+                    <div class="tj-mouse"><span></span></div>
+                </div>
+            </div>
+
+            <!-- Steps stage -->
+            <div class="tj-stage" id="tjStage">
+
+                <!-- Step 1 -->
+                <div class="tj-step" id="tjStep0">
+                    <div class="tj-ghost-num">01</div>
+                    <div class="tj-step-card">
+                        <div class="tj-icon-wrap">
+                            <i class="fas fa-file-signature"></i>
+                        </div>
+                        <div class="tj-step-body">
+                            <span class="tj-step-label">Passo 01 / 05</span>
+                            <h3>Tenha o recibo do seu veículo</h3>
+                            <p>O recibo deve estar <strong>assinado e reconhecido em cartório</strong> como verdadeiro — seja o <strong>CRV (verde)</strong> ou <strong>ATPV (digital)</strong> — junto com o documento do veículo (<strong>CRLV</strong>) e caso tenha procuração, ela também deve estar <strong>assinada e reconhecida em cartório</strong>.</p>
+                            <div class="tj-tags">
+                                <span><i class="fas fa-file-alt"></i> CRV Verde</span>
+                                <span><i class="fas fa-tablet-alt"></i> ATPV Digital</span>
+                                <span><i class="fas fa-file-alt"></i> CRLV</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="tj-step" id="tjStep1">
+                    <div class="tj-ghost-num">02</div>
+                    <div class="tj-step-card">
+                        <div class="tj-icon-wrap">
+                            <i class="fas fa-car"></i>
+                        </div>
+                        <div class="tj-step-body">
+                            <span class="tj-step-label">Passo 02 / 05</span>
+                            <h3>Traga seu veículo para vistoria</h3>
+                            <p>O veículo será inspecionado para confirmar a <strong>integridade e autenticidade</strong> das informações antes da conclusão da transferência.</p>
+                            <div class="tj-tags">
+                                <span><i class="fas fa-search"></i> Vistoria Veicular</span>
+                                <span><i class="fas fa-shield-alt"></i> Inspeção Certificada</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="tj-step" id="tjStep2">
+                    <div class="tj-ghost-num">03</div>
+                    <div class="tj-step-card">
+                        <div class="tj-icon-wrap">
+                            <i class="fas fa-id-card"></i>
+                        </div>
+                        <div class="tj-step-body">
+                            <span class="tj-step-label">Passo 03 / 05</span>
+                            <h3>Documentos pessoais</h3>
+                            <p>Apresente seu <strong>documento pessoal com foto</strong> (RG ou CNH) e um <strong>comprovante de residência</strong> atualizado.</p>
+                            <div class="tj-tags">
+                                <span><i class="fas fa-id-badge"></i> RG / CNH</span>
+                                <span><i class="fas fa-home"></i> Comprovante de Residência</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="tj-step" id="tjStep3">
+                    <div class="tj-ghost-num">04</div>
+                    <div class="tj-step-card">
+                        <div class="tj-icon-wrap">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <div class="tj-step-body">
+                            <span class="tj-step-label">Passo 04 / 05</span>
+                            <h3>Realize o pagamento</h3>
+                            <p>Após a conferência de toda a documentação, realize o <strong>pagamento das taxas</strong> de transferência de forma prática e totalmente segura.</p>
+                            <div class="tj-payment-methods">
+                                <div class="tj-pay-box">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                    <span>Dinheiro</span>
+                                </div>
+                                <div class="tj-pay-box">
+                                    <i class="fas fa-qrcode"></i>
+                                    <span>PIX</span>
+                                </div>
+                                <div class="tj-pay-box">
+                                    <i class="fas fa-credit-card"></i>
+                                    <span>Débito</span>
+                                </div>
+                                <div class="tj-pay-box">
+                                    <i class="fas fa-credit-card"></i>
+                                    <span>Crédito</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 5 — Completion -->
+                <div class="tj-step tj-step--done" id="tjStep4">
+                    <div class="tj-ghost-num tj-ghost-check">✓</div>
+                    <div class="tj-step-card tj-step-card--done">
+                        <div class="tj-icon-wrap tj-icon-done">
+                            <i class="fas fa-check-double"></i>
+                        </div>
+                        <div class="tj-step-body">
+                            <span class="tj-step-label tj-step-label--done">Concluído!</span>
+                            <h3>Aguarde seu processo ficar pronto</h3>
+                            <p>Cuidamos de toda a burocracia. Você receberá o <strong>CRLV atualizado</strong> com o novo proprietário. <strong>Sem filas, sem complicação!</strong></p>
+                            <a href="https://wa.me/554333560220?text=Ol%C3%A1%2C%20vi%20no%20site%20de%20voc%C3%AAs%20e%20gostaria%20de%20fazer%20a%20transfer%C3%AAncia%20do%20meu%20ve%C3%ADculo." class="tj-cta" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-whatsapp"></i> Iniciar minha transferência
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /.tj-stage -->
+        </div><!-- /.tj-sticky -->
+    </section><!-- /#transfer-journey -->
 
     <!-- Why Choose Us -->
     <section id="about" class="why-us">
@@ -490,14 +883,114 @@
         </div>
     </section>
 
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <div class="container">
+            <div class="section-header hiw-header">
+                <h2>O que nossos clientes dizem</h2>
+                <p>Mais de 10.000 clientes satisfeitos em Londrina e região</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p>"Transferi meu carro em tempo recorde, sem filas e sem complicação. O atendimento pelo WhatsApp foi excelente. Recomendo muito o Globo Despachante!"</p>
+                    <div class="client-info">
+                        <div class="client-avatar">RA</div>
+                        <div>
+                            <strong>Ricardo Almeida</strong>
+                            <span>Transferência de Veículo</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p>"Precisei fazer uma alteração de dados no veículo para incluir um novo financiamento e o Globo resolveu tudo com agilidade e muita atenção. Atendimento presencial excelente, fui muito bem atendida!"</p>
+                    <div class="client-info">
+                        <div class="client-avatar">MC</div>
+                        <div>
+                            <strong>Mariana Costa</strong>
+                            <span>Alteração de Dados / Financiamento</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p>"Fiz o primeiro emplacamento do meu carro zero aqui. Eles orientaram tudo, foi muito tranquilo. Confiança total no Globo Despachante!"</p>
+                    <div class="client-info">
+                        <div class="client-avatar">FR</div>
+                        <div>
+                            <strong>Felipe Rodrigues</strong>
+                            <span>Primeiro Emplacamento</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- FAQ Section -->
+    <section class="faq-section" id="faq">
+        <div class="container">
+            <div class="section-header hiw-header">
+                <h2>Perguntas Frequentes</h2>
+                <p>Tire suas dúvidas sobre nossos serviços</p>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Quanto tempo demora uma transferência de veículo?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>O prazo varia conforme a documentação e o estado do veículo. Em média, realizamos transferências em 3 a 7 dias úteis após o envio completo dos documentos.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Posso solicitar serviços sem ir presencialmente ao escritório?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <span>Grande parte dos nossos atendimentos é <strong>presencial</strong>, pois muitos serviços exigem a entrega dos documentos originais em mãos. Para serviços que permitem atendimento remoto, orientamos tudo pelo WhatsApp e você nos envia as cópias necessárias. Em caso de dúvida, entre em contato e informaremos o que é necessário para o seu caso.</span>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Quais documentos preciso para fazer o licenciamento?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Para o licenciamento você precisará do CRLV anterior, comprovante de pagamento do IPVA e laudos de vistoria, se aplicável. Entre em contato e orientaremos conforme seu caso específico.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Vocês atendem apenas em Londrina?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Nosso escritório fica em Londrina - PR, mas com o atendimento remoto podemos ajudar clientes de toda a região e de qualquer cidade do Paraná.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Como faço para solicitar um serviço?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>É simples! Basta entrar em contato pelo WhatsApp (43) 3356-0220, nos informar o serviço desejado e seguir as orientações da nossa equipe. Todo o processo é rápido e transparente.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- CTA Section -->
     <section class="cta-section">
         <div class="container" id="cta-container">
             <h2>Precisa de ajuda com sua documentação?</h2>
             <p>Fale agora mesmo com um de nossos especialistas pelo WhatsApp.</p>
-            <a href="https://wa.me/554333560220" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> Falar no
+            <a href="https://wa.me/554333560220?text=Ol%C3%A1%2C%20entrei%20no%20site%20de%20voc%C3%AAs%20e%20estou%20entrando%20em%20contato%20a%20respeito%20de%20documenta%C3%A7%C3%A3o%20do%20meu%20ve%C3%ADculo." class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> Falar no
                 WhatsApp</a>
         </div>
     </section>

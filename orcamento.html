@@ -111,11 +111,13 @@
 
                 <div class="calc-grid">
                     <div class="calc-group">
-                        <label>Tipo de Transferência</label>
+                        <label>Tipo de Serviço</label>
                         <select id="transferType" class="calc-select">
                             <option value="pr">Transferência Veículo do Paraná</option>
                             <option value="other">Transferência Outro Estado</option>
                             <option value="first_reg">Primeiro Emplacamento</option>
+                            <option value="segunda_via_recibo">Emissão de Segunda Via do Recibo</option>
+                            <option value="alteracao_dados">Alteração de Dados</option>
                         </select>
                     </div>
 
@@ -154,19 +156,12 @@
                         </select>
                     </div>
 
-                    <!-- Hidden Extra Service Fields -->
-                    <div id="extraServiceDetails" class="calc-grid"
-                        style="display: none; margin-top: 10px; width: 100%;">
-                        <div class="calc-group">
-                            <label>Tipo do Serviço</label>
-                            <input type="text" id="extraServiceDesc" class="calc-select"
-                                style="cursor: text; background-image: none;" placeholder="Ex: Taxa de Entrega">
-                        </div>
-                        <div class="calc-group">
-                            <label>Valor do Serviço (R$)</label>
-                            <input type="number" id="extraServiceValue" class="calc-select"
-                                style="cursor: text; background-image: none;" placeholder="0,00" min="0" step="0.01">
-                        </div>
+                    <!-- Hidden Extra Service Fields - multiple rows -->
+                    <div id="extraServiceDetails" style="display: none; margin-top: 10px; width: 100%; grid-column: 1 / -1;">
+                        <div id="extraServicesContainer" style="display: flex; flex-direction: column; gap: 10px;"></div>
+                        <button type="button" id="addExtraServiceBtn" style="margin-top: 12px; display: inline-flex; align-items: center; gap: 6px; background: none; border: 2px dashed var(--primary-color); color: var(--primary-color); padding: 8px 18px; border-radius: 8px; font-family: var(--font-main); font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease;">
+                            <i class="fas fa-plus"></i> Adicionar Serviço Extra
+                        </button>
                     </div>
 
                     <!-- Discount Section -->
