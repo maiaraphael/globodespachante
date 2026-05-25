@@ -125,8 +125,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (logoutBtn) {
         logoutBtn.addEventListener('click', (e) => {
             e.preventDefault();
+            const uid = auth.currentUser ? auth.currentUser.uid : null;
+            encerrarPresenca(uid);
             auth.signOut().then(() => {
-                // Sign-out successful.
                 window.location.href = 'index.html';
             }).catch((error) => {
                 console.error('Logout error', error);
@@ -135,6 +136,46 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Auth State Monitor ---
+    let heartbeatInterval = null;
+
+    function iniciarPresenca(user) {
+        const ref = db.collection('presenca').doc(user.uid);
+        const dados = {
+            email:     user.email,
+            online:    true,
+            ultimaVez: firebase.firestore.FieldValue.serverTimestamp(),
+            pagina:    window.location.pathname,
+        };
+
+        ref.set(dados, { merge: true })
+            .then(() => console.log('[Presença] ✅ Registrado online:', user.email))
+            .catch(err => console.error('[Presença] ❌ Erro ao registrar:', err));
+
+        // Heartbeat a cada 2 minutos
+        heartbeatInterval = setInterval(() => {
+            ref.update({
+                online:    true,
+                ultimaVez: firebase.firestore.FieldValue.serverTimestamp(),
+                pagina:    window.location.pathname,
+            })
+            .then(() => console.log('[Presença] 💓 Heartbeat OK'))
+            .catch(err => console.error('[Presença] ❌ Heartbeat erro:', err));
+        }, 2 * 60 * 1000);
+
+        // Marca offline ao fechar/sair da aba
+        window.addEventListener('beforeunload', () => {
+            ref.update({ online: false }).catch(() => {});
+        });
+    }
+
+    function encerrarPresenca(uid) {
+        clearInterval(heartbeatInterval);
+        heartbeatInterval = null;
+        if (uid) {
+            db.collection('presenca').doc(uid).update({ online: false }).catch(() => {});
+        }
+    }
+
     auth.onAuthStateChanged((user) => {
         if (user) {
             // User is signed in
@@ -142,6 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (protectedMenu) protectedMenu.classList.remove('hidden');
             if (loginBtn) loginBtn.classList.add('hidden');
             if (logoutBtn) logoutBtn.classList.remove('hidden');
+            iniciarPresenca(user);
         } else {
             // User is signed out
             console.log("Usuário deslogado");
