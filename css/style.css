@@ -320,7 +320,6 @@ img {
     display: flex;
     align-items: center;
     overflow: hidden;
-    clip-path: polygon(0 0, 100% 0, 100% 95%, 0 100%);
 }
 
 .hero-bg-overlay {
@@ -2235,6 +2234,36 @@ footer {
 }
 
 .tj-cta i { font-size: 1.25rem; }
+
+/* ── Responsive: janelas médias (901px – 1100px) ─────────────── */
+@media (max-width: 1100px) and (min-width: 901px) {
+    .tj-step {
+        padding: 32px 40px 32px 120px;
+    }
+
+    .tj-step-card {
+        gap: 32px;
+        padding: 36px 36px;
+        max-width: 100%;
+    }
+
+    .tj-ghost-num {
+        right: 16px;
+        font-size: clamp(90px, 13vw, 150px);
+    }
+
+    .tj-intro {
+        padding-left: 100px;
+    }
+
+    .tj-step-body h3 {
+        font-size: clamp(1.3rem, 2.4vw, 1.9rem);
+    }
+
+    .tj-step-body p {
+        font-size: .92rem;
+    }
+}
 
 /* ── Responsive: mobile/tablet (≤ 900px) ────────────────────── */
 @media (max-width: 900px) {
