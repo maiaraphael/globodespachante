@@ -1,3 +1,68 @@
+// ── Rastreamento de Leads ─────────────────────────────────────────────────
+// Salva um lead no Firestore e dispara evento no GA4 sempre que alguém
+// clicar em qualquer botão/link do WhatsApp no site.
+(function initLeadTracking() {
+    'use strict';
+
+    /**
+     * Detecta a origem do clique com base nos atributos e contexto do elemento.
+     */
+    function detectarOrigem(linkEl) {
+        // Prioridade 1: atributo data-origem explícito
+        if (linkEl.dataset.origem) return linkEl.dataset.origem;
+
+        // Prioridade 2: classe do botão flutuante
+        if (linkEl.closest('.fab-whatsapp') || linkEl.classList.contains('fab-whatsapp')) {
+            return 'botao_flutuante';
+        }
+
+        // Prioridade 3: contexto pelo ancestral
+        if (linkEl.closest('.top-bar'))          return 'barra_topo';
+        if (linkEl.closest('#transfer-journey')) return 'jornada_transferencia';
+        if (linkEl.closest('#chatbot-container'))return 'chatbot';
+        if (linkEl.closest('.hero'))             return 'secao_hero';
+        if (linkEl.closest('.services'))         return 'secao_servicos';
+        if (linkEl.closest('#cta-container'))    return 'cta_final';
+
+        return 'link_whatsapp';
+    }
+
+    /**
+     * Salva o lead no Firestore e registra evento no GA4.
+     */
+    function registrarLead(origem) {
+        const payload = {
+            origem:    origem,
+            pagina:    window.location.pathname,
+            titulo:    document.title,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            dispositivo: /Mobi|Android/i.test(navigator.userAgent) ? 'mobile' : 'desktop',
+        };
+
+        // Salva no Firestore (coleção "leads")
+        if (typeof db !== 'undefined') {
+            db.collection('leads').add(payload).catch(() => { /* silencioso */ });
+        }
+
+        // Evento no Google Analytics 4
+        if (typeof analytics !== 'undefined') {
+            analytics.logEvent('whatsapp_lead', { origem: origem, pagina: payload.pagina });
+        }
+    }
+
+    // Intercepta TODOS os cliques em links wa.me do site
+    document.addEventListener('click', function(e) {
+        const link = e.target.closest('a[href*="wa.me"]');
+        if (!link) return;
+        registrarLead(detectarOrigem(link));
+    });
+
+    // Expõe globalmente para uso eventual em outros scripts
+    window.registrarLead = registrarLead;
+}());
+
+// ─────────────────────────────────────────────────────────────────────────────
+
 document.addEventListener('DOMContentLoaded', () => {
 
     // ── Animated stat counters ────────────────────────────────────────────
@@ -727,6 +792,7 @@ document.addEventListener('DOMContentLoaded', () => {
     waBtn.className = 'fab-btn fab-whatsapp';
     waBtn.href = 'https://wa.me/554333560220?text=Ol%C3%A1%2C%20entrei%20no%20site%20de%20voc%C3%AAs%20e%20estou%20entrando%20em%20contato%20a%20respeito%20de%20documenta%C3%A7%C3%A3o%20do%20meu%20ve%C3%ADculo.';
     waBtn.target = '_blank';
+    waBtn.dataset.origem = 'botao_flutuante';
     waBtn.innerHTML = '<i class="fab fa-whatsapp"></i>';
     waBtn.setAttribute('data-tooltip', 'Falar no WhatsApp');
     fabContainer.appendChild(waBtn);
@@ -974,19 +1040,56 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', update);
-    update(); // set initial state
 
-    /* ── Mobile: IntersectionObserver fallback ── */
-    if (isMobile()) {
-        const obs = new IntersectionObserver(entries => {
+    /* ── Mobile IntersectionObserver (reusável) ── */
+    let mobileObs = null;
+
+    function setupMobileObserver() {
+        if (mobileObs) mobileObs.disconnect();
+        mobileObs = new IntersectionObserver(entries => {
             entries.forEach(e => {
                 if (e.isIntersecting) {
                     e.target.classList.add('tj-mobile-visible');
-                    obs.unobserve(e.target);
+                    mobileObs.unobserve(e.target);
                 }
             });
         }, { threshold: 0.22 });
-        steps.forEach(s => obs.observe(s));
+        steps.forEach(s => {
+            if (!s.classList.contains('tj-mobile-visible')) mobileObs.observe(s);
+        });
     }
+
+    /* ── Resize: detecta troca de modo desktop ↔ mobile ── */
+    let prevMobile = isMobile();
+
+    function onResize() {
+        const nowMobile = isMobile();
+        if (nowMobile !== prevMobile) {
+            prevMobile = nowMobile;
+            if (nowMobile) {
+                // Passou para mobile — remove classes do desktop e ativa steps visíveis
+                steps.forEach(s => {
+                    s.classList.remove('tj-active', 'tj-exit');
+                    const rect = s.getBoundingClientRect();
+                    if (rect.top < window.innerHeight * 0.9) {
+                        s.classList.add('tj-mobile-visible');
+                    }
+                });
+                setupMobileObserver();
+            } else {
+                // Passou para desktop — remove classes do mobile e re-renderiza
+                if (mobileObs) { mobileObs.disconnect(); mobileObs = null; }
+                steps.forEach(s => s.classList.remove('tj-mobile-visible'));
+                update();
+            }
+        } else {
+            update();
+        }
+    }
+
+    window.addEventListener('resize', onResize, { passive: true });
+    update(); // estado inicial
+
+    /* ── Inicialização mobile ── */
+    if (isMobile()) setupMobileObserver();
 }());

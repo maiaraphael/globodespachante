@@ -14,5 +14,6 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
+const analytics = firebase.analytics();
 
 console.log("Firebase initialized (Compat Mode)");
