@@ -19,7 +19,7 @@
         content="despachante londrina, despachante em londrina, licenciamento, ipva, transferencia de veiculo, primeiro emplacamento, detran pr, despachante centro londrina">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/chatbot.css">
 
@@ -29,7 +29,7 @@
         position: fixed;
         inset: 0;
         z-index: 99999;
-        background: #002776;
+        background: #06090f;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -120,7 +120,7 @@
       }
       .pl-brand-name {
         display: block;
-        font-family: 'Inter', sans-serif;
+        font-family: 'Space Grotesk', 'Inter', sans-serif;
         font-size: clamp(.78rem, 2vw, .92rem);
         font-weight: 700;
         letter-spacing: .28em;
@@ -129,7 +129,7 @@
       }
       .pl-brand-sub {
         display: block;
-        font-family: 'Inter', sans-serif;
+        font-family: 'Space Grotesk', 'Inter', sans-serif;
         font-size: clamp(.52rem, 1.3vw, .62rem);
         font-weight: 400;
         letter-spacing: .14em;
@@ -154,7 +154,7 @@
       .pl-bar-fill {
         height: 100%;
         width: 0;
-        background: #009c3b;
+        background: linear-gradient(90deg, #00e676, #2563eb);
         border-radius: 2px;
         animation: pl-fill 2.6s .5s cubic-bezier(.4,0,.15,1) forwards;
       }
@@ -270,10 +270,10 @@
             <line x1="12" y1="36" x2="26" y2="36" stroke="rgba(255,255,255,.45)" stroke-width="1.4"/>
             <!-- stamp circle (appears at 2.4s) -->
             <circle class="pl-stamp-circle" cx="32" cy="42" r="9"
-                    stroke="#009c3b" stroke-width="1.8" fill="none"/>
+                    stroke="#00e676" stroke-width="1.8" fill="none"/>
             <!-- checkmark inside stamp -->
             <polyline class="pl-stamp-check" points="27.5,42 30.5,45.5 36.5,38.5"
-                      stroke="#009c3b" stroke-width="1.8" fill="none"/>
+                      stroke="#00e676" stroke-width="1.8" fill="none"/>
           </svg>
         </div>
 
@@ -314,8 +314,8 @@
     <script>
         /* ── Face ── */
         var face = ctx.createRadialGradient(cx, cy-.2*R, R*.1, cx, cy, R);
-        face.addColorStop(0, '#141e30');
-        face.addColorStop(1, '#080c14');
+        face.addColorStop(0, '#0c1a2e');
+        face.addColorStop(1, '#06090f');
         ctx.beginPath();
         ctx.arc(cx, cy, R, 0, Math.PI*2);
         ctx.fillStyle = face;
@@ -340,8 +340,8 @@
         /* ── Progress arc ── */
         if (kmh > 0) {
           var progGrad = ctx.createLinearGradient(cx-R, cy, cx+R, cy);
-          progGrad.addColorStop(0, '#002776');
-          progGrad.addColorStop(.55, '#ffdf00');
+          progGrad.addColorStop(0, '#2563eb');
+          progGrad.addColorStop(.55, '#00e676');
           progGrad.addColorStop(1, '#ff2200');
           ctx.beginPath();
           ctx.arc(cx, cy, R*.78, toRad(ARC_START), kmhToAngle(kmh));
@@ -373,7 +373,7 @@
           ctx.lineWidth  = isMajor ? R*.018 : R*.009;
           var lit = kk <= kmh;
           ctx.strokeStyle = lit
-            ? (kk > RED_ZONE ? '#ff3300' : '#ffdf00')
+            ? (kk > RED_ZONE ? '#ff3300' : '#00e676')
             : 'rgba(255,255,255,.18)';
           ctx.lineCap = 'round';
           ctx.stroke();
@@ -387,7 +387,7 @@
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             ctx.fillStyle = lit
-              ? (kk > RED_ZONE ? '#ff5533' : 'rgba(255,223,0,.9)')
+              ? (kk > RED_ZONE ? '#ff5533' : 'rgba(0,230,118,.9)')
               : 'rgba(255,255,255,.3)';
             ctx.fillText(Math.round(kk), 0, 0);
             ctx.restore();
@@ -403,7 +403,7 @@
 
         /* ── Center digital readout ── */
         var dispKmh = Math.round(kmh);
-        var readColor = dispKmh > RED_ZONE ? '#ff4422' : '#ffdf00';
+        var readColor = dispKmh > RED_ZONE ? '#ff4422' : '#00e676';
 
         /* Readout bg pill */
         var pw = R*.7, ph = R*.28;
@@ -564,9 +564,11 @@
                             <li><a href="cancelamento_comunicado.html">Declaração de
                                     Cancelamento de Comunicado
                                 </a></li>
+                            <li><a href="cancelamento_atpv.html">Termo de Cancelamento de ATPV</a></li>
                             <li><a href="segunda_via_crv.html">Declaração para Solicitação de 2ª Via do CRV</a>
                             </li>
                             <li><a href="termo_motor_968.html">Termo Motor 968</a></li>
+                            <li><a href="baixa_veiculo.html">Requerimento de Baixa de Veículo</a></li>
                                     <li><a
                                     href="https://www1.detran.pr.gov.br/detran-itd/consultas/veiculos/consulta_restricao.asp">Consultar
                                     Gravame</a></li>
@@ -593,7 +595,7 @@
         <div class="container hero-content">
             <div class="hero-text">
                 <div class="hero-badge"><span class="hero-badge-hex"><i class="fas fa-check"></i></span> Credenciado DETRAN-PR &nbsp;·&nbsp; Desde 1986</div>
-                <h1>Globo Despachante em Londrina</h1>
+                <h1>Globo Despachante<br><span class="highlight">em Londrina</span></h1>
                 <p>Regularize seu veículo sem sair de casa. Licenciamento, IPVA, Multas e Transferências.</p>
                 <ul class="hero-benefits">
                     <li><i class="fas fa-check"></i> Consulta Gratuita e Online</li>
@@ -647,6 +649,7 @@
     <section id="services" class="services">
         <div class="container">
             <div class="section-header">
+                <div class="accent-line"></div>
                 <h2>Nossos Serviços</h2>
                 <p>Resolvemos toda a burocracia para você rodar tranquilo</p>
             </div>
@@ -895,6 +898,7 @@
     <section class="testimonials-section">
         <div class="container">
             <div class="section-header hiw-header">
+                <div class="accent-line"></div>
                 <h2>O que nossos clientes dizem</h2>
                 <p>Mais de 35.000 clientes satisfeitos em Londrina e região</p>
             </div> 
@@ -940,6 +944,7 @@
     <section class="faq-section" id="faq">
         <div class="container">
             <div class="section-header hiw-header">
+                <div class="accent-line"></div>
                 <h2>Perguntas Frequentes</h2>
                 <p>Tire suas dúvidas sobre nossos serviços</p>
             </div>

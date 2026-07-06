@@ -12,18 +12,17 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Globo Despachante - Londrina PR | Consulta de Débitos e Licenciamento</title>
-    <meta name="description"
-        content="Regularize seu veículo com o Globo Despachante em Londrina. Consulta de IPVA 2025, Licenciamento, Multas e Transferência. Rápido e Seguro.">
+    <title>Termo de Cancelamento de ATPV - DETRAN PR</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style_cancelamento_atpv.css">
 </head>
 
-<body>
+<body class="auth-loading">
 
     <!-- Top Bar -->
     <div class="top-bar">
@@ -47,8 +46,7 @@
                     <li><a href="index.html#about">Sobre Nós</a></li>
                     <li><a href="index.html#contact">Contato</a></li>
                     <li><a href="orcamento.html">Orçamento</a></li>
-                    <li><a href="fipe.html" class="active">Tabela Fipe</a></li>
-
+                    <li><a href="fipe.html">Tabela Fipe</a></li>
                     <li><a href="orgaos.html">Orgãos</a></li>
                     <li class="btn btn-outline dropdown">
                         <a href="#">Termos e Documentos <i class="fas fa-chevron-down"
@@ -64,16 +62,14 @@
                             <li><a href="cancelamento_atpv.html">Termo de Cancelamento de ATPV</a></li>
                             <li><a href="segunda_via_crv.html">Declaração para Solicitação de 2ª Via do CRV</a>
                             </li>
-
                             <li><a href="termo_motor_968.html">Termo Motor 968</a></li>
                             <li><a href="baixa_veiculo.html">Requerimento de Baixa de Veículo</a></li>
-                                    <li><a
+                            <li><a
                                     href="https://www1.detran.pr.gov.br/detran-itd/consultas/veiculos/consulta_restricao.asp">Consultar
                                     Gravame</a></li>
                             <li><a href="https://selo.funarpen.com.br/Consulta/">Consultar Selo Funarpen</a></li>
                         </ul>
                     </li>
-
                 </ul>
             </nav>
             <button class="mobile-menu-btn" aria-label="Menu">
@@ -82,91 +78,72 @@
         </div>
     </header>
 
-    <!-- Page Header (Optional, for spacing) -->
-    <div style="height: 40px;"></div>
+    <!-- Print Button -->
+    <div class="print-btn-container" style="width: 210mm; margin: 10px auto 0; text-align: right;">
+        <button onclick="window.print()"
+            style="padding: 8px 20px; background: #1a5276; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">
+            <i class="fas fa-print"></i> Imprimir / Salvar PDF
+        </button>
+    </div>
 
-    <!-- FIPE Lookup Section -->
-    <section class="fipe-section" id="fipe-lookup">
-        <div class="container">
-            <div class="section-header"
-                style="text-align: left; max-width: 600px; margin: 0 auto 30px; padding: 0 20px;">
-                <h2>Consulta Tabela Fipe</h2>
-                <p>Descubra o valor de mercado de qualquer veículo.</p>
-            </div>
+    <!-- A4 Document Page -->
+    <div class="page">
 
-            <div class="calculator-wrapper" style="max-width: 600px; margin: 0 auto;">
+        <!-- Document Header with both logos -->
+        <div class="doc-header">
+            <img src="detran_pr.jpg" alt="Detran PR">
+            <img src="header-logos.jpg" alt="Paraná Governo do Estado"
+                style="height: 55px; object-fit: contain; object-position: right; width: 180px; clip-path: inset(0 0 0 50%);">
+        </div>
 
-                <!-- Model Search (Real API) -->
-                <div class="fipe-search-box">
-                    <label>Selecione as características</label>
-                    <div class="calc-group">
-                        <select id="fipeBrand" class="calc-select">
-                            <option value="">Selecione a Marca</option>
-                        </select>
-                    </div>
-                    <div class="calc-group">
-                        <select id="fipeModel" class="calc-select" disabled>
-                            <option value="">Selecione o Modelo</option>
-                        </select>
-                    </div>
-                    <div class="calc-group">
-                        <select id="fipeYear" class="calc-select" disabled>
-                            <option value="">Selecione o Ano</option>
-                        </select>
-                    </div>
-                    <button id="btnModelConsult" class="btn btn-primary btn-block" disabled>
-                        <i class="fas fa-search"></i> Consultar Tabela
-                    </button>
-                </div>
+        <!-- ANEXO II -->
+        <div class="doc-title">ANEXO II</div>
 
-                <div id="fipeResult" class="fipe-result-card" style="display: none;">
-                    <div class="vehicle-info-header">
-                        <div class="vehicle-icon-circle">
-                            <i class="fas fa-car"></i>
-                        </div>
-                        <h3 id="resModel">Veículo não identificado</h3>
-                        <span class="badge-year" id="resYear">---</span>
-                    </div>
+        <!-- Intro text -->
+        <div class="doc-intro">
+            Solicito que seja cancelada a intenção de venda de veículo conforme preenchimento a baixo:
+        </div>
 
-                    <div class="fipe-details-grid">
-                        <div class="detail-item">
-                            <span class="label">Preço Médio</span>
-                            <span class="value price" id="resPrice">R$ ---</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="label">Código Fipe</span>
-                            <span class="value" id="resFipeCode">---</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="label">Mês de Referência</span>
-                            <span class="value" id="resRefMonth">---</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="label">Cidade/UF</span>
-                            <span class="value location" id="resCity">---</span>
-                        </div>
-                    </div>
+        <!-- Vehicle Identification Section -->
+        <div class="vehicle-section-title">Identificação do Veículo:</div>
 
-                    <div class="fipe-disclaimer">
-                        <p>* Valores de referência da Tabela Fipe. O valor real pode variar conforme estado de
-                            conservação e opcionais.</p>
-                    </div>
-                </div>
+        <table class="vehicle-table">
+            <tr>
+                <td style="width: 50%;">
+                    <label>Placa:</label>
+                    <input type="text">
+                </td>
+                <td style="width: 50%;">
+                    <label>Renavam:</label>
+                    <input type="text">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <label>ATPV-e:</label>
+                    <input type="text">
+                </td>
+            </tr>
+        </table>
+
+        <!-- Signature Section -->
+        <div class="signature-area">
+            <div class="signature-block">
+                <div class="signature-line"></div>
+                <p>Local e data.</p>
+                <p>Assinatura</p>
             </div>
         </div>
-    </section>
 
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <h2>Precisa de ajuda com sua documentação?</h2>
-            <p>Fale agora mesmo com um de nossos especialistas pelo WhatsApp.</p>
-            <a href="https://wa.me/554333560220" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> Falar no
-                WhatsApp</a>
+        <!-- DETRAN Document Footer -->
+        <div class="doc-footer">
+            <span class="address">Detran PR – Av. Victor Ferreira do Amaral, 3462 – Caixa Postal 906 – 82820-390 – Curitiba – PR – (41) 3884-2210</span>
+            <span class="website">www.detran.pr.gov.br</span>
         </div>
-    </section>
 
-    <!-- Footer -->
+    </div>
+
+    <!-- Website Footer -->
     <footer id="contact">
         <div class="container footer-content">
             <div class="footer-col">
@@ -203,7 +180,16 @@
         </div>
     </footer>
 
-    <script src="js/app.js?v=5"></script>
+    <!-- Firebase Compat -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+    <!-- App Scripts -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+
 </body>
 
 </html>

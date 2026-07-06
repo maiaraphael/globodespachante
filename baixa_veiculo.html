@@ -12,15 +12,14 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Declaração de Cancelamento da Comunicação de Venda - DETRAN PR</title>
+    <title>Requerimento de Baixa de Veículo - DETRAN PR</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/styles_cancelamento_comunicado.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style_baixa_veiculo.css">
 </head>
 
 <body class="auth-loading">
@@ -65,13 +64,12 @@
                             </li>
                             <li><a href="termo_motor_968.html">Termo Motor 968</a></li>
                             <li><a href="baixa_veiculo.html">Requerimento de Baixa de Veículo</a></li>
-                                    <li><a
+                            <li><a
                                     href="https://www1.detran.pr.gov.br/detran-itd/consultas/veiculos/consulta_restricao.asp">Consultar
                                     Gravame</a></li>
                             <li><a href="https://selo.funarpen.com.br/Consulta/">Consultar Selo Funarpen</a></li>
                         </ul>
                     </li>
-
                 </ul>
             </nav>
             <button class="mobile-menu-btn" aria-label="Menu">
@@ -80,110 +78,143 @@
         </div>
     </header>
 
-    <div class="page">
-        <header>
-            <div class="logo-detran">
-                <img src="logo.jpg" alt="Detran PR">
-            </div>
-        </header>
-
-        <h1 class="document-title">DECLARAÇÃO DE CANCELAMENTO DA COMUNICAÇÃO DE VENDA</h1>
-
-        <form class="document-body">
-            <div class="line">
-                <label>EU, (VENDEDOR)</label>
-                <input type="text" class="full-width">
-                <span>,</span>
-            </div>
-
-            <div class="line">
-                <label>PORTADOR DO RG:</label>
-                <input type="text" style="flex: 1;">
-                <label>E DO CPF/CNPJ:</label>
-                <input type="text" style="flex: 1;" class="mask-cpf-cnpj">
-                <span>,</span>
-            </div>
-
-            <p class="declaration-text">
-                DECLARO PARA OS DEVIDOS FINS JUNTO AO DETRAN – PR, QUE FOI PREENCHIDO O CERTIFICADO DE REGISTRO DO
-                VEÍCULO (CRV)
-            </p>
-
-            <div class="line">
-                <label>MARCA:</label>
-                <input type="text" style="flex: 2;">
-                <label>PLACA:</label>
-                <input type="text" style="width: 150px;">
-            </div>
-
-            <div class="line">
-                <label>RENAVAM:</label>
-                <input type="text" style="flex: 1;">
-                <label>CHASSI:</label>
-                <input type="text" style="flex: 2;">
-            </div>
-
-            <div class="spacer-small"></div>
-
-            <div class="line">
-                <label>EM NOME DO SR.(COMPRADOR)</label>
-                <input type="text" class="full-width">
-                <span>,</span>
-            </div>
-
-            <div class="line">
-                <label>PORTADOR DO RG.:</label>
-                <input type="text" style="flex: 1;">
-                <label>E DO CPF/CNPJ:</label>
-                <input type="text" style="flex: 1;" class="mask-cpf-cnpj">
-                <span>.</span>
-            </div>
-
-            <div class="spacer-small"></div>
-
-            <div class="line column-layout">
-                <label>O MOTIVO DO CANCELAMENTO DA COMUNICAÇÃO DE VENDA</label>
-                <input type="text" placeholder="DESISTENCIA" class="full-width" style="margin-top: 5px;">
-            </div>
-
-            <div class="spacer-large"></div>
-
-            <p class="responsibility-text">
-                ESTANDO O COMPRADOR E VENDEDOR CIENTES DE SUAS RESPONSABILIDADES CIVIS, CRIMINAIS E SOBRE A PONTUAÇÃO
-                DAS INFRAÇÕES.
-            </p>
-
-            <div class="spacer-xlarge"></div>
-
-            <div class="line date-line">
-                <label>DATA</label>
-                <div class="date-inputs">
-                    <input type="text" maxlength="2" class="day"> /
-                    <input type="text" maxlength="2" class="month"> /
-                    <input type="text" maxlength="4" class="year">
-                </div>
-            </div>
-
-            <div class="spacer-xxlarge"></div>
-
-            <div class="signatures">
-                <div class="signature-block">
-                    <div class="signature-line"></div>
-                    <p>ASSINATURA DO COMPRADOR</p>
-                    <p>(RECONHECIMENTO DE FIRMA POR VERDADEIRO EM CARTÓRIO)</p>
-                </div>
-
-                <div class="signature-block">
-                    <div class="signature-line"></div>
-                    <p>ASSINATURA DO VENDEDOR</p>
-                    <p>(RECONHECIMENTO DE FIRMA POR VERDADEIRO EM CARTÓRIO)</p>
-                </div>
-            </div>
-
-        </form>
+    <!-- Print Button -->
+    <div class="print-btn-container" style="width: 210mm; margin: 10px auto 0; text-align: right;">
+        <button onclick="window.print()"
+            style="padding: 8px 20px; background: #1a5276; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">
+            <i class="fas fa-print"></i> Imprimir / Salvar PDF
+        </button>
     </div>
 
-    <!-- Footer -->
+    <!-- A4 Document Page -->
+    <div class="page">
+
+        <!-- Document Header with both logos -->
+        <div class="doc-header">
+            <img src="detran_pr.jpg" alt="Detran PR">
+            <img src="header-logos.jpg" alt="Paraná Governo do Estado"
+                style="height: 55px; object-fit: contain; object-position: right; width: 180px; clip-path: inset(0 0 0 50%);">
+        </div>
+
+        <!-- Main Title -->
+        <div class="doc-title">
+            REQUERIMENTO E TERMO DE RESPONSABILIDADE DE BAIXA DO REGISTRO<br>
+            DE VEÍCULO (RESOLUÇÃO CONTRAN Nº 967/2022)
+        </div>
+
+        <!-- DADO DO PROPRIETÁRIO -->
+        <table class="info-table">
+            <thead>
+                <tr>
+                    <th colspan="2">DADO DO PROPRIETÁRIO</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="2">NOME:&nbsp;<input type="text"></td>
+                </tr>
+                <tr>
+                    <td style="width: 55%;">CPF/CNPJ:&nbsp;<input type="text" style="width: calc(100% - 80px);"></td>
+                    <td style="width: 45%;">RG:&nbsp;<input type="text" style="width: calc(100% - 30px);"></td>
+                </tr>
+                <tr>
+                    <td colspan="2">ENDEREÇO:&nbsp;<input type="text"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Intro paragraph -->
+        <p class="doc-text">
+            POR MEIO DESTE TERMO, EU, ACIMA QUALIFICADO, PROPRIETÁRIO DO VEÍCULO ABAIXO
+            IDENTIFICADO, VENHO REQUERER A BAIXA DO REGISTRO DO VEÍCULO EM ATENÇÃO À
+            RESOLUÇÃO CONTRAN Nº 967/2022, POIS O VEÍCULO SE ENQUADRA COMO:
+        </p>
+
+        <!-- Checkboxes -->
+        <ul class="checkbox-list">
+            <li><input type="checkbox"> VEÍCULO IRRECUPERÁVEL/ DESMONTADO.</li>
+            <li><input type="checkbox"> NÃO LICENCIADO HÁ 10 ANOS E POSSUI 25 ANOS OU MAIS DE FABRICAÇÃO.</li>
+            <li><input type="checkbox"> MEDIANTE A ENTREGA DO RECORTE DO CHASSI E SUAS PLACAS.</li>
+            <li><input type="checkbox"> BAIXA PARA O EXTERIOR.</li>
+        </ul>
+
+        <!-- CARACTERÍSTICAS DO VEÍCULO -->
+        <table class="info-table">
+            <thead>
+                <tr>
+                    <th colspan="2">CARACTERÍTICAS DO VEÍCULO</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="width: 50%;">PLACA:&nbsp;<input type="text" style="width: calc(100% - 55px);"></td>
+                    <td style="width: 50%;">RENAVAM:&nbsp;<input type="text" style="width: calc(100% - 70px);"></td>
+                </tr>
+                <tr>
+                    <td>Nº VIN (CHASSI):&nbsp;<input type="text" style="width: calc(100% - 110px);"></td>
+                    <td>ANO DE FABRICAÇÃO:&nbsp;<input type="text" style="width: calc(100% - 140px);"></td>
+                </tr>
+                <tr>
+                    <td>MARCA/MODELO:&nbsp;<input type="text" style="width: calc(100% - 105px);"></td>
+                    <td>TIPO/ESPÉCIE:&nbsp;<input type="text" style="width: calc(100% - 90px);"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Responsibility paragraph -->
+        <p class="doc-text">
+            VENHO ATRAVÉS DESTE RESPONSABILIZAR-ME PELA BAIXA DEFINITIVA DO VEÍCULO, POR NÃO
+            TER MAIS CONDIÇÕES DE CIRCULAÇÃO E RECUPERAÇÃO, O QUE DÁ ORIGEM À BAIXA DO
+            REGISTRO POR PERDA TOTAL DO VEÍCULO.
+        </p>
+
+        <!-- Irrevogável paragraph -->
+        <p class="doc-text">
+            DECLARO TER CONHECIMENTO DE QUE O PEDIDO DE BAIXA É DE CARÁTER IRREVOGÁVEL E
+            IRREVERSÍVEL.
+        </p>
+
+        <!-- IMPORTANTE -->
+        <p class="important-title">IMPORTANTE:</p>
+
+        <p class="important-item">
+            * NO CASO DA ENTREGA DO RECORTE DO CHASSI, ME RESPONSABILIZO PELO RECORTE DO
+            CHASSI CONTENDO O NÚMERO VIN E INFORMO QUE REALIZEI A ENTREGA JUNTO AO DETRAN-PR.
+        </p>
+
+        <p class="important-item">
+            * NO CASO DE BAIXA PARA O EXTERIOR DECLARO TER CONHECIMENTO DE QUE OS VEÍCULO
+            BAIXADOS QUE SAÍREM DO PAÍS NÃO PODERÃO RETORNAR.
+        </p>
+
+        <p class="important-item">
+            POR FIM, DECLARO TAMBÉM TER CONHECIMENTO DE QUE OS VEÍCULO BAIXADOS COM DÉBITOS,
+            OS MESMOS PODERÃO SER COBRADOS ATRAVÉS DE DÍVIDA ATIVA.
+        </p>
+
+        <!-- Local e Data -->
+        <div class="local-data-row">
+            <div class="field-group">
+                <span>LOCAL:</span>
+                <input type="text" class="local-input">
+            </div>
+            <div class="field-group">
+                <span>DATA:</span>
+                <input type="text" class="date-dd" maxlength="2"> /
+                <input type="text" class="date-mm" maxlength="2"> /
+                <input type="text" class="date-yyyy" maxlength="4">
+            </div>
+        </div>
+
+        <!-- Signature -->
+        <div class="signature-area">
+            <div class="signature-line"></div>
+            <p class="signature-label">PROPRIETÁRIO ASSINA E RECONHECE FIRMA POR VERDADEIRO EM CARTÓRIO</p>
+        </div>
+
+    </div>
+
+    <!-- Website Footer -->
     <footer id="contact">
         <div class="container footer-content">
             <div class="footer-col">
@@ -229,6 +260,7 @@
     <script src="js/firebase-config.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/app.js"></script>
+
 </body>
 
 </html>

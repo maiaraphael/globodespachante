@@ -60,10 +60,10 @@
                             <li><a href="cancelamento_comunicado.html">Declaração de
                                     Cancelamento de Comunicado
                                 </a></li>
+                            <li><a href="cancelamento_atpv.html">Termo de Cancelamento de ATPV</a></li>
                             <li><a href="segunda_via_crv.html">Declaração para Solicitação de 2ª Via do CRV</a>
                             </li>
-                            <li><a href="termo_motor_968.html">Termo Motor 968</a></li>
-                            <li><a
+                            <li><a href="termo_motor_968.html">Termo Motor 968</a></li>                            <li><a href="baixa_veiculo.html">Requerimento de Baixa de Veículo</a></li>                            <li><a
                                     href="https://www1.detran.pr.gov.br/detran-itd/consultas/veiculos/consulta_restricao.asp">Consultar
                                     Gravame</a></li>
                             <li><a href="https://selo.funarpen.com.br/Consulta/">Consultar Selo Funarpen</a></li>
@@ -190,9 +190,18 @@
             <div class="signature-section">
                 <div class="signature-line-date" style="display: flex; justify-content: center;">
                     <div style="width: 35%; text-align: center;">
-                        <input type="text" style="width: 100%; border: none; border-bottom: 1px solid #000; background: transparent; text-align: center;">
+                        <input type="text" id="local-data-input" style="width: 100%; border: none; border-bottom: 1px solid #000; background: transparent; text-align: center;">
                         <div class="label-center">Local e data.</div>
                     </div>
+                    <script>
+                        (function() {
+                            var hoje = new Date();
+                            var dia = String(hoje.getDate()).padStart(2, '0');
+                            var mes = String(hoje.getMonth() + 1).padStart(2, '0');
+                            var ano = hoje.getFullYear();
+                            document.getElementById('local-data-input').value = 'LONDRINA ' + dia + '/' + mes + '/' + ano;
+                        })();
+                    </script>
                 </div>
                 <!-- Day/Month/Year input hack if needed, but image shows just a line for local/data -->
             </div>
