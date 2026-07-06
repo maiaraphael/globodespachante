@@ -212,6 +212,8 @@ document.addEventListener('DOMContentLoaded', () => {
         'procuracao_simples.html',
         'declaracao_residencia.html',
         'cancelamento_comunicado.html',
+        'cancelamento_atpv.html',
+        'baixa_veiculo.html',
         'segunda_via_crv.html',
         'requerimento_atpv_sp.html',
         'termo_motor_968.html'

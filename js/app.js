@@ -251,7 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (toggleLink) {
             toggleLink.addEventListener('click', (e) => {
                 e.preventDefault();
-                dropdown.classList.toggle('active');
+                dropdown.classList.add('active');
             });
         }
     });
