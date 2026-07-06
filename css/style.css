@@ -256,6 +256,7 @@ img { max-width:100%; display:block; }
 
 /* Dropdown */
 .main-nav li { position:relative; }
+.dropdown { overflow:visible; }
 .dropdown-menu {
   display:none;
   position:absolute;
@@ -305,6 +306,9 @@ img { max-width:100%; display:block; }
   color:var(--green) !important;
 }
 .nav-btn-link:hover { color:var(--white) !important; }
+
+/* Dark text for document/print pages on white background */
+.page, .page-container { color:#1a1a1a; }
 
 /* ── Hero ──────────────────────────────────────────────────── */
 .hero {
