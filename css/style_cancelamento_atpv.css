@@ -1,0 +1,173 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #f0f0f0;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    padding: 20px;
+}
+
+.page {
+    width: 210mm;
+    min-height: 297mm;
+    padding: 15mm 20mm 20mm 20mm;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    margin: 10mm auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+.doc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.doc-header img {
+    height: 60px;
+    width: auto;
+}
+
+/* Title */
+.doc-title {
+    text-align: center;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Intro text */
+.doc-intro {
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+/* Vehicle section */
+.vehicle-section-title {
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: underline;
+    margin-bottom: 8px;
+}
+
+.vehicle-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 40px;
+    font-size: 12px;
+}
+
+.vehicle-table td {
+    border: 1px solid #000;
+    padding: 8px 10px;
+    vertical-align: top;
+}
+
+.vehicle-table td label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.vehicle-table input[type="text"] {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 12px;
+    width: 100%;
+    padding: 0;
+}
+
+/* Signature section */
+.signature-area {
+    margin-top: auto;
+    padding-top: 60px;
+    display: flex;
+    justify-content: center;
+}
+
+.signature-block {
+    text-align: center;
+    width: 60%;
+}
+
+.signature-line {
+    border-top: 1px solid #000;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.signature-block p {
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 1.6;
+}
+
+/* Document footer (DETRAN address bar) */
+.doc-footer {
+    margin-top: 40px;
+    border-top: 3px solid #000;
+    padding-top: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 9px;
+}
+
+.doc-footer .address {
+    flex: 1;
+}
+
+.doc-footer .website {
+    font-weight: bold;
+    color: #1a5276;
+    font-size: 10px;
+}
+
+/* Print */
+@media print {
+    @page {
+        size: A4;
+        margin: 0;
+    }
+
+    body {
+        background: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .top-bar,
+    .main-header,
+    footer#contact,
+    .print-btn-container {
+        display: none !important;
+    }
+
+    .page {
+        width: 210mm;
+        height: 297mm;
+        min-height: unset;
+        box-shadow: none;
+        margin: 0;
+        padding: 15mm 20mm 15mm 20mm;
+        border: none;
+    }
+
+    .vehicle-table input[type="text"] {
+        border: none;
+        outline: none;
+    }
+}
