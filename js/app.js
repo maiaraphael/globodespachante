@@ -423,7 +423,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (alienationType.value === 'include') basePrice += 60;
             } else {
                 if (transferType.value === 'pr') basePrice += 550;
-                else if (transferType.value === 'other') basePrice += 670;
+                else if (transferType.value === 'other') basePrice += 650;
 
                 if (alienationType.value === 'include') basePrice += 60;
                 else if (alienationType.value === 'exclude') basePrice += 60;
