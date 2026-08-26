@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="css/print_budget.css">
 </head>
 
-<body>
+<body class="auth-loading">
 
     <!-- Top Bar -->
     <div class="top-bar">
@@ -47,7 +47,7 @@
                     <li><a href="index.html#services">Serviços</a></li>
                     <li><a href="index.html#about">Sobre Nós</a></li>
                     <li><a href="index.html#contact">Contato</a></li>
-                    <li><a href="orcamento.html" class="active">Orçamento</a></li>
+                    <li class="hidden" data-auth-required><a href="orcamento.html" class="active">Orçamento</a></li>
                     <li><a href="fipe.html">Tabela Fipe</a></li>
 
                     <li><a href="orgaos.html">Orgãos</a></li>
@@ -348,6 +348,12 @@
         </div>
     </div>
 
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth.js"></script>
     <script src="js/app.js?v=6"></script>
 </body>
 

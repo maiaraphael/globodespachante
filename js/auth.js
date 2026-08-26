@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginBtn = document.getElementById('loginBtn');
     const logoutBtn = document.getElementById('logoutBtn');
     const protectedMenu = document.getElementById('protectedMenu');
+    const authRequiredMenus = document.querySelectorAll('[data-auth-required]');
     const authModal = document.getElementById('authModal');
     const closeModalBtn = document.getElementById('closeModalBtn');
     const authForm = document.getElementById('authForm');
@@ -181,6 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // User is signed in
             console.log("Usuário logado:", user.email);
             if (protectedMenu) protectedMenu.classList.remove('hidden');
+            authRequiredMenus.forEach((menuItem) => menuItem.classList.remove('hidden'));
             if (loginBtn) loginBtn.classList.add('hidden');
             if (logoutBtn) logoutBtn.classList.remove('hidden');
             iniciarPresenca(user);
@@ -188,6 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // User is signed out
             console.log("Usuário deslogado");
             if (protectedMenu) protectedMenu.classList.add('hidden');
+            authRequiredMenus.forEach((menuItem) => menuItem.classList.add('hidden'));
             if (loginBtn) loginBtn.classList.remove('hidden');
             if (logoutBtn) logoutBtn.classList.add('hidden');
         }
@@ -216,7 +219,8 @@ document.addEventListener('DOMContentLoaded', () => {
         'baixa_veiculo.html',
         'segunda_via_crv.html',
         'requerimento_atpv_sp.html',
-        'termo_motor_968.html'
+        'termo_motor_968.html',
+        'orcamento.html'
     ];
 
     const path = window.location.pathname;

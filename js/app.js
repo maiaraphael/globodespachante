@@ -710,7 +710,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Service Type Cost
             if (transferType) {
                 if (transferType.value === 'pr') addRow('Transferência de Veículo (PR)', 550);
-                else if (transferType.value === 'other') addRow('Transferência de Veículo (Outro Estado)', 670);
+                else if (transferType.value === 'other') addRow('Transferência de Veículo (Outro Estado)', 650);
                 else if (transferType.value === 'segunda_via_recibo') addRow('Emissão de Segunda Via do Recibo', 390);
                 else if (transferType.value === 'alteracao_dados') addRow('Alteração de Dados', 390);
                 else if (transferType.value === 'first_reg') {
