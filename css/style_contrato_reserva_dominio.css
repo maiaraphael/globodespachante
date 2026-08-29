@@ -68,7 +68,7 @@
 
 .contract-declaration { margin-top: 10px; padding: 8px 10px; border: 1px solid #c2c7ca; background: #f9fafb; font-size: 9px; line-height: 1.4; text-align: justify; }
 .contract-declaration p { margin: 0; }
-.signatures { display: grid; grid-template-columns: 1fr 1fr; gap: 38px; margin-top: 34px; padding: 0; border: 0; background: #fff; color: #151515; }
+.signatures { display: grid; grid-template-columns: 1fr; gap: 28px; margin-top: 34px; padding: 0 42px; border: 0; background: #fff; color: #151515; }
 .signature { padding: 0; background: #fff; color: #151515; text-align: center; font-size: 8px; }
 .signature-line { border-top: 1px solid #1b1b1b; margin-bottom: 6px; }
 .signature strong { display: block; color: #172b4d; font-size: 8px; }
@@ -99,7 +99,7 @@
     .penalty-section h2 { min-width: 124px; }
     .penalty-options { gap: 10px; font-size: 8.5px; }
     .contract-declaration { margin-top: 6px; padding: 5px 7px; font-size: 8px; line-height: 1.28; }
-    .signatures { gap: 32px; margin-top: 21px; padding: 0; background: #fff !important; }
+    .signatures { gap: 17px; margin-top: 21px; padding: 0 42px; background: #fff !important; }
     .signature { font-size: 7px; }
     .signature strong { font-size: 7px; }
     .signature span { font-size: 6.5px; }
