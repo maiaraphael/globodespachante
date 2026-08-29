@@ -15,7 +15,7 @@
     box-shadow: 0 12px 36px rgba(0, 0, 0, .35);
     font-family: Arial, Helvetica, sans-serif;
     font-size: 11px;
-    line-height: 1.22;
+    line-height: 1.25;
 }
 
 .contract-header {
@@ -29,14 +29,27 @@
 .contract-header h1 { margin: 0; color: #10213d; font-size: 16px; letter-spacing: .35px; line-height: 1.15; text-transform: uppercase; }
 .contract-header > p:last-child { margin: 5px 0 0; color: #53606b; font-size: 9px; }
 
-.contract-section { margin-bottom: 10px; }
-.contract-section h2 { margin: 0 0 4px; color: #172b4d; font-size: 9px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; }
+.contract-section { margin-bottom: 12px; }
+.contract-section h2 { margin: 0 0 5px; color: #172b4d; font-size: 9px; font-weight: 700; letter-spacing: .9px; text-transform: uppercase; }
 .field-grid { display: grid; gap: 0; border: 1px solid #aeb5bb; }
-.party-grid { grid-template-columns: 1.7fr .72fr .85fr .34fr .82fr .78fr .72fr .28fr .54fr .3fr .72fr; }
+.party-grid { grid-template-columns: repeat(6, 1fr); }
 .vehicle-grid { grid-template-columns: .56fr 1.42fr .86fr 1.2fr .7fr .7fr; }
 .finance-grid { grid-template-columns: .78fr 1fr 1fr .62fr .8fr 1.5fr; }
-.field { display: flex; flex-direction: column; min-width: 0; min-height: 38px; padding: 4px 5px 3px; border-right: 1px solid #c5cbd0; }
-.field:last-child { border-right: 0; }
+.field { display: flex; flex-direction: column; min-width: 0; min-height: 39px; padding: 5px 6px 3px; border-right: 1px solid #c5cbd0; }
+.party-grid .field { border-bottom: 1px solid #c5cbd0; }
+.party-grid .field:nth-child(1) { grid-column: span 4; }
+.party-grid .field:nth-child(2) { grid-column: span 2; border-right: 0; }
+.party-grid .field:nth-child(3) { grid-column: span 3; }
+.party-grid .field:nth-child(4) { grid-column: span 1; }
+.party-grid .field:nth-child(5) { grid-column: span 2; }
+.party-grid .field:nth-child(5) { border-right: 0; }
+.party-grid .field:nth-child(6), .party-grid .field:nth-child(7) { grid-column: span 2; }
+.party-grid .field:nth-child(8), .party-grid .field:nth-child(10) { grid-column: span 1; }
+.party-grid .field:nth-child(9) { grid-column: span 1; border-right: 0; }
+.party-grid .field:nth-child(10) { grid-column: span 1; }
+.party-grid .field:nth-child(11) { grid-column: span 5; border-right: 0; border-bottom: 0; }
+.party-grid .field:nth-child(6), .party-grid .field:nth-child(7), .party-grid .field:nth-child(8), .party-grid .field:nth-child(9) { border-bottom: 1px solid #c5cbd0; }
+.vehicle-grid .field:last-child, .finance-grid .field:last-child { border-right: 0; }
 .field-wide { grid-column: span 2; }
 .field-small { grid-column: span 1; }
 .field-state { grid-column: span 1; }
@@ -53,13 +66,14 @@
 .penalty-options .penalty-value { flex: 1; white-space: nowrap; }
 .penalty-value input { width: 55px; margin-left: 3px; text-align: center; }
 
-.contract-declaration { margin-top: 10px; padding: 7px 9px; border: 1px solid #c2c7ca; background: #f7f8f8; font-size: 9px; line-height: 1.4; text-align: justify; }
+.contract-declaration { margin-top: 10px; padding: 8px 10px; border: 1px solid #c2c7ca; background: #f9fafb; font-size: 9px; line-height: 1.4; text-align: justify; }
 .contract-declaration p { margin: 0; }
-.signatures { display: grid; grid-template-columns: 1fr 1fr; gap: 38px; margin-top: 32px; }
-.signature { text-align: center; font-size: 8px; }
-.signature-line { border-top: 1px solid #1b1b1b; margin-bottom: 5px; }
+.signatures { display: grid; grid-template-columns: 1fr 1fr; gap: 38px; margin-top: 34px; padding: 0; border: 0; background: #fff; color: #151515; }
+.signature { padding: 0; background: #fff; color: #151515; text-align: center; font-size: 8px; }
+.signature-line { border-top: 1px solid #1b1b1b; margin-bottom: 6px; }
 .signature strong { display: block; color: #172b4d; font-size: 8px; }
 .signature span { display: block; margin-top: 3px; color: #5e666d; font-size: 7px; }
+.signature small { display: block; margin-top: 5px; color: #4e565c; font-size: 6.5px; font-style: italic; }
 
 @media (max-width: 850px) {
     .document-page { padding: 16px 0; overflow-x: auto; }
@@ -85,8 +99,9 @@
     .penalty-section h2 { min-width: 124px; }
     .penalty-options { gap: 10px; font-size: 8.5px; }
     .contract-declaration { margin-top: 6px; padding: 5px 7px; font-size: 8px; line-height: 1.28; }
-    .signatures { gap: 32px; margin-top: 21px; }
+    .signatures { gap: 32px; margin-top: 21px; padding: 0; background: #fff !important; }
     .signature { font-size: 7px; }
     .signature strong { font-size: 7px; }
     .signature span { font-size: 6.5px; }
+    .signature small { font-size: 6px; }
 }
