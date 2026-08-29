@@ -773,7 +773,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Print Button (Only on form pages - check by existing of .page or .page-container)
     // ALSO for the Budget page (orcamento.html) which now has .printable-quote
-    if (document.querySelector('.page') || document.querySelector('.page-container') || document.querySelector('.printable-quote')) {
+    if (document.querySelector('.page') || document.querySelector('.page-container') || document.querySelector('.document-page') || document.querySelector('.printable-quote')) {
         const printBtn = document.createElement('button');
         printBtn.className = 'fab-btn fab-print';
         printBtn.innerHTML = '<i class="fas fa-print"></i>';
