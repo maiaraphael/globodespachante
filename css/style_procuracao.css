@@ -110,6 +110,11 @@ body {
         font-size: 9pt;
     }
 
+    .date-line .date-input {
+        font-size: 9pt;
+        height: 16px;
+    }
+
     .signature-box {
         padding-top: 2px;
         width: 70%;
@@ -336,6 +341,26 @@ h2 {
     /* Increased from 70px */
     font-size: 11pt;
 }
+
+.date-line label { margin-right: 4px; }
+
+.date-line .date-input {
+    width: 30px;
+    padding: 1px 0;
+    border: none;
+    border-bottom: 1px solid #333;
+    background: transparent;
+    color: #000;
+    font: inherit;
+    text-align: center;
+    outline: none;
+}
+
+.date-line .date-input-year { width: 52px; }
+
+.date-line .date-input:focus { border-bottom-color: #000; }
+
+.date-line .date-input::placeholder { color: #777; opacity: 1; }
 
 .signature-box {
     width: 65%;

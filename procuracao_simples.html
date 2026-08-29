@@ -63,6 +63,7 @@
                             <li><a href="segunda_via_crv.html">Declaração para Solicitação de 2ª Via do CRV</a>
                             </li>
                             <li><a href="termo_motor_968.html">Termo Motor 968</a></li>
+                            <li><a href="contrato_reserva_dominio.html">Contrato de Reserva de Domínio</a></li>
                             <li><a href="baixa_veiculo.html">Requerimento de Baixa de Veículo</a></li>
                                     <li><a
                                     href="https://www1.detran.pr.gov.br/detran-itd/consultas/veiculos/consulta_restricao.asp">Consultar
@@ -198,7 +199,12 @@
 
         <div class="footer">
             <div class="date-line" style="width: 100%;">
-                Data: ______ / ______ / __________
+                <label for="procuracao-date-day">Data:</label>
+                <input id="procuracao-date-day" class="date-input date-input-day" type="text" inputmode="numeric" maxlength="2" placeholder="DD" aria-label="Dia da data">
+                <span aria-hidden="true">/</span>
+                <input class="date-input date-input-month" type="text" inputmode="numeric" maxlength="2" placeholder="MM" aria-label="Mês da data">
+                <span aria-hidden="true">/</span>
+                <input class="date-input date-input-year" type="text" inputmode="numeric" maxlength="4" placeholder="AAAA" aria-label="Ano da data">
             </div>
 
             <div class="signature-box">

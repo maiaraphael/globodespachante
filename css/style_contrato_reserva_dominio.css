@@ -1,0 +1,92 @@
+* { box-sizing: border-box; }
+
+.document-page {
+    padding: 32px 20px 48px;
+    background: var(--bg);
+}
+
+.contract-sheet {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0 auto;
+    padding: 13mm 14mm;
+    background: #fff;
+    color: #151515;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, .35);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    line-height: 1.22;
+}
+
+.contract-header {
+    margin-bottom: 13px;
+    padding-bottom: 9px;
+    border-bottom: 2px solid #172b4d;
+    text-align: center;
+}
+
+.document-kicker { margin: 0 0 3px; color: #5d6670; font-size: 8px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+.contract-header h1 { margin: 0; color: #10213d; font-size: 16px; letter-spacing: .35px; line-height: 1.15; text-transform: uppercase; }
+.contract-header > p:last-child { margin: 5px 0 0; color: #53606b; font-size: 9px; }
+
+.contract-section { margin-bottom: 10px; }
+.contract-section h2 { margin: 0 0 4px; color: #172b4d; font-size: 9px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; }
+.field-grid { display: grid; gap: 0; border: 1px solid #aeb5bb; }
+.party-grid { grid-template-columns: 1.7fr .72fr .85fr .34fr .82fr .78fr .72fr .28fr .54fr .3fr .72fr; }
+.vehicle-grid { grid-template-columns: .56fr 1.42fr .86fr 1.2fr .7fr .7fr; }
+.finance-grid { grid-template-columns: .78fr 1fr 1fr .62fr .8fr 1.5fr; }
+.field { display: flex; flex-direction: column; min-width: 0; min-height: 38px; padding: 4px 5px 3px; border-right: 1px solid #c5cbd0; }
+.field:last-child { border-right: 0; }
+.field-wide { grid-column: span 2; }
+.field-small { grid-column: span 1; }
+.field-state { grid-column: span 1; }
+.field label { margin-bottom: 3px; color: #59636b; font-size: 7px; font-weight: 700; letter-spacing: .35px; text-transform: uppercase; }
+.field input, .penalty-value input { width: 100%; min-width: 0; padding: 1px 0; border: 0; border-bottom: 1px solid #707980; outline: 0; color: #111; background: transparent; font: inherit; font-size: 10px; text-transform: uppercase; }
+.field input:focus, .penalty-value input:focus { border-bottom-color: #172b4d; background: #f4f7fb; }
+.field input::placeholder { color: #92989d; font-size: 8px; }
+
+.penalty-section { display: flex; align-items: baseline; gap: 18px; margin-top: 2px; }
+.penalty-section h2 { min-width: 150px; }
+.penalty-options { display: flex; align-items: center; flex: 1; gap: 14px; font-size: 10px; }
+.penalty-options label { display: inline-flex; align-items: center; gap: 4px; cursor: pointer; }
+.penalty-options input[type="radio"] { accent-color: #172b4d; }
+.penalty-options .penalty-value { flex: 1; white-space: nowrap; }
+.penalty-value input { width: 55px; margin-left: 3px; text-align: center; }
+
+.contract-declaration { margin-top: 10px; padding: 7px 9px; border: 1px solid #c2c7ca; background: #f7f8f8; font-size: 9px; line-height: 1.4; text-align: justify; }
+.contract-declaration p { margin: 0; }
+.signatures { display: grid; grid-template-columns: 1fr 1fr; gap: 38px; margin-top: 32px; }
+.signature { text-align: center; font-size: 8px; }
+.signature-line { border-top: 1px solid #1b1b1b; margin-bottom: 5px; }
+.signature strong { display: block; color: #172b4d; font-size: 8px; }
+.signature span { display: block; margin-top: 3px; color: #5e666d; font-size: 7px; }
+
+@media (max-width: 850px) {
+    .document-page { padding: 16px 0; overflow-x: auto; }
+    .contract-sheet { margin: 0; }
+}
+
+@media print {
+    @page { size: A4 portrait; margin: 0; }
+    .top-bar, .main-header, #contact, .fab-container { display: none !important; }
+    body { margin: 0; padding: 0; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .document-page { padding: 0; background: #fff; }
+    .contract-sheet { width: 210mm; height: 297mm; min-height: 0; margin: 0; padding: 10mm 12mm; box-shadow: none; font-size: 9px; line-height: 1.12; overflow: hidden; }
+    .contract-header { margin-bottom: 8px; padding-bottom: 5px; }
+    .document-kicker { font-size: 7px; }
+    .contract-header h1 { font-size: 13px; }
+    .contract-header > p:last-child { margin-top: 3px; font-size: 8px; }
+    .contract-section { margin-bottom: 6px; }
+    .contract-section h2 { margin-bottom: 2px; font-size: 8px; }
+    .field { min-height: 30px; padding: 3px 4px 2px; }
+    .field label { margin-bottom: 1px; font-size: 6.5px; }
+    .field input, .penalty-value input { font-size: 8.5px; background: transparent !important; }
+    .penalty-section { gap: 10px; margin-bottom: 4px; }
+    .penalty-section h2 { min-width: 124px; }
+    .penalty-options { gap: 10px; font-size: 8.5px; }
+    .contract-declaration { margin-top: 6px; padding: 5px 7px; font-size: 8px; line-height: 1.28; }
+    .signatures { gap: 32px; margin-top: 21px; }
+    .signature { font-size: 7px; }
+    .signature strong { font-size: 7px; }
+    .signature span { font-size: 6.5px; }
+}

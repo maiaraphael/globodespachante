@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contrato de Reserva de Domínio Credor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style_contrato_reserva_dominio.css">
+</head>
+<body class="auth-loading">
+    <div class="top-bar"><div class="container"><p><i class="fas fa-check-circle"></i> Despachante oficial credenciado pelo DETRAN-PR</p><a href="https://wa.me/554333560220" target="_blank" class="top-contact"><i class="fab fa-whatsapp"></i> (43) 3356-0220</a></div></div>
+    <header class="main-header">
+        <div class="container">
+            <a href="index.html" class="logo"><span class="logo-icon"><i class="fas fa-globe-americas"></i></span> GLOBO DESPACHANTE</a>
+            <nav class="main-nav"><ul>
+                <li><a href="index.html#services">Serviços</a></li><li><a href="index.html#about">Sobre Nós</a></li><li><a href="index.html#contact">Contato</a></li>
+                <li class="hidden" data-auth-required><a href="orcamento.html">Orçamento</a></li><li><a href="fipe.html">Tabela Fipe</a></li><li><a href="orgaos.html">Órgãos</a></li>
+                <li class="btn btn-outline dropdown"><a href="#">Termos e Documentos <i class="fas fa-chevron-down" style="font-size:.8em;margin-left:5px;"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="declaracao_residencia.html">Declaração de Residência</a></li><li><a href="procuracao_simples.html">Procuração Simples</a></li><li><a href="requerimento_atpv.html">Termo de Preenchimento ATPV</a></li><li><a href="requerimento_atpv_sp.html">Requerimento ATPV SP</a></li><li><a href="cancelamento_comunicado.html">Declaração de Cancelamento de Comunicado</a></li><li><a href="cancelamento_atpv.html">Termo de Cancelamento de ATPV</a></li><li><a href="segunda_via_crv.html">Declaração para Solicitação de 2ª Via do CRV</a></li><li><a href="termo_motor_968.html">Termo Motor 968</a></li><li><a href="contrato_reserva_dominio.html" class="active">Contrato de Reserva de Domínio</a></li><li><a href="baixa_veiculo.html">Requerimento de Baixa de Veículo</a></li>
+                    </ul>
+                </li>
+            </ul></nav>
+            <button class="mobile-menu-btn" aria-label="Menu"><i class="fas fa-bars"></i></button>
+        </div>
+    </header>
+
+    <main class="document-page">
+        <form class="contract-sheet" autocomplete="off">
+            <header class="contract-header">
+                <p class="document-kicker">Instrumento Particular</p>
+                <h1>Contrato de Reserva de Domínio Credor</h1>
+                <p>Dados para registro de contrato de reserva de domínio</p>
+            </header>
+
+            <section class="contract-section">
+                <h2>Dados do Credor</h2>
+                <div class="field-grid party-grid">
+                    <label class="field field-wide">Nome<input type="text" aria-label="Nome do credor"></label>
+                    <label class="field">CPF/CNPJ<input type="text" class="mask-cpf-cnpj" aria-label="CPF ou CNPJ do credor"></label>
+                    <label class="field">Logradouro<input type="text" aria-label="Logradouro do credor"></label>
+                    <label class="field field-small">Número<input type="text" inputmode="numeric" aria-label="Número do endereço do credor"></label>
+                    <label class="field">Complemento<input type="text" aria-label="Complemento do credor"></label>
+                    <label class="field">Bairro<input type="text" aria-label="Bairro do credor"></label>
+                    <label class="field">Cidade<input type="text" aria-label="Cidade do credor"></label>
+                    <label class="field field-state">UF<input type="text" maxlength="2" aria-label="Estado do credor"></label>
+                    <label class="field field-small">CEP<input type="text" inputmode="numeric" aria-label="CEP do credor"></label>
+                    <label class="field">DDD<input type="text" inputmode="numeric" maxlength="2" aria-label="DDD do credor"></label>
+                    <label class="field">Telefone celular<input type="text" inputmode="tel" aria-label="Telefone celular do credor"></label>
+                </div>
+            </section>
+
+            <section class="contract-section compact-section">
+                <h2>Dados do Veículo</h2>
+                <div class="field-grid vehicle-grid">
+                    <label class="field">Placa<input type="text" maxlength="8" aria-label="Placa"></label>
+                    <label class="field">Marca / Modelo<input type="text" aria-label="Marca e modelo"></label>
+                    <label class="field">Renavam<input type="text" inputmode="numeric" aria-label="Renavam"></label>
+                    <label class="field">Chassi<input type="text" aria-label="Chassi"></label>
+                    <label class="field">Ano de Fabricação<input type="text" inputmode="numeric" maxlength="4" aria-label="Ano de fabricação"></label>
+                    <label class="field">Ano Modelo<input type="text" inputmode="numeric" maxlength="4" aria-label="Ano modelo"></label>
+                </div>
+            </section>
+
+            <section class="contract-section">
+                <h2>Dados do Devedor</h2>
+                <div class="field-grid party-grid">
+                    <label class="field field-wide">Nome<input type="text" aria-label="Nome do devedor"></label>
+                    <label class="field">CPF/CNPJ<input type="text" class="mask-cpf-cnpj" aria-label="CPF ou CNPJ do devedor"></label>
+                    <label class="field">Logradouro<input type="text" aria-label="Logradouro do devedor"></label>
+                    <label class="field field-small">Número<input type="text" inputmode="numeric" aria-label="Número do endereço do devedor"></label>
+                    <label class="field">Complemento<input type="text" aria-label="Complemento do devedor"></label>
+                    <label class="field">Bairro<input type="text" aria-label="Bairro do devedor"></label>
+                    <label class="field">Cidade<input type="text" aria-label="Cidade do devedor"></label>
+                    <label class="field field-state">UF<input type="text" maxlength="2" aria-label="Estado do devedor"></label>
+                    <label class="field field-small">CEP<input type="text" inputmode="numeric" aria-label="CEP do devedor"></label>
+                    <label class="field">DDD<input type="text" inputmode="numeric" maxlength="2" aria-label="DDD do devedor"></label>
+                    <label class="field">Telefone celular<input type="text" inputmode="tel" aria-label="Telefone celular do devedor"></label>
+                </div>
+            </section>
+
+            <section class="contract-section contract-data">
+                <h2>Dados Financeiros</h2>
+                <div class="field-grid finance-grid">
+                    <label class="field">Data do Contrato<input type="text" inputmode="numeric" maxlength="10" placeholder="DD/MM/AAAA" aria-label="Data do contrato"></label>
+                    <label class="field">Valor da Entrada<input type="text" inputmode="decimal" aria-label="Valor da entrada"></label>
+                    <label class="field">Valor Financiado<input type="text" inputmode="decimal" aria-label="Valor financiado"></label>
+                    <label class="field">Juros ao Ano<input type="text" inputmode="decimal" aria-label="Juros ao ano"></label>
+                    <label class="field">Quantidade de Parcelas<input type="text" inputmode="numeric" aria-label="Quantidade de parcelas"></label>
+                    <label class="field">Valor e Vencimento das Parcelas<input type="text" aria-label="Valor e vencimento das parcelas"></label>
+                </div>
+            </section>
+
+            <section class="contract-section penalty-section">
+                <h2>Indicativo de Penalidade</h2>
+                <div class="penalty-options">
+                    <label><input type="radio" name="penalty" value="sim"> Sim</label>
+                    <label><input type="radio" name="penalty" value="nao"> Não</label>
+                    <label class="penalty-value">Parcela(s): <input type="text" inputmode="numeric" aria-label="Quantidade de parcelas para penalidade"></label>
+                </div>
+            </section>
+
+            <section class="contract-declaration">
+                <p>As partes declaram que os dados acima correspondem ao contrato firmado e solicitam o registro da reserva de domínio do veículo identificado neste documento, responsabilizando-se pela veracidade das informações prestadas.</p>
+            </section>
+
+            <footer class="signatures">
+                <div class="signature"><div class="signature-line"></div><strong>FINANCIADOR / CREDOR</strong><span>Nome e CPF/CNPJ</span></div>
+                <div class="signature"><div class="signature-line"></div><strong>COMPRADOR / DEVEDOR</strong><span>Nome e CPF/CNPJ</span></div>
+            </footer>
+        </form>
+    </main>
+
+    <footer id="contact"><div class="container footer-content"><div class="footer-col"><h3>Globo Despachante</h3><p>Seu parceiro de confiança para regularização veicular em Londrina e região.</p></div><div class="footer-col"><h3>Contato</h3><ul class="contact-info"><li><i class="fas fa-map-marker-alt"></i> Rua Uruguai, 197 - Centro<br>Londrina - PR</li><li><i class="fas fa-phone"></i> (43) 3356-0220</li></ul></div></div><div class="footer-bottom"><div class="container"><p>&copy; 2025 Globo Despachante. Todos os direitos reservados.</p></div></div></footer>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

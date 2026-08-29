@@ -220,6 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'segunda_via_crv.html',
         'requerimento_atpv_sp.html',
         'termo_motor_968.html',
+        'contrato_reserva_dominio.html',
         'orcamento.html'
     ];
 
