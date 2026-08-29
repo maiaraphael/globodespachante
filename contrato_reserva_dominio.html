@@ -40,8 +40,8 @@
             <section class="contract-section">
                 <h2>Dados do Credor</h2>
                 <div class="field-grid party-grid">
-                    <label class="field field-wide">Nome<input type="text" aria-label="Nome do credor"></label>
-                    <label class="field">CPF/CNPJ<input type="text" class="mask-cpf-cnpj" aria-label="CPF ou CNPJ do credor"></label>
+                    <label class="field field-wide">Nome<input type="text" id="creditor-name" aria-label="Nome do credor"></label>
+                    <label class="field">CPF/CNPJ<input type="text" id="creditor-document" class="mask-cpf-cnpj" aria-label="CPF ou CNPJ do credor"></label>
                     <label class="field">Logradouro<input type="text" aria-label="Logradouro do credor"></label>
                     <label class="field field-small">Número<input type="text" inputmode="numeric" aria-label="Número do endereço do credor"></label>
                     <label class="field">Complemento<input type="text" aria-label="Complemento do credor"></label>
@@ -69,8 +69,8 @@
             <section class="contract-section">
                 <h2>Dados do Devedor</h2>
                 <div class="field-grid party-grid">
-                    <label class="field field-wide">Nome<input type="text" aria-label="Nome do devedor"></label>
-                    <label class="field">CPF/CNPJ<input type="text" class="mask-cpf-cnpj" aria-label="CPF ou CNPJ do devedor"></label>
+                    <label class="field field-wide">Nome<input type="text" id="debtor-name" aria-label="Nome do devedor"></label>
+                    <label class="field">CPF/CNPJ<input type="text" id="debtor-document" class="mask-cpf-cnpj" aria-label="CPF ou CNPJ do devedor"></label>
                     <label class="field">Logradouro<input type="text" aria-label="Logradouro do devedor"></label>
                     <label class="field field-small">Número<input type="text" inputmode="numeric" aria-label="Número do endereço do devedor"></label>
                     <label class="field">Complemento<input type="text" aria-label="Complemento do devedor"></label>
@@ -87,8 +87,8 @@
                 <h2>Dados Financeiros</h2>
                 <div class="field-grid finance-grid">
                     <label class="field">Data do Contrato<input type="text" inputmode="numeric" maxlength="10" placeholder="DD/MM/AAAA" aria-label="Data do contrato"></label>
-                    <label class="field">Valor da Entrada<input type="text" inputmode="decimal" aria-label="Valor da entrada"></label>
                     <label class="field">Valor Financiado<input type="text" inputmode="decimal" aria-label="Valor financiado"></label>
+                    <label class="field">Valor da Entrada<input type="text" inputmode="decimal" aria-label="Valor da entrada"></label>
                     <label class="field">Juros ao Ano<input type="text" inputmode="decimal" aria-label="Juros ao ano"></label>
                     <label class="field">Quantidade de Parcelas<input type="text" inputmode="numeric" aria-label="Quantidade de parcelas"></label>
                     <label class="field">Valor e Vencimento das Parcelas<input type="text" aria-label="Valor e vencimento das parcelas"></label>
@@ -109,8 +109,8 @@
             </section>
 
             <footer class="signatures">
-                <div class="signature"><div class="signature-line"></div><strong>FINANCIADOR / CREDOR</strong><span>Nome e CPF/CNPJ</span><small>Reconhecimento de firma em cartório</small></div>
-                <div class="signature"><div class="signature-line"></div><strong>COMPRADOR / DEVEDOR</strong><span>Nome e CPF/CNPJ</span><small>Reconhecimento de firma em cartório</small></div>
+                <div class="signature"><div class="signature-line"></div><strong>FINANCIADOR / CREDOR</strong><span id="creditor-signature-details">Nome e CPF/CNPJ</span><small>Reconhecimento de firma em cartório</small></div>
+                <div class="signature"><div class="signature-line"></div><strong>COMPRADOR / DEVEDOR</strong><span id="debtor-signature-details">Nome e CPF/CNPJ</span><small>Reconhecimento de firma em cartório</small></div>
             </footer>
         </form>
     </main>
@@ -124,5 +124,27 @@
     <script src="js/firebase-config.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/app.js"></script>
+    <script>
+        (function () {
+            function updateSignatureDetails() {
+                const parties = [
+                    { name: 'creditor-name', document: 'creditor-document', target: 'creditor-signature-details' },
+                    { name: 'debtor-name', document: 'debtor-document', target: 'debtor-signature-details' }
+                ];
+
+                parties.forEach((party) => {
+                    const name = document.getElementById(party.name).value.trim();
+                    const documentNumber = document.getElementById(party.document).value.trim();
+                    document.getElementById(party.target).textContent = [name, documentNumber].filter(Boolean).join(' - ') || 'Nome e CPF/CNPJ';
+                });
+            }
+
+            ['creditor-name', 'creditor-document', 'debtor-name', 'debtor-document'].forEach((id) => {
+                document.getElementById(id).addEventListener('input', updateSignatureDetails);
+            });
+
+            window.addEventListener('beforeprint', updateSignatureDetails);
+        }());
+    </script>
 </body>
 </html>
