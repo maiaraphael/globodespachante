@@ -34,7 +34,9 @@
 .field-grid { display: grid; gap: 0; border: 1px solid #aeb5bb; }
 .party-grid { grid-template-columns: repeat(6, 1fr); }
 .vehicle-grid { grid-template-columns: .56fr 1.42fr .86fr 1.2fr .7fr .7fr; }
-.finance-grid { grid-template-columns: .78fr 1fr 1fr .62fr .8fr 1.5fr; }
+.finance-grid { grid-template-columns: repeat(4, 1fr); }
+.finance-grid .field:nth-child(-n+4) { border-bottom: 1px solid #c5cbd0; }
+.finance-grid .field:nth-child(4n) { border-right: 0; }
 .field { display: flex; flex-direction: column; min-width: 0; min-height: 39px; padding: 5px 6px 3px; border-right: 1px solid #c5cbd0; }
 .party-grid .field { border-bottom: 1px solid #c5cbd0; }
 .party-grid .field:nth-child(1) { grid-column: span 4; }
