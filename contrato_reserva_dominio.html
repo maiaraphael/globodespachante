@@ -93,13 +93,24 @@
                     <label class="field">Quantidade de Parcelas<input type="text" inputmode="numeric" aria-label="Quantidade de parcelas"></label>
                 </div>
                 <div class="installments-editor" id="installments-editor">
-                    <div class="installments-heading"><span>Parcelas e vencimentos</span><button type="button" id="add-installment"><i class="fas fa-plus"></i> Adicionar vencimento</button></div>
-                    <div id="installments-list">
-                        <div class="installment-row">
-                            <label>Valor<input type="text" class="installment-amount" inputmode="decimal" placeholder="R$ 0,00" aria-label="Valor da parcela"></label>
-                            <label>Vencimento<input type="date" class="installment-date" aria-label="Vencimento da parcela"></label>
-                            <button type="button" class="remove-installment" aria-label="Remover vencimento" title="Remover vencimento"><i class="fas fa-trash-alt"></i></button>
+                    <div class="installments-heading"><span>Parcelas e vencimentos</span></div>
+                    <div class="installment-mode" role="radiogroup" aria-label="Modalidade de pagamento">
+                        <label><input type="radio" name="installment-mode" value="dynamic" checked> Valores e vencimentos diferentes</label>
+                        <label><input type="radio" name="installment-mode" value="fixed"> Valor fixo mensal</label>
+                    </div>
+                    <div id="dynamic-installments">
+                        <div class="installments-subheading"><span>Vencimentos individuais</span><button type="button" id="add-installment"><i class="fas fa-plus"></i> Adicionar vencimento</button></div>
+                        <div id="installments-list">
+                            <div class="installment-row">
+                                <label>Valor<input type="text" class="installment-amount" inputmode="decimal" placeholder="R$ 0,00" aria-label="Valor da parcela"></label>
+                                <label>Vencimento<input type="date" class="installment-date" aria-label="Vencimento da parcela"></label>
+                                <button type="button" class="remove-installment" aria-label="Remover vencimento" title="Remover vencimento"><i class="fas fa-trash-alt"></i></button>
+                            </div>
                         </div>
+                    </div>
+                    <div class="fixed-installments hidden" id="fixed-installments">
+                        <label>Valor de cada parcela<input type="text" id="fixed-installment-amount" inputmode="decimal" placeholder="R$ 0,00" aria-label="Valor fixo da parcela"></label>
+                        <label>Todo dia<input type="text" id="fixed-installment-day" inputmode="numeric" maxlength="2" placeholder="Ex.: 15" aria-label="Dia fixo de vencimento"></label>
                     </div>
                 </div>
             </section>
@@ -227,17 +238,24 @@
 
             function formatDateLong(value) {
                 const months = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
-                const match = value.match(/^(\d{4})-(\d{2})-(\d{2})$|^(\d{2})\/(\d{2})\/(\d{4})$/);
+                const match = value.match(/^(\d{4})-(\d{2})-(\d{2})$|^(\d{2})\/(\d{2})\/(\d{4})$|^(\d{2})(\d{2})(\d{4})$/);
                 if (!match) return value === '____________________________' ? value : value;
 
-                const [, isoYear, isoMonth, isoDay, brDay, brMonth, brYear] = match;
-                const day = Number(isoDay || brDay);
-                const month = Number(isoMonth || brMonth);
-                const year = isoYear || brYear;
+                const [, isoYear, isoMonth, isoDay, brDay, brMonth, brYear, compactDay, compactMonth, compactYear] = match;
+                const day = Number(isoDay || brDay || compactDay);
+                const month = Number(isoMonth || brMonth || compactMonth);
+                const year = isoYear || brYear || compactYear;
                 return month >= 1 && month <= 12 && day >= 1 && day <= 31 ? `${day} de ${months[month - 1]} de ${year}` : value;
             }
 
             function formatInstallments() {
+                const mode = document.querySelector('input[name="installment-mode"]:checked')?.value;
+                if (mode === 'fixed') {
+                    const amount = document.getElementById('fixed-installment-amount').value.trim();
+                    const day = document.getElementById('fixed-installment-day').value.trim();
+                    return amount || day ? `${amount || 'valor não informado'} todo dia ${day || 'não informado'} de cada mês` : 'valor e dia de vencimento a informar';
+                }
+
                 const installments = [...document.querySelectorAll('.installment-row')]
                     .map((row) => {
                         const amount = row.querySelector('.installment-amount').value.trim();
@@ -272,6 +290,16 @@
 
             const installmentsList = document.getElementById('installments-list');
             const addInstallmentButton = document.getElementById('add-installment');
+            const dynamicInstallments = document.getElementById('dynamic-installments');
+            const fixedInstallments = document.getElementById('fixed-installments');
+
+            document.querySelectorAll('input[name="installment-mode"]').forEach((option) => {
+                option.addEventListener('change', () => {
+                    const fixedMode = option.value === 'fixed' && option.checked;
+                    dynamicInstallments.classList.toggle('hidden', fixedMode);
+                    fixedInstallments.classList.toggle('hidden', !fixedMode);
+                });
+            });
 
             function createInstallmentRow() {
                 const row = document.createElement('div');
