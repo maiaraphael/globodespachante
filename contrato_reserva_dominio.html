@@ -87,11 +87,13 @@
                 <h2>Dados Financeiros</h2>
                 <div class="field-grid finance-grid">
                     <label class="field">Data do Contrato<input type="text" inputmode="numeric" maxlength="10" placeholder="DD/MM/AAAA" aria-label="Data do contrato"></label>
-                    <label class="field">Valor Total<input type="text" inputmode="decimal" aria-label="Valor total do veículo"></label>
-                    <label class="field">Valor Financiado<input type="text" inputmode="decimal" aria-label="Valor financiado"></label>
-                    <label class="field">Valor da Entrada<input type="text" inputmode="decimal" aria-label="Valor da entrada"></label>
+                    <label class="field">Valor Total<input type="text" class="currency-input" inputmode="decimal" placeholder="R$ 0,00" aria-label="Valor total do veículo"></label>
+                    <label class="field">Valor Financiado<input type="text" class="currency-input" inputmode="decimal" placeholder="R$ 0,00" aria-label="Valor financiado"></label>
+                    <label class="field">Valor da Entrada<input type="text" class="currency-input" inputmode="decimal" placeholder="R$ 0,00" aria-label="Valor da entrada"></label>
                     <label class="field">Juros ao Ano<input type="text" inputmode="decimal" aria-label="Juros ao ano"></label>
                     <label class="field">Quantidade de Parcelas<input type="text" inputmode="numeric" aria-label="Quantidade de parcelas"></label>
+                    <label class="field">Data da 1ª Parcela<input type="date" aria-label="Data da primeira parcela"></label>
+                    <label class="field">Data da Última Parcela<input type="date" aria-label="Data da última parcela"></label>
                 </div>
                 <div class="installments-editor" id="installments-editor">
                     <div class="installments-heading"><span>Parcelas e vencimentos</span></div>
@@ -103,14 +105,14 @@
                         <div class="installments-subheading"><span>Vencimentos individuais</span><button type="button" id="add-installment"><i class="fas fa-plus"></i> Adicionar vencimento</button></div>
                         <div id="installments-list">
                             <div class="installment-row">
-                                <label>Valor<input type="text" class="installment-amount" inputmode="decimal" placeholder="R$ 0,00" aria-label="Valor da parcela"></label>
+                                <label>Valor<input type="text" class="installment-amount currency-input" inputmode="decimal" placeholder="R$ 0,00" aria-label="Valor da parcela"></label>
                                 <label>Vencimento<input type="date" class="installment-date" aria-label="Vencimento da parcela"></label>
                                 <button type="button" class="remove-installment" aria-label="Remover vencimento" title="Remover vencimento"><i class="fas fa-trash-alt"></i></button>
                             </div>
                         </div>
                     </div>
                     <div class="fixed-installments hidden" id="fixed-installments">
-                        <label>Valor de cada parcela<input type="text" id="fixed-installment-amount" inputmode="decimal" placeholder="R$ 0,00" aria-label="Valor fixo da parcela"></label>
+                        <label>Valor de cada parcela<input type="text" class="currency-input" id="fixed-installment-amount" inputmode="decimal" placeholder="R$ 0,00" aria-label="Valor fixo da parcela"></label>
                         <label>Todo dia<input type="text" id="fixed-installment-day" inputmode="numeric" maxlength="2" placeholder="Ex.: 15" aria-label="Dia fixo de vencimento"></label>
                     </div>
                 </div>
@@ -160,7 +162,7 @@
 
             <section>
                 <h2>IV. DAS CONDIÇÕES FINANCEIRAS</h2>
-                <p>O valor total do veículo é de <strong><span data-print="financeiro-total"></span></strong>, sendo financiado o valor de <strong><span data-print="financeiro-financiado"></span></strong>, com entrada no valor de <strong><span data-print="financeiro-entrada"></span></strong>, incidindo juros de <strong><span data-print="financeiro-juros"></span></strong> ao ano. O saldo será pago em <strong><span data-print="financeiro-parcelas"></span></strong> parcela(s), conforme o seguinte ajuste: <strong><span data-print="financeiro-vencimentos"></span></strong>.</p>
+                <p>O valor total do veículo é de <strong><span data-print="financeiro-total"></span></strong>, sendo financiado o valor de <strong><span data-print="financeiro-financiado"></span></strong>, com entrada no valor de <strong><span data-print="financeiro-entrada"></span></strong>, incidindo juros de <strong><span data-print="financeiro-juros"></span></strong> ao ano. O saldo será pago em <strong><span data-print="financeiro-parcelas"></span></strong> parcela(s), com primeira parcela em <strong><span data-print="financeiro-primeira-parcela"></span></strong> e última parcela em <strong><span data-print="financeiro-ultima-parcela"></span></strong>, conforme o seguinte ajuste: <strong><span data-print="financeiro-vencimentos"></span></strong>.</p>
             </section>
 
             <section>
@@ -224,11 +226,13 @@
                     'veiculo-fabricacao': valueFor('Ano de fabricação'),
                     'veiculo-modelo-ano': valueFor('Ano modelo'),
                     'financeiro-data': formatDateLong(valueFor('Data do contrato')),
-                    'financeiro-total': valueFor('Valor total do veículo'),
-                    'financeiro-financiado': valueFor('Valor financiado'),
-                    'financeiro-entrada': valueFor('Valor da entrada'),
+                    'financeiro-total': currencyValueFor('Valor total do veículo'),
+                    'financeiro-financiado': currencyValueFor('Valor financiado'),
+                    'financeiro-entrada': currencyValueFor('Valor da entrada'),
                     'financeiro-juros': valueFor('Juros ao ano'),
                     'financeiro-parcelas': valueFor('Quantidade de parcelas'),
+                    'financeiro-primeira-parcela': formatDateLong(valueFor('Data da primeira parcela')),
+                    'financeiro-ultima-parcela': formatDateLong(valueFor('Data da última parcela')),
                     'financeiro-vencimentos': formatInstallments(),
                     'penalidade': document.querySelector('input[name="penalty"]:checked')?.value === 'sim' ? `SIM, após ${valueFor('Quantidade de parcelas para penalidade')} parcela(s).` : 'NÃO.'
                 };
@@ -250,12 +254,27 @@
                 return month >= 1 && month <= 12 && day >= 1 && day <= 31 ? `${day} de ${months[month - 1]} de ${year}` : value;
             }
 
+            function formatCurrencyValue(value) {
+                const normalized = value.replace(/R\$|\s/g, '');
+                if (!normalized) return '';
+
+                const numericValue = normalized.includes(',')
+                    ? Number(normalized.replace(/\./g, '').replace(',', '.'))
+                    : Number(normalized.replace(/\./g, ''));
+                return Number.isFinite(numericValue) ? numericValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }).replace(/\s/g, '') : value;
+            }
+
+            function currencyValueFor(label) {
+                const value = form.querySelector(`[aria-label="${label}"]`)?.value.trim();
+                return value ? formatCurrencyValue(value) : '____________________________';
+            }
+
             function formatInstallments() {
                 const mode = document.querySelector('input[name="installment-mode"]:checked')?.value;
                 if (mode === 'fixed') {
                     const amount = document.getElementById('fixed-installment-amount').value.trim();
                     const day = document.getElementById('fixed-installment-day').value.trim();
-                    return amount || day ? `${amount || 'valor não informado'} todo dia ${day || 'não informado'} de cada mês` : 'valor e dia de vencimento a informar';
+                    return amount || day ? `${formatCurrencyValue(amount) || 'valor não informado'} todo dia ${day || 'não informado'} de cada mês` : 'valor e dia de vencimento a informar';
                 }
 
                 const installments = [...document.querySelectorAll('.installment-row')]
@@ -263,7 +282,7 @@
                         const amount = row.querySelector('.installment-amount').value.trim();
                         const dueDate = row.querySelector('.installment-date').value;
                         if (!amount && !dueDate) return null;
-                        return `${amount || 'valor não informado'} com vencimento em ${formatDateLong(dueDate || 'data não informada')}`;
+                        return `${formatCurrencyValue(amount) || 'valor não informado'} com vencimento em ${formatDateLong(dueDate || 'data não informada')}`;
                     })
                     .filter(Boolean);
 
@@ -306,9 +325,13 @@
             function createInstallmentRow() {
                 const row = document.createElement('div');
                 row.className = 'installment-row';
-                row.innerHTML = '<label>Valor<input type="text" class="installment-amount" inputmode="decimal" placeholder="R$ 0,00" aria-label="Valor da parcela"></label><label>Vencimento<input type="date" class="installment-date" aria-label="Vencimento da parcela"></label><button type="button" class="remove-installment" aria-label="Remover vencimento" title="Remover vencimento"><i class="fas fa-trash-alt"></i></button>';
+                row.innerHTML = '<label>Valor<input type="text" class="installment-amount currency-input" inputmode="decimal" placeholder="R$ 0,00" aria-label="Valor da parcela"></label><label>Vencimento<input type="date" class="installment-date" aria-label="Vencimento da parcela"></label><button type="button" class="remove-installment" aria-label="Remover vencimento" title="Remover vencimento"><i class="fas fa-trash-alt"></i></button>';
                 installmentsList.appendChild(row);
             }
+
+            form.addEventListener('blur', (event) => {
+                if (event.target.matches('.currency-input')) event.target.value = formatCurrencyValue(event.target.value);
+            }, true);
 
             addInstallmentButton.addEventListener('click', createInstallmentRow);
             installmentsList.addEventListener('click', (event) => {
