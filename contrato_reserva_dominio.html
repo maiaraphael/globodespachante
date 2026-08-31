@@ -91,7 +91,16 @@
                     <label class="field">Valor da Entrada<input type="text" inputmode="decimal" aria-label="Valor da entrada"></label>
                     <label class="field">Juros ao Ano<input type="text" inputmode="decimal" aria-label="Juros ao ano"></label>
                     <label class="field">Quantidade de Parcelas<input type="text" inputmode="numeric" aria-label="Quantidade de parcelas"></label>
-                    <label class="field">Valor e Vencimento das Parcelas<input type="text" aria-label="Valor e vencimento das parcelas"></label>
+                </div>
+                <div class="installments-editor" id="installments-editor">
+                    <div class="installments-heading"><span>Parcelas e vencimentos</span><button type="button" id="add-installment"><i class="fas fa-plus"></i> Adicionar vencimento</button></div>
+                    <div id="installments-list">
+                        <div class="installment-row">
+                            <label>Valor<input type="text" class="installment-amount" inputmode="decimal" placeholder="R$ 0,00" aria-label="Valor da parcela"></label>
+                            <label>Vencimento<input type="date" class="installment-date" aria-label="Vencimento da parcela"></label>
+                            <button type="button" class="remove-installment" aria-label="Remover vencimento" title="Remover vencimento"><i class="fas fa-trash-alt"></i></button>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -202,18 +211,43 @@
                     'veiculo-chassi': valueFor('Chassi'),
                     'veiculo-fabricacao': valueFor('Ano de fabricação'),
                     'veiculo-modelo-ano': valueFor('Ano modelo'),
-                    'financeiro-data': valueFor('Data do contrato'),
+                    'financeiro-data': formatDateLong(valueFor('Data do contrato')),
                     'financeiro-financiado': valueFor('Valor financiado'),
                     'financeiro-entrada': valueFor('Valor da entrada'),
                     'financeiro-juros': valueFor('Juros ao ano'),
                     'financeiro-parcelas': valueFor('Quantidade de parcelas'),
-                    'financeiro-vencimentos': valueFor('Valor e vencimento das parcelas'),
+                    'financeiro-vencimentos': formatInstallments(),
                     'penalidade': document.querySelector('input[name="penalty"]:checked')?.value === 'sim' ? `SIM, após ${valueFor('Quantidade de parcelas para penalidade')} parcela(s).` : 'NÃO.'
                 };
 
                 Object.entries(values).forEach(([key, value]) => {
                     document.querySelectorAll(`[data-print="${key}"]`).forEach((element) => { element.textContent = value; });
                 });
+            }
+
+            function formatDateLong(value) {
+                const months = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+                const match = value.match(/^(\d{4})-(\d{2})-(\d{2})$|^(\d{2})\/(\d{2})\/(\d{4})$/);
+                if (!match) return value === '____________________________' ? value : value;
+
+                const [, isoYear, isoMonth, isoDay, brDay, brMonth, brYear] = match;
+                const day = Number(isoDay || brDay);
+                const month = Number(isoMonth || brMonth);
+                const year = isoYear || brYear;
+                return month >= 1 && month <= 12 && day >= 1 && day <= 31 ? `${day} de ${months[month - 1]} de ${year}` : value;
+            }
+
+            function formatInstallments() {
+                const installments = [...document.querySelectorAll('.installment-row')]
+                    .map((row) => {
+                        const amount = row.querySelector('.installment-amount').value.trim();
+                        const dueDate = row.querySelector('.installment-date').value;
+                        if (!amount && !dueDate) return null;
+                        return `${amount || 'valor não informado'} com vencimento em ${formatDateLong(dueDate || 'data não informada')}`;
+                    })
+                    .filter(Boolean);
+
+                return installments.length ? installments.join('; ') : 'valores e vencimentos a informar';
             }
 
             function updateSignatureDetails() {
@@ -235,6 +269,23 @@
 
             window.addEventListener('beforeprint', updateSignatureDetails);
             window.addEventListener('beforeprint', updatePrintContract);
+
+            const installmentsList = document.getElementById('installments-list');
+            const addInstallmentButton = document.getElementById('add-installment');
+
+            function createInstallmentRow() {
+                const row = document.createElement('div');
+                row.className = 'installment-row';
+                row.innerHTML = '<label>Valor<input type="text" class="installment-amount" inputmode="decimal" placeholder="R$ 0,00" aria-label="Valor da parcela"></label><label>Vencimento<input type="date" class="installment-date" aria-label="Vencimento da parcela"></label><button type="button" class="remove-installment" aria-label="Remover vencimento" title="Remover vencimento"><i class="fas fa-trash-alt"></i></button>';
+                installmentsList.appendChild(row);
+            }
+
+            addInstallmentButton.addEventListener('click', createInstallmentRow);
+            installmentsList.addEventListener('click', (event) => {
+                const removeButton = event.target.closest('.remove-installment');
+                if (!removeButton || installmentsList.children.length === 1) return;
+                removeButton.closest('.installment-row').remove();
+            });
         }());
     </script>
 </body>
