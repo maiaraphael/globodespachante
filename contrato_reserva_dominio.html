@@ -87,6 +87,7 @@
                 <h2>Dados Financeiros</h2>
                 <div class="field-grid finance-grid">
                     <label class="field">Data do Contrato<input type="text" inputmode="numeric" maxlength="10" placeholder="DD/MM/AAAA" aria-label="Data do contrato"></label>
+                    <label class="field">Valor Total<input type="text" inputmode="decimal" aria-label="Valor total do veículo"></label>
                     <label class="field">Valor Financiado<input type="text" inputmode="decimal" aria-label="Valor financiado"></label>
                     <label class="field">Valor da Entrada<input type="text" inputmode="decimal" aria-label="Valor da entrada"></label>
                     <label class="field">Juros ao Ano<input type="text" inputmode="decimal" aria-label="Juros ao ano"></label>
@@ -159,7 +160,7 @@
 
             <section>
                 <h2>IV. DAS CONDIÇÕES FINANCEIRAS</h2>
-                <p>O valor financiado é de <strong><span data-print="financeiro-financiado"></span></strong>, com entrada no valor de <strong><span data-print="financeiro-entrada"></span></strong>, incidindo juros de <strong><span data-print="financeiro-juros"></span></strong> ao ano. O saldo será pago em <strong><span data-print="financeiro-parcelas"></span></strong> parcela(s), conforme o seguinte ajuste: <strong><span data-print="financeiro-vencimentos"></span></strong>.</p>
+                <p>O valor total do veículo é de <strong><span data-print="financeiro-total"></span></strong>, sendo financiado o valor de <strong><span data-print="financeiro-financiado"></span></strong>, com entrada no valor de <strong><span data-print="financeiro-entrada"></span></strong>, incidindo juros de <strong><span data-print="financeiro-juros"></span></strong> ao ano. O saldo será pago em <strong><span data-print="financeiro-parcelas"></span></strong> parcela(s), conforme o seguinte ajuste: <strong><span data-print="financeiro-vencimentos"></span></strong>.</p>
             </section>
 
             <section>
@@ -223,6 +224,7 @@
                     'veiculo-fabricacao': valueFor('Ano de fabricação'),
                     'veiculo-modelo-ano': valueFor('Ano modelo'),
                     'financeiro-data': formatDateLong(valueFor('Data do contrato')),
+                    'financeiro-total': valueFor('Valor total do veículo'),
                     'financeiro-financiado': valueFor('Valor financiado'),
                     'financeiro-entrada': valueFor('Valor da entrada'),
                     'financeiro-juros': valueFor('Juros ao ano'),
