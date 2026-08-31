@@ -74,6 +74,7 @@
 .signature strong { display: block; color: #172b4d; font-size: 10px; }
 .signature span { display: block; margin-top: 4px; color: #4a5359; font-size: 9px; }
 .signature small { display: block; margin-top: 5px; color: #4e565c; font-size: 8px; font-style: italic; }
+.print-contract { display: none; }
 
 @media (max-width: 850px) {
     .document-page { padding: 16px 0; overflow-x: auto; }
@@ -82,10 +83,24 @@
 
 @media print {
     @page { size: A4 portrait; margin: 0; }
-    .top-bar, .main-header, #contact, .fab-container { display: none !important; }
+    .top-bar, .main-header, #contact, .fab-container, .contract-sheet { display: none !important; }
     body { margin: 0; padding: 0; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     .document-page { padding: 0; background: #fff; }
-    .contract-sheet { width: 210mm; height: 297mm; min-height: 0; margin: 0; padding: 10mm 12mm; box-shadow: none; font-size: 9px; line-height: 1.12; overflow: hidden; }
+    .print-contract { display: block; width: 210mm; height: 297mm; padding: 16mm 20mm; color: #111; background: #fff; font-family: Georgia, 'Times New Roman', serif; font-size: 10.5pt; line-height: 1.42; }
+    .print-contract-header { margin-bottom: 15mm; text-align: center; }
+    .print-contract-header p { margin: 0 0 3mm; font: 700 8pt Arial, sans-serif; letter-spacing: 1px; }
+    .print-contract-header h1 { margin: 0; font-size: 15pt; letter-spacing: .4px; }
+    .print-contract-intro, .print-contract section p { margin: 0; text-align: justify; }
+    .print-contract section { margin-top: 5mm; }
+    .print-contract section h2 { margin: 0 0 2mm; font: 700 9pt Arial, sans-serif; text-transform: uppercase; }
+    .print-contract [data-print] { font-weight: 600; }
+    .print-contract-date { margin: 12mm 0 0; text-align: right; }
+    .print-contract-signatures { display: grid; grid-template-columns: 1fr 1fr; gap: 20mm; margin-top: 21mm; padding: 0; border: 0; background: #fff !important; color: #111; }
+    .print-contract-signatures > div { text-align: center; font-family: Arial, sans-serif; font-size: 8pt; }
+    .print-signature-line { border-top: 1px solid #111; margin-bottom: 3mm; }
+    .print-contract-signatures strong, .print-contract-signatures span, .print-contract-signatures em { display: block; }
+    .print-contract-signatures strong { font-size: 8pt; }
+    .print-contract-signatures em { margin-top: 2mm; font-size: 7pt; font-style: normal; font-weight: 700; }
     .contract-header { margin-bottom: 8px; padding-bottom: 5px; }
     .document-kicker { font-size: 7px; }
     .contract-header h1 { font-size: 13px; }
