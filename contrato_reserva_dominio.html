@@ -113,6 +113,51 @@
                 <div class="signature"><div class="signature-line"></div><strong>COMPRADOR / DEVEDOR</strong><span id="debtor-signature-details">Nome e CPF/CNPJ</span><small>Reconhecimento de firma em cartório</small></div>
             </footer>
         </form>
+
+        <article class="print-contract" aria-hidden="true">
+            <header class="print-contract-header">
+                <p>INSTRUMENTO PARTICULAR</p>
+                <h1>CONTRATO DE RESERVA DE DOMÍNIO</h1>
+            </header>
+
+            <p class="print-contract-intro">Pelo presente instrumento particular, as partes abaixo identificadas celebram o presente contrato de reserva de domínio, nos termos das condições e informações a seguir.</p>
+
+            <section>
+                <h2>I. DO CREDOR / FINANCIADOR</h2>
+                <p><strong><span data-print="credor-nome"></span></strong>, inscrito(a) no CPF/CNPJ sob nº <strong><span data-print="credor-documento"></span></strong>, com endereço em <span data-print="credor-logradouro"></span>, nº <span data-print="credor-numero"></span>, <span data-print="credor-complemento"></span>, bairro <span data-print="credor-bairro"></span>, <span data-print="credor-cidade"></span>/<span data-print="credor-uf"></span>, CEP <span data-print="credor-cep"></span>, telefone <span data-print="credor-telefone"></span>, doravante denominado(a) <strong>CREDOR</strong>.</p>
+            </section>
+
+            <section>
+                <h2>II. DO COMPRADOR / DEVEDOR</h2>
+                <p><strong><span data-print="devedor-nome"></span></strong>, inscrito(a) no CPF/CNPJ sob nº <strong><span data-print="devedor-documento"></span></strong>, com endereço em <span data-print="devedor-logradouro"></span>, nº <span data-print="devedor-numero"></span>, <span data-print="devedor-complemento"></span>, bairro <span data-print="devedor-bairro"></span>, <span data-print="devedor-cidade"></span>/<span data-print="devedor-uf"></span>, CEP <span data-print="devedor-cep"></span>, telefone <span data-print="devedor-telefone"></span>, doravante denominado(a) <strong>DEVEDOR</strong>.</p>
+            </section>
+
+            <section>
+                <h2>III. DO VEÍCULO</h2>
+                <p>O presente contrato tem por objeto o veículo <strong><span data-print="veiculo-modelo"></span></strong>, placa <strong><span data-print="veiculo-placa"></span></strong>, Renavam <strong><span data-print="veiculo-renavam"></span></strong>, chassi <strong><span data-print="veiculo-chassi"></span></strong>, ano de fabricação/modelo <strong><span data-print="veiculo-fabricacao"></span>/<span data-print="veiculo-modelo-ano"></span></strong>.</p>
+            </section>
+
+            <section>
+                <h2>IV. DAS CONDIÇÕES FINANCEIRAS</h2>
+                <p>O valor financiado é de <strong><span data-print="financeiro-financiado"></span></strong>, com entrada no valor de <strong><span data-print="financeiro-entrada"></span></strong>, incidindo juros de <strong><span data-print="financeiro-juros"></span></strong> ao ano. O saldo será pago em <strong><span data-print="financeiro-parcelas"></span></strong> parcela(s), conforme o seguinte ajuste: <strong><span data-print="financeiro-vencimentos"></span></strong>.</p>
+            </section>
+
+            <section>
+                <h2>V. DA RESERVA DE DOMÍNIO E PENALIDADE</h2>
+                <p>Até a quitação integral das obrigações assumidas, a propriedade do veículo permanece reservada ao CREDOR, transferindo-se ao DEVEDOR após o cumprimento total do contrato. Em caso de inadimplemento, fica estabelecido o indicativo de penalidade: <strong><span data-print="penalidade"></span></strong>.</p>
+            </section>
+
+            <section>
+                <h2>VI. DAS DISPOSIÇÕES FINAIS</h2>
+                <p>As partes declaram que leram, compreenderam e concordam com todas as condições deste instrumento, responsabilizando-se pela veracidade dos dados informados. Para todos os fins, firmam o presente instrumento em duas vias de igual teor, devendo as assinaturas ser reconhecidas por autenticidade em cartório.</p>
+            </section>
+
+            <p class="print-contract-date">Londrina/PR, <span data-print="financeiro-data"></span>.</p>
+            <footer class="print-contract-signatures">
+                <div><div class="print-signature-line"></div><strong><span data-print="credor-nome"></span></strong><span>CPF/CNPJ: <span data-print="credor-documento"></span></span><em>CREDOR / FINANCIADOR</em></div>
+                <div><div class="print-signature-line"></div><strong><span data-print="devedor-nome"></span></strong><span>CPF/CNPJ: <span data-print="devedor-documento"></span></span><em>COMPRADOR / DEVEDOR</em></div>
+            </footer>
+        </article>
     </main>
 
     <footer id="contact"><div class="container footer-content"><div class="footer-col"><h3>Globo Despachante</h3><p>Seu parceiro de confiança para regularização veicular em Londrina e região.</p></div><div class="footer-col"><h3>Contato</h3><ul class="contact-info"><li><i class="fas fa-map-marker-alt"></i> Rua Uruguai, 197 - Centro<br>Londrina - PR</li><li><i class="fas fa-phone"></i> (43) 3356-0220</li></ul></div></div><div class="footer-bottom"><div class="container"><p>&copy; 2025 Globo Despachante. Todos os direitos reservados.</p></div></div></footer>
@@ -126,6 +171,51 @@
     <script src="js/app.js"></script>
     <script>
         (function () {
+            const form = document.querySelector('.contract-sheet');
+            const valueFor = (label) => form.querySelector(`[aria-label="${label}"]`)?.value.trim() || '____________________________';
+
+            function updatePrintContract() {
+                const values = {
+                    'credor-nome': valueFor('Nome do credor'),
+                    'credor-documento': valueFor('CPF ou CNPJ do credor'),
+                    'credor-logradouro': valueFor('Logradouro do credor'),
+                    'credor-numero': valueFor('Número do endereço do credor'),
+                    'credor-complemento': valueFor('Complemento do credor'),
+                    'credor-bairro': valueFor('Bairro do credor'),
+                    'credor-cidade': valueFor('Cidade do credor'),
+                    'credor-uf': valueFor('Estado do credor'),
+                    'credor-cep': valueFor('CEP do credor'),
+                    'credor-telefone': `${valueFor('DDD do credor')} ${valueFor('Telefone celular do credor')}`,
+                    'devedor-nome': valueFor('Nome do devedor'),
+                    'devedor-documento': valueFor('CPF ou CNPJ do devedor'),
+                    'devedor-logradouro': valueFor('Logradouro do devedor'),
+                    'devedor-numero': valueFor('Número do endereço do devedor'),
+                    'devedor-complemento': valueFor('Complemento do devedor'),
+                    'devedor-bairro': valueFor('Bairro do devedor'),
+                    'devedor-cidade': valueFor('Cidade do devedor'),
+                    'devedor-uf': valueFor('Estado do devedor'),
+                    'devedor-cep': valueFor('CEP do devedor'),
+                    'devedor-telefone': `${valueFor('DDD do devedor')} ${valueFor('Telefone celular do devedor')}`,
+                    'veiculo-placa': valueFor('Placa'),
+                    'veiculo-modelo': valueFor('Marca e modelo'),
+                    'veiculo-renavam': valueFor('Renavam'),
+                    'veiculo-chassi': valueFor('Chassi'),
+                    'veiculo-fabricacao': valueFor('Ano de fabricação'),
+                    'veiculo-modelo-ano': valueFor('Ano modelo'),
+                    'financeiro-data': valueFor('Data do contrato'),
+                    'financeiro-financiado': valueFor('Valor financiado'),
+                    'financeiro-entrada': valueFor('Valor da entrada'),
+                    'financeiro-juros': valueFor('Juros ao ano'),
+                    'financeiro-parcelas': valueFor('Quantidade de parcelas'),
+                    'financeiro-vencimentos': valueFor('Valor e vencimento das parcelas'),
+                    'penalidade': document.querySelector('input[name="penalty"]:checked')?.value === 'sim' ? `SIM, após ${valueFor('Quantidade de parcelas para penalidade')} parcela(s).` : 'NÃO.'
+                };
+
+                Object.entries(values).forEach(([key, value]) => {
+                    document.querySelectorAll(`[data-print="${key}"]`).forEach((element) => { element.textContent = value; });
+                });
+            }
+
             function updateSignatureDetails() {
                 const parties = [
                     { name: 'creditor-name', document: 'creditor-document', target: 'creditor-signature-details' },
@@ -144,6 +234,7 @@
             });
 
             window.addEventListener('beforeprint', updateSignatureDetails);
+            window.addEventListener('beforeprint', updatePrintContract);
         }());
     </script>
 </body>
